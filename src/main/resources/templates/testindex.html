@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+    <button onclick="saveReq()">글작성</button>
+    <a href="/board/save">글작성 링크</a>
+</body>
+
+
+<a href="/board/save">글작성(링크)</a>
+<button onclick="listReq()">글목록</button>
+
+<script>
+
+
+
+ /*   버튼 글작성을 클릭하면 실행 된다
+    function saveReq(){    이거랑 똑같은 메서드
+        }
+
+    */
+    const saveReq = () => {
+        location.href = "/board/save";
+
+    }
+
+    const listReq = () => {
+        location.href = "/board/";
+    }
+
+
+</script>
+</html>

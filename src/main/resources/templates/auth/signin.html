@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--로그인 페이지-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOBUL 로그인</title>
+  <link rel="stylesheet" th:href="@{/css/auth.css}" />
+</head>
+
+<body>
+<div class="center">
+<!--  로고, 메인페이지로 이동 링크-->
+  <a id="logoText" href="/">SAY SOMETHING</a>
+  <div class="login-form-box">
+<!--    로그인 폼-->
+    <form method="post" action="#" id="login-form">
+      <div class="inputBox">
+        <input type="text" name="UserId" placeholder="User ID" />
+        <input type="password" name="userPassword" placeholder="Password" />
+      </div>
+<!--   로그인 폼 제출 버튼-->
+      <div class="btnBox">
+        <button type="submit" class="btn-green">Login</button>
+      </div>
+
+    </form>
+
+<!--    카카오로 로그인, 회원가입 페이지로 이동 버튼-->
+    <div class="btnBox">
+      <hr />
+      <button class="btn-kakao">Login with Kakao</button>
+      <button class="btn-grey" onclick="window.location.href='/auth/signup'">
+        SignUp
+      </button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

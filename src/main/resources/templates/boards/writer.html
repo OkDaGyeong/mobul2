@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAY SOMETHING</title>
+    <!-- css  -->
+    <link rel="stylesheet" href="css/reset.css" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" href="css/style.css" th:href="@{/css/writerPage.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" th:href="@{https://fonts.googleapis.com}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin th:href="@{https://fonts.gstatic.com}" >
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&amp;family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;family=Noto+Serif+KR&amp;family=Playfair+Display:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet" th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&amp;family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;family=Noto+Serif+KR&amp;family=Playfair+Display:wght@400;500;600;700;800;900&amp;display=swap}">
+</head>
+<body>
+<div id="wrap">
+    <!-- 헤더 -->
+    <div id="logo" class="clearfix">
+        <p><a href="#">SAY SOMETHING</a></p>
+    </div>
+    <!-- 테이블 섹션 -->
+    <div id="tableWrap">
+        <input type="button" value="글 목록" id="listBtn" style="font-weight : bold">
+        <div id="tableBox">
+            <tr>
+                <td>
+                    <input type="text" placeholder="제목을 입력하세요">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea placeholder="내용을 입력하세요" id="text"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea placeholder="#해시태그" id="hash" style="overflow:hidden"></textarea>
+                </td>
+            </tr>
+            <label for="file-upload" class="custom-file-upload">
+                파일 선택하기
+            </label>
+            <input id="file-upload" type="file" name="file" />
+            <!-- 선택된 파일명을 보여주는 영역 -->
+            <div id="fileName"></div>
+
+            <td>
+                <input type="button" value="등록" style="font-weight : bold">
+            </td>
+            </tr>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

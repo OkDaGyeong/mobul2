@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SAY SOMETHING</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/commentPage.css}">
+    <script src="js/comment.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap}" rel="stylesheet">
+</head>
+<body>
+<div id="wrap">
+    <!-- 헤더 -->
+
+    <div id="logo" class="clearfix">
+        <p><a href="#">SAY SOMETHING</a></p>
+    </div>
+
+    <!-- 테이블 섹션 -->
+
+    <div id="tableWrap">
+        <input type="button" value="글 목록" id="listBtn" style="font-weight : bold ;">
+        <div id="tableBox">
+            <div class="titleArea">
+                <p class="date">2023.04.11</p>
+                <p class="title">챗 gpt가 다 만들어주네요</p>
+                <div id="viewbox">
+                    <p class="view">view</p>
+                    <p class="viewCount">15656</p>
+                </div>
+            </div>
+            <div id="mainText">
+                <p>프론트엔드는 더 이상 설 자리가 없어요</p>
+                <div id="hashArea">
+                    <p>#내_일자리</p>
+                </div>
+            </div>
+            <td>
+                <input type="button" value="삭제" style="font-weight : bold ;">
+                <input type="button" value="수정" style="font-weight : bold ;">
+            </td>
+        </div>
+
+        <!-- 댓글 -->
+        <div id="commentArea">
+            <div class="comment">
+                <p>댓글</p>
+                <span class="commentNum">3</span>
+            </div>
+            <div class="likeBtn">
+                <p>♡</p>
+                <span class="likeNum">1</span>
+            </div>
+        </div>
+
+        <ul id="comListWrap">
+
+            <li class="comList">
+                <div class="anonymousWrap">
+                    <span class="anonymous">익명</span>
+                    <button class="anonymousBtn" font-weight="bold">댓글달기</button>
+                </div>
+                <span class="itemText">ㅎㅇ</span>
+                <div clss="dateWrap">
+                    <span class="comDate">04/10</span>
+                    <span class="comTime">15:40</span>
+                </div>
+            </li>
+
+            <li class="comList">
+                <div class="anonymousWrap">
+                    <span class="anonymous">익명</span>
+                    <button class="anonymousBtn" font-weight : bold >댓글달기</button>
+                </div>
+                <span class="itemText">인정따리 인정따.</span>
+                <div class="dateWrap">
+                    <span class="comDate">04/10</span>
+                    <span class="comTime">15:40</span>
+                </div>
+            </li>
+
+            <li class="comList">
+                <div class="anonymousWrap">
+                    <span class="anonymous">익명</span>
+                    <button class="anonymousBtn" font-weight : bold ;>댓글달기</button>
+                </div>
+                <span class="itemText">2222</span>
+                <div class="dateWrap">
+                    <span class="comDate">04/10</span>
+                    <span class="comTime">15:40</span>
+                </div>
+            </li>
+        </ul>
+
+        <div id="postComment">
+            <textarea id="postArea" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"style="overflow=hidden" ></textarea>
+            <button id="post">작성하기</button>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

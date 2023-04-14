@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>list.html</h2>
+<table>
+    <tr>
+        <th>id</th>
+        <th>userId</th>
+        <th>userPassword</th>
+        <th>userPhone</th>
+        <th>상세조회</th>
+        <th>삭제</th>
+    </tr>
+    <tr th:each="users: ${usersList}">
+        <td th:text="${users.userId}"></td>
+        <td th:text="${users.userPassword}"></td>
+        <td th:text="${users.userPhone}"></td>
+        <td>
+
+<!--            주소 치는 곳... -->
+            <a th:href="@{|/auth/${users.userId}|}">조회</a>
+        </td>
+        <td>
+            <a th:href="@{|/auth/delete/${users.userId}|}">삭제</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

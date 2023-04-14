@@ -1,0 +1,99 @@
+
+
+build.gradle 에
+//	implementation 'org.springframework.boot:spring-boot-starter-security' 의존성 추가
+
+
+
+경로 - controller - BoardsController;
+    @PostMapping("/save")
+    public String save(@ModelAttribute BoardsDTO boardsDTO){
+        // save.html이랑 name 과 필드 값이 동일하다면  스프링이 해당하는 필드에 대한 setter를 알아서 호출하면서
+        // name에 setter의 값들 setter 메서드로 각각 알아서 담아 준다
+
+
+
+경로 - entity - Boards
+   // 포린키를 생성시는 꼭 클래스의 객체를 만들어 줘야 한다
+    // users 객체가 user_id 칼럼이 되고
+    // users 의 user_id  동작이 같이 ...
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")  // 포린키 설정
+    private Users users;
+
+
+4-13 13:52
+----------
+디비로 값 넘겨주는 방법1
+@RequiredArgsConstructor
+public class AuthService {
+
+	private final AuthRepository authRepository;
+
+public void save(Users users) {
+	authRepository.save(users);
+    }
+}
+
+---> Controller 클래스로 가서
+
+@RequiredArgsConstructor
+public class AuthController {
+
+	private final AuthService authService;  //
+
+    @PostMapping(value="/signup")       // 회원가입
+    public String signUp(@ModelAttribute Users users){   // ModelAttribute 자동으로 값들을 받아오고 넣어주고 하는 어노테이션
+        System.out.println("AuthController.signup");
+        System.out.println("usersDTO = " + users); //  작성한 값들을 콘솔로 확인
+        //DTO --> entity 객체
+        authService.save(users);
+
+
+        return "redirect:/";
+
+
+
+----- 유저 DTO 에서  entity로     --------- 경로  service - AuthService 클래스
+    public void save(UsersDTO usersDTO) {
+        // 1. dto -> entity변환
+        // 2. repository의 save 메서드 호출
+        Users users = Users.authSignUp(usersDTO); // 매개 변수 타입 usersDTO 객체
+        authRepository.save(users);
+        // reprository의 save메서드 호출 ( 조건 . entity객체를 넘겨줘야 함
+
+    }
+
+---------- 경로 entity - Users 클래스
+    public static Users authSignUp(UsersDTO usersDTO){
+        Users users = new Users();
+        users.setUserId(usersDTO.getUserId());
+        users.setUserPassword(usersDTO.getUserPassword());
+        users.setUserPhone(usersDTO.getUserPhone());
+        return  users;
+    }
+
+---> (@ModelAttribute Entity entity) 메서드를 만들어서
+---> 레포지토리.save(entity)를 불러온다
+
+------------
+    @GetMapping("/list")
+    public  String findAll(Model model){        //리퀘스트에 영역에 있는 데이터들을 객체들을 화면에 뿌려주는 스프링에서는 model
+        List<UsersDTO> usersDTOList = authService.findAll(); // 여러개의 데이터를 가져 올 때는 리스트로 쓴다
+    }
+
+
+
+----------- 유저 리스트 출력 하기 위한 메서드  경로 --- service - AuthService
+    public List<UsersDTO> findAll() {
+        List<Users> usersList = authRepository.findAll();  //리스트에는 반드시 엔티티가 온다
+        List<UsersDTO> usersDTOList = new ArrayList<>();
+        for (Users users: usersList){
+            usersDTOList.add(UsersDTO.toUsersDTO(users));
+
+            //윗 작업을 길게 쓰면 이렇게 된다
+//            UsersDTO usersDTO = UsersDTO.toUsersDTO(users);
+//            usersDTOList.add(usersDTO);
+        }
+        return usersDTOList;
+    }

@@ -1,0 +1,124 @@
+@import url("reset.css");
+
+.logo {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+#logoText {
+  color: var(--green);
+  font-weight: 700;
+  /* font-size: 6vw; */
+  font-size: 60px;
+  text-align: center;
+  font-family: "Noto Sans KR", sans-serif;
+  margin-bottom: 20px;
+}
+
+.container {
+  max-width: 1130px; /* 최대 너비 */
+  margin: 0 auto; /* 수평 중앙 정렬 */
+  padding: 20px; /* 패딩 */
+  border: 2px solid #ccc;
+}
+
+input,
+button, .btn-style {
+  font-size: 16px;
+  padding: 15px 25px;
+  margin: 10px;
+  background-color: transparent;
+  box-sizing: border-box;
+}
+
+input[type="text"],
+input[type="password"] {
+  border-bottom: 2px solid var(--botteom-border);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  background-color: var(--white);
+}
+
+button {
+  border: 4px solid transparent;
+  color: var(--ivory);
+  box-sizing: border-box;
+  transition: 0.3s;
+  cursor: pointer;
+  font-weight: 700;
+}
+button:hover {
+  background: transparent;
+}
+
+.btn-green {
+  background-color: var(--green);
+}
+.btn-green:hover {
+  border: 4px solid var(--green);
+  color: var(--green);
+}
+
+.btn-kakao {
+  background-color: var(--kakao-yellow);
+  color: rgba(0, 0, 0, 0.85);
+}
+.btn-kakao:hover {
+  border: 4px solid var(--kakao-yellow);
+  color: var(--kakao-yellow);
+}
+
+.btn-grey {
+  background-color: var(--darkgrey);
+}
+.btn-grey:hover {
+  border: 4px solid var(--darkgrey);
+  color: var(--darkgrey);
+}
+
+.center {
+  /* width: 800px;
+  margin: 170px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  /* border: 2px solid #ccc; */
+}
+
+.login-form-box {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid red; */
+  width: 100%;
+  max-width: 500px;
+  margin: 0 100px;
+}
+.btnBox {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  gap: 10px;
+  justify-content: space-evenly;
+}
+
+.inputBox {
+  /* border: 1px solid #ccc; */
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+hr {
+  border: 1.5px solid var(--botteom-border);
+  margin: 10px;
+}
