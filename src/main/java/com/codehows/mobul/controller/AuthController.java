@@ -20,7 +20,7 @@ public class AuthController {
 
     private final AuthService authService;  // 생성자 주입 방식 AuthController
 
-    
+
     @GetMapping(value="/signin")         // 로그인
     public String signInForm(Model model){
         return "auth/signin"; //templates폴더를 기준으로 뷰의 위치와 이름을 반환
@@ -59,7 +59,7 @@ public class AuthController {
         //DTO --> entity 객체
         authService.save(usersDTO);
 
-        
+
         return "redirect:/";
 
     }
@@ -79,4 +79,18 @@ public class AuthController {
         return "redirect:/";         // 리다이렉트 뒤에는 주소가 온다
 
     }
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();       // session 값 삭제
+        return "redirect:/";
+
+    }
 }
+
+
+
+
+
+
+
+
