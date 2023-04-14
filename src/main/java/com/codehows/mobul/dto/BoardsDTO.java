@@ -26,6 +26,5 @@ public class BoardsDTO {
 
     private LocalDateTime boardDate;       // 작성한 시간
 
-    private LocalDateTime boardDateUpdate;  // 수정한 시간
 
 }
