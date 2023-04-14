@@ -66,6 +66,16 @@ public class AuthService {
     public void deleteById(String userId) {
         authRepository.deleteById(userId);
     }
+
+    public String emailCheck(String userId) {
+        Optional<Users> byUserId = authRepository.findById(userId);
+        if(byUserId.isPresent()){  // 조회 결과가 있는지 확인
+            //조회 결과가 있다면 -> 사용할 수 없다
+            return null;
+        } else
+            //조회 결과가 없다면 -> 사용할 수 있다.
+        return "ok";
+    }
 }
 //
 //

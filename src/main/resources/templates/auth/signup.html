@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MOBUL 회원가입</title>
   <link rel="stylesheet" th:href="@{/css/auth.css}" />
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+          integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+          crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -17,7 +20,9 @@
 <!--    회원가입 정보 받는 폼-->
     <form method="post" action="#" id="login-form">
       <div class="inputBox">
-        <input type="text" name="userId" placeholder="User ID" />
+<!--        중복확인-->
+        <input type="text" name="userId" placeholder="User ID" id="userId" onkeyup="idCheck()" />
+          <span id="idCheckResult"></span>
         <input type="password" name="userPassword" placeholder="Password" />
         <input
                 type="password"
@@ -25,6 +30,37 @@
                 placeholder="Confirm Password"
         />
         <input type="text" name="userPhone" placeholder="Phone" />
+
+        <script th:inline="javascript">
+            const idCheck = () =>{
+              const userId = document.getElementById("userId").value;
+              const checkResult = document.getElementById("idCheckResult");
+              console.log("입력값 : ", userId);
+              $.ajax({
+                  // 요청 방식 : post, 주소 : "/aut/idcheck", 데이터 : userId
+                  type : "post",
+                   url : "/auth/idcheck",           //요청을 컨트롤러로 보낸다
+                   data : {
+                       "userId": userId         // 전송되는 파라미터 가는 값이 userId
+                   },
+                  success : function(res) {          // 성공하면
+                      console.log("요청성공" + res);
+                      if(res == "ok"){
+                          console.log("사용 가능 아이디");
+                          checkResult.innerHTML = "사용 가능한 아이디";
+                      } else{
+                          console.log("이미 사용 중인 아이디");
+                          checkResult.innerHTML = "사용 중인 아이디";
+                      }
+                  },
+                  error: function(err) {
+                      console.log("에러 발생" + err);
+                  }
+              });
+            }
+        </script>
+
+
       </div>
 <!--      회원가입 버튼-->
       <div class="btnBox">

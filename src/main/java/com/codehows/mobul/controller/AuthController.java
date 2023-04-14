@@ -83,6 +83,22 @@ public class AuthController {
     public String logout(HttpSession session){
         session.invalidate();       // session 값 삭제
         return "redirect:/";
+    }
+
+    @PostMapping("/idcheck")
+
+    //ajax를 쓸때는 리턴 타입에 @ResponseBody를 써준다
+    public @ResponseBody String emailCheck(@RequestParam("userId") String userId){
+        System.out.println("userId : " + userId);       //userId 가 function 메서드의 res가 된다.
+        String checkResult = authService.emailCheck(userId);
+        return checkResult;
+
+
+//        if(checkResult != null){  // 중복확인 checkResult가 널이 아니라면
+//            return "ok";
+//        } else {
+//            return "no";
+//        }
 
     }
 }
