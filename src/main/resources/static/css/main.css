@@ -6,6 +6,7 @@ html {
 }
 body {
   min-height: 100%;
+  width:100%;
 }
 .footer {
   border: 1px solid #ccc;
@@ -13,7 +14,6 @@ body {
   color: var(--ivory);
   background-color: var(--green);
   margin-top: 20px;
-  width: 100%;
 
   position: absolute;
   left: 0;

@@ -1,4 +1,3 @@
-
 // 댓글 목록에 대한 변수
 const comListWrap = document.getElementById('comListWrap');
 
@@ -13,11 +12,13 @@ window.onload = function(){
   // 댓글 삭제 버튼 클릭 시
   comListWrap.addEventListener('click', (event) => {
     const target = event.target;
-    if (target.classList.contains('deleteBtn')) {
+    if (target.classList.contains('anonymousBtn')) {
       const commentItem = target.closest('.comList');
       comListWrap.removeChild(commentItem);
       //댓글 삭제 시 commentNum1 감소
       commentNum--;
+      const commentNumEl = document.querySelector('.commentNum');
+      commentNumEl.textContent = commentNum;
     }
   });
   // 작성 버튼 클릭 시
@@ -50,7 +51,7 @@ window.onload = function(){
 
     const anonymousBtn = document.createElement('button');
     anonymousBtn.classList.add('anonymousBtn');
-    anonymousBtn.textContent = '댓글달기';
+    anonymousBtn.textContent = '삭제';
     anonymousWrap.appendChild(anonymousBtn);
 
     newComment.appendChild(anonymousWrap);
@@ -60,7 +61,6 @@ window.onload = function(){
     itemText.classList.add('itemText');
     itemText.textContent = comment;
     newComment.appendChild(itemText);
-    itemText.style.whiteSpace = 'pre-wrap'; // 줄바꿈이 되도록 style 속성 적용
 
     // 댓글 작성일
     const date = new Date();
@@ -82,14 +82,32 @@ window.onload = function(){
     // 작성 창 비우기
     postArea.value = '';
 
+
+
    // 댓글 작성한 갯수만큼 commentNum이 카운트 되게 해줘
     const commentNumEl = document.querySelector('.commentNum');
     commentNumEl.textContent = ++commentNum;
-
-
   });
+
 }
 
+
+
+// 댓글 삭제 버튼을 누르면 실행됩니다.
+function deleteComment() {
+  var comList = this.parentNode.parentNode;
+  comList.parentNode.removeChild(comList);
+}
+
+// 작성하기 버튼에 이벤트를 추가합니다.
+var postButton = document.getElementById("post");
+postButton.addEventListener("click", postComment);
+
+// 삭제 버튼에 이벤트를 추가합니다.
+var delButtons = document.getElementsByClassName("delBtn");
+for (var i = 0; i < delButtons.length; i++) {
+  delButtons[i].addEventListener("click", deleteComment);
+}
 
 
 

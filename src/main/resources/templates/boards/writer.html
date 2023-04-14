@@ -8,6 +8,7 @@
     <!-- css  -->
     <link rel="stylesheet" href="css/reset.css" th:href="@{/css/reset.css}">
     <link rel="stylesheet" href="css/style.css" th:href="@{/css/writerPage.css}">
+    <script th:src="@{/js/fileName.js}" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" th:href="@{https://fonts.googleapis.com}">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin th:href="@{https://fonts.gstatic.com}" >
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&amp;family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;family=Noto+Serif+KR&amp;family=Playfair+Display:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet" th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&amp;family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;family=Noto+Serif+KR&amp;family=Playfair+Display:wght@400;500;600;700;800;900&amp;display=swap}">
@@ -20,7 +21,7 @@
     </div>
     <!-- 테이블 섹션 -->
     <div id="tableWrap">
-        <input type="button" value="글 목록" id="listBtn" style="font-weight : bold">
+        <input type="button" value="글 목록" id="listBtn" style="font-weight : bold" onclick="location.href='/'">
         <div id="tableBox">
             <tr>
                 <td>

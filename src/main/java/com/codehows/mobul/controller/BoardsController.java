@@ -43,6 +43,9 @@ public class BoardsController {
     @GetMapping("/writer")
     public String writerForm(){return  "boards/writer";}
 
+    @GetMapping("/admin")
+    public String adminForm(){return  "boards/admin";}
+
 //--
     // BoardsFIleFormDTO를 model에 담아서 뷰로 전달
     // value, return 확인필요

@@ -8,11 +8,14 @@
   <title>Say Something</title>
   <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
-<body>
+<body style="overflow-y: hidden">
 <!--로고, 로그인, 회원가입 링크-->
 <div class="header">
   <div class="rightBox">
     <div id="signBox">
+      session 값 확인 : <p th:text="${session.userId}"></p>
+      <a href="/auth/list">유저 목록</a>
+
       <a th:href="@{/auth/signin}">로그인</a>
       <a th:href="@{/auth/signup}">회원가입</a>
     </div>
@@ -21,38 +24,37 @@
     <p id="logoTitle">SAY SOMETHINGS</p>
   </div>
 </div>
-session 값 확인 : <p th:text="${session.userId}"></p>
-<a href="/auth/list">유저 목록</a>
+
 <!--boards 목록 출력-->
 <div class="container" style="margin:0px auto 100px auto">
   <!-- 검색창, 글쓰기 버튼-->
   <div class="searchBox betweenBox">
-    <form th:action="@{/}" method="get">
+    <form th:action="@{/board/list}" method="get">
       <select name="category" id="searchCategory">
         <option value="title" selected>제목</option>
         <option value="content">내용</option>
-        <!--                <option value="titlecontent">제목+내용</option>-->
+        <option value="titlecontent">제목+내용</option>
       </select>
       <input type="search" name="searchTitle" id="searchKeyword" placeholder="검색어를 입력하세요" />
     </form>
 
-    <button class="btn-navy" onclick="location.href='@{/board/writer}'">글 작성하기</button>
+    <button class="btn-navy" onclick="window.location.href='/board/writer'">글 작성하기</button>
   </div>
   <script>
-    // searchCategory 값이 변경될 때마다 searchKeyword input의 name 속성 변경
-    const searchCategory = document.getElementById("searchCategory");
-    const searchKeyword = document.getElementById("searchKeyword");
+        // searchCategory 값이 변경될 때마다 searchKeyword input의 name 속성 변경
+        const searchCategory = document.getElementById("searchCategory");
+        const searchKeyword = document.getElementById("searchKeyword");
 
-    searchCategory.addEventListener("change", function() {
-      if (searchCategory.value === "title") {
-        searchKeyword.setAttribute("name", "searchTitle");
-      } else if (searchCategory.value === "content") {
-        searchKeyword.setAttribute("name", "searchContent");
-      } else {
-        searchKeyword.setAttribute("name", "searchTitleContent");
-      }
-    });
-  </script>
+        searchCategory.addEventListener("change", function() {
+            if (searchCategory.value === "title") {
+                searchKeyword.setAttribute("name", "searchTitle");
+            } else if (searchCategory.value === "content") {
+                searchKeyword.setAttribute("name", "searchContent");
+            } else {
+                searchKeyword.setAttribute("name", "searchTitleContent");
+            }
+        });
+    </script>
 
   <!--    게시글 목록 (표로 출력)-->
   <div class="tableBox">
@@ -64,7 +66,7 @@ session 값 확인 : <p th:text="${session.userId}"></p>
       </tr>
       <tr th:each = "board:${list}">
         <td th:text="${board.boardId}"></td>
-        <td><a href="#" th:text="${board.boardTitle}" th:href="@{/board/comment(boardId=${board.boardId})}"></a></td>
+        <td><a href="#" th:text="${board.boardTitle}" th:href="@{/board/view(id=${board.boardId})}"></a></td>
         <td th:text="${#temporals.format(board.boardDate, 'yyyy-MM-dd')}"></td>
       </tr>
 
@@ -72,14 +74,14 @@ session 값 확인 : <p th:text="${session.userId}"></p>
   </div>
   <div class="page centerContent" style="margin-top:30px">
     <li class="page-item">
-      <a class="page-link" th:href="@{/(page=${nowPage > 5 ? nowPage-5 : 0}, searchTitle=${param.searchTitle},searchContent=${param.searchContent})}">&laquo;</a>
+      <a class="page-link" th:href="@{/board/list(page=${nowPage > 5 ? nowPage-5 : 0}, searchTitle=${param.searchTitle},searchContent=${param.searchContent})}">&laquo;</a>
     </li>
     <th:block th:each="page:${#numbers.sequence(startPage,endPage)}" class="page-item">
-      <a class="page-link" th:if="${page != nowPage}" th:href="@{/(page=${page-1}, searchTitle=${param.searchTitle},searchContent=${param.searchContent})}" th:text ="${page}"></a>
+      <a class="page-link" th:if="${page != nowPage}" th:href="@{/board/list(page=${page-1}, searchTitle=${param.searchTitle},searchContent=${param.searchContent})}" th:text ="${page}"></a>
       <strong class="page-link" th:if="${page==nowPage}" th:text ="${page}" style="color:var(--green); border:2px solid var(--green);"></strong>
     </th:block>
     <li class="page-item">
-      <a class="page-link" th:href="@{/(page=${nowPage < endPage - 5 ? nowPage+5 : endPage-1}, searchTitle=${param.searchTitle},searchContent=${param.searchContent})}">&raquo;</a>
+      <a class="page-link" th:href="@{/board/list(page=${nowPage < endPage - 5 ? nowPage+5 : endPage-1}, searchTitle=${param.searchTitle},searchContent=${param.searchContent})}">&raquo;</a>
     </li>
   </div>
 

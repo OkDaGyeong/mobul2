@@ -8,7 +8,7 @@
     <title>Say Something</title>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
-<body>
+<body style="overflow-y: hidden">
 <!--로고, 로그인, 회원가입 링크-->
 <div class="header">
     <div class="rightBox">
@@ -38,7 +38,7 @@
             <input type="search" name="searchTitle" id="searchKeyword" placeholder="검색어를 입력하세요" />
         </form>
 
-        <button class="btn-navy" onclick="location.href='@{/board/writer}'">글 작성하기</button>
+        <button class="btn-navy" onclick="window.location.href='/board/writer'">글 작성하기</button>
     </div>
     <script>
         // searchCategory 값이 변경될 때마다 searchKeyword input의 name 속성 변경
