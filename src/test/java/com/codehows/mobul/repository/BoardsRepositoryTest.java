@@ -1,7 +1,10 @@
 package com.codehows.mobul.repository;
 
 import com.codehows.mobul.entity.Boards;
+import com.codehows.mobul.entity.QBoards;
 import com.codehows.mobul.entity.Users;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,9 @@ import org.springframework.test.context.TestPropertySource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -18,85 +24,85 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestPropertySource(locations="classpath:application-test.properties")
 public class BoardsRepositoryTest {
 
-//
-//    @Autowired
-//    BoardsRepository boardsRepository;
-//
-//    @Autowired
-//    UsersRepository usersRepository;
-//
-//    @PersistenceContext
-//    EntityManager em;
-//
-//    @Test
-//    @DisplayName("게시글 저장 테스트")
-//    public void createBoardsTest(){
-//        Users user = new Users();
-//        user.setUserId("test");
-//        user.setUserPassword("test");
-//        user.setUserPhone("000000");
-//		usersRepository.save(user);
-//
-//        Users us = usersRepository.findByUserId("test");
-//
-//		Boards boards = new Boards();
-//		boards.setBoardTitle("테스트 제목");
-//		boards.setBoardContent("테스트 본문");
-//		boards.setBoardWriter("테스트 작성자");
-//		boards.setBoardTag("테스트 해시태그");
-//		boards.setUsers(us);
-//        System.out.println(boards.getBoardId());
-//		Boards savedBoards = boardsRepository.save(boards);
-//
-//        Boards bd = boardsRepository.findByBoardTitle("테스트 제목");
-//        System.out.println(bd.getBoardId());
-//
-////        em.flush();
-////        em.clear();
-//        assertEquals(us.getUserId(), bd.getUsers().getUserId());
-//    }
-    @Test
-    void contextLoads() {
-    }
-
-}
-
-//    @DataJpaTest 어노테이션을 통해 JPA 레포지토리 관련 테스트에 필요한 설정이 자동으로 이루어지도록 합니다. 이 테스트에서는 게시글 등록 후 등록된 게시글을 조회하는 테스트를 수행합니다. given, when, then 패턴에 따라 코드가 작성되었으며, 게시글의 필수 정보인 게시글 제목, 내용, 작성자, 작
-
-
-
-
-/*
-
-@SpringBootTest
-class BoardsRepositoryTest {
-
-
-    @Autowired
-    UsersRepository usersRepository;
 
     @Autowired
     BoardsRepository boardsRepository;
 
-    @Test
-    public void InsertDummies() {
-        Users users = new Users();
-        // test 유저 생성
-        users.setUserId("test");
+    @Autowired
+    AuthRepository authRepository;
 
-        //테스트 케이스에 users 생성
-        usersRepository.save(users);
-        Users user = usersRepository.findByUserId("test"); // UsersRepository 에 메서드 추상 메서드 작성
+    @PersistenceContext
+    EntityManager em;
 
 
-        IntStream.rangeClosed(1, 10).forEach(i -> {
-            Boards boards = new Boards();
-            boards.setBoardTitle("test" + i);
-            boards.setUsers(user);
-
-            //create
-            boardsRepository.save(boards);
-        });
+    public void createBoardList(){
+        for(int i=1; i<=10; i++ ){
+            Boards board1 = new Boards();
+            board1.setBoardId(1L + i);
+            board1.setBoardTitle("첫 번째 게시물" + i);
+            board1.setBoardContent("첫 번째 게시물 내용" + i);
+            board1.setBoardWriter("작성자1" + i);
+            board1.setBoardTag("태그1"+ i);
+            boardsRepository.save(board1);
+        }
     }
-*/
 
+    @Test
+    @DisplayName("상품 저장 테트")
+    public void createBoardTest(){
+        Boards board = new Boards();
+        board.setBoardContent("테스트 상품");
+        board.setBoardTitle("와따매~");
+        board.setBoardWriter("작성자");
+        board.setBoardDate(LocalDateTime.now());
+        Boards saveBoards = boardsRepository.save(board);
+    }
+
+    @Test
+    @DisplayName("게시판 아이디 조회")
+    public void findByBoardIdTest(){
+        this.createBoardList();
+        List<Boards> boardsList = boardsRepository.findByBoardId(1L);
+        for(Boards boards: boardsList){
+            System.out.println(boards.toString());
+        }
+    }
+
+    @Test
+    @DisplayName("QueryDsl")
+    public void queryDslTest() {
+        this.createBoardList();
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QBoards qBoards = QBoards.boards;
+        JPAQuery<Boards> query = queryFactory.selectFrom(qBoards)
+            .where(qBoards.boardContent.eq("dd"))
+            .where(qBoards.boardTitle.eq("와따야 "))
+            .orderBy(qBoards.boardTitle.desc());
+        List<Boards> boardsList = query.fetch();
+        for (Boards boards : boardsList) {
+            System.out.println(boards.toString());
+        }
+
+        public void createBoardList2 () {
+            for (int i = 1; i <= 5; i++) {
+                Boards boards = new Boards();
+                boards.setBoardId(1L + i);
+                boards.setBoardWriter("돼지새끼" + i);
+                boards.setBoardContent("게시글 내용" + i);
+                boards.setBoardDate(LocalDateTime.now());
+                boards.setBoardTitle("안녕하세용");
+            }
+            for (int i = 6; i < 10; i++) {
+                Boards boards = new Boards();
+                boards.setBoardId(1L + i);
+                boards.setBoardWriter("돼지새끼" + i);
+                boards.setBoardContent("게시글 내용" + i);
+                boards.setBoardDate(LocalDateTime.now());
+                boards.setBoardTitle("안녕하세용");
+            }
+
+        }
+    }
+
+
+}

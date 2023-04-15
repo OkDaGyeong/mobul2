@@ -25,6 +25,8 @@ public class Users {
     @Column(length = 20)
     private String userPhone;
 
+
+
 //    @OneToMany(mappedBy = "users")
 //    private List<Boards> board_writer;
     

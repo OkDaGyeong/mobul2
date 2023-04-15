@@ -50,9 +50,9 @@ public class Boards {
     // 포린키를 생성시는 꼭 클래스의 객체를 만들어 줘야 한다
     // users 객체가 user_id 칼럼이 되고
     // users 의 user_id  동작이 같이 ...
-   @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")  // 포린키 설정
-    private Users users;
+//   @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")  // 포린키 설정
+//    private Users users;
 
 
 

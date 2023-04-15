@@ -1,3 +1,4 @@
+/*
 package com.codehows.mobul.entity;
 
 import lombok.Getter;
@@ -36,4 +37,4 @@ public class BoardsFile {
     @Column(name = "file_path")
     private String filePath;
 
-}
+}*/
