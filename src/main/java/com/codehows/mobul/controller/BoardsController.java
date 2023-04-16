@@ -2,12 +2,10 @@ package com.codehows.mobul.controller;
 
 import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.dto.BoardsFormDTO;
-import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.service.BoardsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
-//import org.springframework.web.multipart.MultipartFile;
 
-//import java.util.concurrent.ExecutionException;
 
-//board 뒤에 붙게 대표 주소 /board 입력
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
@@ -51,29 +46,8 @@ public class BoardsController {
     @GetMapping("/admin")
     public String adminForm(){return  "boards/admin";}
 
-//--
-    // BoardsFIleFormDTO를 model에 담아서 뷰로 전달
-    // value, return 확인필요
-//    @GetMapping(value = "/new")
-//    public String writer(Model model) {
-//        model.addAttribute("boardsFileDTO", new BoardsFormDTO());
-//        return "boards/writer";
-//    }
 
-    // /write 페이지 보이기 - 데이터 가져오기 - boards/writer.html에서
-//    @GetMapping("/write")
-//    public String boardWriteForm(){
-//        // 어떤 html파일로 이동할지
-//        return "boards/writer";
-//    }
-//
-//    // 게시물 등록
-//    @PostMapping("/write")
-//    public String boardsWrite(Boards boards) {
-//        boardsService.write(boards);
-//
-//        return "boards/writer";
-//    }
+
 
     // 혜영
     @GetMapping("/writer")     // writerForm -> boardWriteForm

@@ -32,6 +32,11 @@ public class Boards {
     @Column(columnDefinition = "integer default 0")
     private Long boardView;
 
+    // 작성자 - 확인중
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")  // 포린키 설정
+    private Users users;
+
 
     // -- 수정필요
 //    //게시글 작성자 not null fk 설정   users 테이블의 user_id와 연결
