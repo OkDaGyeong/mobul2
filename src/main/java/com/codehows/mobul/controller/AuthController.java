@@ -1,10 +1,8 @@
 package com.codehows.mobul.controller;
 
 import com.codehows.mobul.dto.UsersDTO;
-import com.codehows.mobul.entity.Users;
 import com.codehows.mobul.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value="/auth") // url에 /auth로 들어오는 요청을 이 AuthController가 처리하도록함
 public class AuthController {
+
 
     private final AuthService authService;  // 생성자 주입 방식 AuthController
 
