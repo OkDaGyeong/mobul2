@@ -14,10 +14,10 @@
   <a id="logoText" href="/">SAY SOMETHING</a>
   <div class="login-form-box">
 <!--    로그인 폼-->
-    <form method="post" action="#" id="login-form">
+    <form method="post"  id="login-form">
       <div class="inputBox">
-        <input type="text" name="UserId" placeholder="User ID" />
-        <input type="password" name="userPassword" placeholder="Password" />
+        <input type="text" name="userId" placeholder="User ID" required/>
+        <input type="password" name="userPassword" placeholder="Password" required />
       </div>
 <!--   로그인 폼 제출 버튼-->
       <div class="btnBox">
@@ -30,9 +30,19 @@
     <div class="btnBox">
       <hr />
       <button class="btn-kakao">Login with Kakao</button>
+      <!-- 카카오 로그인 버튼 -->
+      <form method="post" action="/kakao/code">
+<!--        <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=f16a9a399cece2acaaf3110b8761e417&redirect_uri=http://localhost:9095/kakao/code&prompt=create" id="kakao-login-btn">-->
+        <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=f16a9a399cece2acaaf3110b8761e417&redirect_uri=http://localhost:9095/kakao/code&response_type=code&prompt=login" id="kakao-login-btn">
+        <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+        </a>
+      </form>
+
+
       <button class="btn-grey" onclick="window.location.href='/auth/signup'">
         SignUp
       </button>
+
     </div>
   </div>
 </div>

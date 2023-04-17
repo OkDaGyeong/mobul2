@@ -1,6 +1,9 @@
 package com.codehows.mobul.service;
 
 
+import com.codehows.mobul.dto.BoardsDTO;
+import com.codehows.mobul.dto.BoardsFileDTO;
+
 import com.codehows.mobul.dto.BoardsFormDTO;
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.BoardsFile;
@@ -13,6 +16,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+//import org.springframework.web.multipart.MultipartFile;
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
+//import java.io.File;
+import java.io.File;
+import java.util.ArrayList;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -22,6 +31,11 @@ import java.util.List;
 public class BoardsService {
     @Autowired
     private BoardsRepository boardsRepository;
+    @Autowired
+    private final BoardsFileService boardsFileService;
+
+    @Autowired
+    private final BoardsFileRepository boardsFileRepository;
 
     @Autowired
     private final BoardsFileService boardsFileService;
@@ -56,9 +70,29 @@ public class BoardsService {
     }
 
 
+
+    //개별 게시글 불러오기
+//    @Transactional(readOnly = true)
+    public BoardsFormDTO getBoardDtl(Long boardId){ //-257
+        List<BoardsFile> boardsFileList = boardsFileRepository.findByFileBoardNumOrderByFileIdAsc(boardId);
+        List<BoardsFileDTO> boardsFileDTOList = new ArrayList<>();
+        for(BoardsFile boardsFile : boardsFileList){
+            BoardsFileDTO boardsFileDTO = BoardsFileDTO.of(boardsFile);
+            boardsFileDTOList.add(boardsFileDTO);
+        }
+
+        Boards boards = boardsRepository.findById(boardId)
+                .orElseThrow(EntityNotFoundException::new);
+        BoardsFormDTO boardsFormDTO = BoardsFormDTO.of(boards);
+        boardsFormDTO.setBoardsFileDTOList(boardsFileDTOList);
+        return boardsFormDTO;
+    }
+
+
     public Long saveBoard(BoardsFormDTO boardsFormDTO, List<MultipartFile> fileList) throws Exception{
         // 게시글 등록
 //        Users users = usersRepository.findById(boardsDTO.getUsersId()).orElse(null);
+
         Boards boards = boardsFormDTO.createBoard();
         boardsRepository.save(boards);
 
@@ -66,12 +100,10 @@ public class BoardsService {
         for(int i=0; i<fileList.size(); i++){
             BoardsFile boardsFile = new BoardsFile();
             boardsFile.setFileBoardNum(boards);
-
             boardsFileService.saveFile(boardsFile, fileList.get(i));
         }
 
         return boards.getBoardId();
     }
-
 
 }

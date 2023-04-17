@@ -1,6 +1,7 @@
 package com.codehows.mobul.dto;
 
 import com.codehows.mobul.entity.Boards;
+
 import com.codehows.mobul.entity.Users;
 import lombok.*;
 import org.modelmapper.ModelMapper;
@@ -22,7 +23,10 @@ public class BoardsDTO {
 
     private Long boardView;             // 게시판 조회수
 
-    private Users users;         // 게시판 작성자
+    private Users boardWriter ;         // 게시판 작성자
+
+    //private Users users;         // 게시판 작성자
+
 
     private Long boardLike;             // 게시판 좋아요 수
 
@@ -30,10 +34,6 @@ public class BoardsDTO {
 
     private LocalDateTime boardDate;    // 작성한 시간
 
-//    private static ModelMapper modelMapper = new ModelMapper(); //
-//
-//    public static BoardsDTO of(Boards boards){                  //
-//        return modelMapper.map(boards, BoardsDTO.class);
-//    }
 
+ }
 }

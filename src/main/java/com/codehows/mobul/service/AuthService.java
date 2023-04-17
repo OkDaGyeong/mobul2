@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -64,20 +65,22 @@ public class AuthService {
     }
 
     public void deleteById(String userId) {
+
         authRepository.deleteById(userId);
     }
+
+//-da--
+    //기존 kakao 가입자인지 확인
+    //@Transactional(readOnly=true)
+    public Users aleadyUser(String userId){
+       // Users users = authRepository.findByUserId(userId).get();
+        Users users = authRepository.findByUserId(userId).orElseGet(()->{
+            return new Users();
+        });
+        return users;
+    }
+
 }
-//
-//
-//
-//
-//    }
-//
 
-
-
-//    public void save(Users users) {
-//        authRepository.save(users);
-////
 
 

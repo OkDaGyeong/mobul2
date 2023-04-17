@@ -25,6 +25,7 @@ public class BoardsFormDTO {
     @NotBlank
     private String boardContent;        // 게시판 내용
 
+
     @NotBlank
     private Users users;         // 게시판 작성자
 

@@ -32,6 +32,7 @@ public class Boards {
     @Column(columnDefinition = "integer default 0")
     private Long boardView;
 
+
     // 작성자 - 확인중
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")  // 포린키 설정
