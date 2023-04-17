@@ -1,13 +1,21 @@
 package com.codehows.mobul.controller;
 
 import com.codehows.mobul.dto.BoardsDTO;
+import com.codehows.mobul.dto.BoardsFormDTO;
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.service.BoardsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import java.util.List;
 //import org.springframework.web.multipart.MultipartFile;
 
 //import java.util.concurrent.ExecutionException;
@@ -40,8 +48,8 @@ public class BoardsController {
     @GetMapping("/comment")
     public String commentForm(){return "boards/comment";}
 
-    @GetMapping("/writer")
-    public String writerForm(){return  "boards/writer";}
+//    @GetMapping("/writer")
+//    public String writerForm(){return  "boards/writer";}
 
     @GetMapping("/admin")
     public String adminForm(){return  "boards/admin";}
@@ -56,10 +64,11 @@ public class BoardsController {
 //    }
 
     // /write 페이지 보이기 - 데이터 가져오기 - boards/writer.html에서
-    @GetMapping("/write")
-    public String boardWriteForm(){
-        // 어떤 html파일로 이동할지
-        return "boards/writer";
+    @GetMapping("/writer")     // writerForm -> boardWriteForm
+    public String writerForm(Model model){
+        model.addAttribute("boardsFormDTO", new BoardsFormDTO());
+
+        return  "boards/writer";
     }
 
     // 게시물 등록
@@ -70,45 +79,37 @@ public class BoardsController {
         return "boards/writer";
     }
 
+    //     게시물 등록
+    @PostMapping("/writer")
+    public String boardsWrite(@Valid BoardsFormDTO boardsFormDTO, BindingResult bindingResult, Model model,
+                              @RequestParam("boardsFile") List<MultipartFile> fileList){
+        if(bindingResult.hasErrors()){ return "/boards/writer"; }
+
+        try{
+            boardsService.saveBoard(boardsFormDTO, fileList);
+        } catch (Exception e){
+            model.addAttribute("errorMessage", "파일 등록 중 에러가 발생하였습니다");
+            return "/boards/writer";
+        }
 
 
-
-    // 게시물+파일 업로드 수정중
-//    @PostMapping("/write")
-//    public String boardsWrite(Boards boards, Model model, MultipartFile file) throws Exception {
-//        boardsService.write(boards, file);
-//        model.addAttribute("message", "글 작성이 완료되었습니다");
-//        model.addAttribute("searchUrl", "/board/list");
-//
-////        return "boards/writer";
-//          return "message";
-//    }
+        return "redirect:/";
+    }
 
 
-
-
-
-
-//    @PostMapping("/writerpro")
-//    public String boardWritePro(B)
-
-//    @PostMapping(value = "/new")
-//    public String boardsNew(@Valid BoardsFormDTO boardsFormDTO, BindingResult bindingResult,
-//                            Model model) {
-//        if (bindingResult.hasErrors()) {      // 상품 등록 시 필수 값 없으면 상품 페이지로 전환
-//            return "boards/boardsForm";
-//        }
-//
-//        try {
-//            boardsService.saveBoards(boardsFormDTO);
-//
-//        } catch (Exception e) {
-//            model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다");
-//            return "boards/boardsForm";
-//        }
-//        return "redirect:/";        // 정상 등록 -> 메인페이지 이동
-//    }
-//
+    //----상세페이지 불러오기
+    @GetMapping(value="/comment/{boardId}")
+    public String boardDtl(Model model, @PathVariable("boardId") Long boardId){
+        try {
+            BoardsFormDTO boardsFormDTO =boardsService.getBoardDtl(boardId);
+            model.addAttribute("boardFormDTO", boardsFormDTO);
+        } catch(EntityNotFoundException e){
+            model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
+            model.addAttribute("boardFormDTO", new BoardsFormDTO());
+            return "/comment";
+        }
+        return "/comment";
+    }
 
 
 }

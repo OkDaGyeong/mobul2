@@ -15,16 +15,18 @@
   <a id="logoText" href="/">SAY SOMETHING</a>
   <div class="login-form-box">
 <!--    회원가입 정보 받는 폼-->
-    <form method="post" action="#" id="login-form">
+    <form method="post" id="login-form">
       <div class="inputBox">
-        <input type="text" name="userId" placeholder="User ID" />
-        <input type="password" name="userPassword" placeholder="Password" />
+        <input type="text" name="userId" placeholder="User ID" pattern="[a-zA-Z0-9]+" title="영문자와 숫자만 포함" required/>
+        <input type="password" name="userPassword" placeholder="Password" required/>
         <input
                 type="password"
                 name="userPasswordConfirm"
                 placeholder="Confirm Password"
+                required
         />
-        <input type="text" name="userPhone" placeholder="Phone" />
+        <input type="text" name="userPhone" placeholder="Phone(숫자만 입력)"
+               pattern="[0-9]+" title="숫자만 입력"/>
       </div>
 <!--      회원가입 버튼-->
       <div class="btnBox">
