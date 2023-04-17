@@ -121,7 +121,7 @@ public class KakaoController {
         UsersDTO newUsersDTO = UsersDTO.toUsersDTO(newUser);
 
 //비가입자는 회원가입 진행
-        Users originUser = authService.aleadyUser(newUser.getUserId());
+        Users originUser = authService.alreadyUser(newUser.getUserId());
         if (originUser.getUserId() == null) {
             System.out.println("가입정보가 없습니다. no data user");
             authService.save(newUsersDTO); //회원가입하기

@@ -5,6 +5,7 @@ import com.codehows.mobul.entity.Users;
 import com.codehows.mobul.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 
 import javax.transaction.Transactional;
@@ -18,7 +19,7 @@ public class AuthService {
 
     private final AuthRepository authRepository;
 
-    public UsersDTO signIn(UsersDTO usersDTO) {
+    public UsersDTO signIn(@ModelAttribute UsersDTO usersDTO) {
         // 1. 회원이 입력한 Id로 DB에서 조회
         // 2. DB에서 조회한 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 판단
         Optional<Users> byUserId = authRepository.findByUserId(usersDTO.getUserId());
@@ -72,7 +73,7 @@ public class AuthService {
 //-da--
     //기존 kakao 가입자인지 확인
     //@Transactional(readOnly=true)
-    public Users aleadyUser(String userId){
+    public Users alreadyUser(String userId){
        // Users users = authRepository.findByUserId(userId).get();
         Users users = authRepository.findByUserId(userId).orElseGet(()->{
             return new Users();

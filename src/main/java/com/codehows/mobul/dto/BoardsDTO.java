@@ -25,9 +25,6 @@ public class BoardsDTO {
 
     private Users boardWriter ;         // 게시판 작성자
 
-    //private Users users;         // 게시판 작성자
-
-
     private Long boardLike;             // 게시판 좋아요 수
 
     private String boardTag;            // 게시판 해시태그
@@ -35,5 +32,5 @@ public class BoardsDTO {
     private LocalDateTime boardDate;    // 작성한 시간
 
 
- }
+
 }

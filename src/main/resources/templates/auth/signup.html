@@ -33,6 +33,15 @@
         <button type="submit" class="btn-green">SignUp</button>
       </div>
     </form>
+
+<div>
+    <div th:if="${errorMessage}">
+        <p style="color: red" th:text="${errorMessage}"></p>
+    </div>
+    <div th:if="${passwordError}">
+        <p style="color: blue" th:text="${passwordError}"></p>
+    </div>
+</div>
 <!--카카오 회원가입, 로그인페이지로 이동 버튼-->
     <div class="btnBox">
       <hr />

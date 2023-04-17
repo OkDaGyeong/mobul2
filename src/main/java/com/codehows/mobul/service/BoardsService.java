@@ -37,11 +37,6 @@ public class BoardsService {
     @Autowired
     private final BoardsFileRepository boardsFileRepository;
 
-    @Autowired
-    private final BoardsFileService boardsFileService;
-
-    @Autowired
-    private final BoardsFileRepository boardsFileRepository;
 
 //    @Autowired
 //    private UserRepository userRepository;    //
