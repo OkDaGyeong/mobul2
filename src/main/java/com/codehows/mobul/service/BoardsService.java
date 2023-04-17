@@ -3,6 +3,7 @@ package com.codehows.mobul.service;
 
 import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.dto.BoardsFileDTO;
+
 import com.codehows.mobul.dto.BoardsFormDTO;
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.BoardsFile;
@@ -14,14 +15,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 //import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 //import java.io.File;
 import java.io.File;
 import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -34,6 +36,15 @@ public class BoardsService {
 
     @Autowired
     private final BoardsFileRepository boardsFileRepository;
+
+    @Autowired
+    private final BoardsFileService boardsFileService;
+
+    @Autowired
+    private final BoardsFileRepository boardsFileRepository;
+
+//    @Autowired
+//    private UserRepository userRepository;    //
 
     // 파일 입력
     public void write(Boards boards) {boardsRepository.save(boards);}
@@ -59,6 +70,7 @@ public class BoardsService {
     }
 
 
+
     //개별 게시글 불러오기
 //    @Transactional(readOnly = true)
     public BoardsFormDTO getBoardDtl(Long boardId){ //-257
@@ -77,10 +89,10 @@ public class BoardsService {
     }
 
 
-
-
     public Long saveBoard(BoardsFormDTO boardsFormDTO, List<MultipartFile> fileList) throws Exception{
         // 게시글 등록
+//        Users users = usersRepository.findById(boardsDTO.getUsersId()).orElse(null);
+
         Boards boards = boardsFormDTO.createBoard();
         boardsRepository.save(boards);
 
@@ -88,10 +100,10 @@ public class BoardsService {
         for(int i=0; i<fileList.size(); i++){
             BoardsFile boardsFile = new BoardsFile();
             boardsFile.setFileBoardNum(boards);
-
             boardsFileService.saveFile(boardsFile, fileList.get(i));
         }
 
         return boards.getBoardId();
     }
+
 }

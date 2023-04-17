@@ -1,8 +1,12 @@
 package com.codehows.mobul.dto;
 
+import com.codehows.mobul.entity.Boards;
+
 import com.codehows.mobul.entity.Users;
 import lombok.*;
+import org.modelmapper.ModelMapper;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 
@@ -21,10 +25,15 @@ public class BoardsDTO {
 
     private Users boardWriter ;         // 게시판 작성자
 
+    //private Users users;         // 게시판 작성자
+
+
     private Long boardLike;             // 게시판 좋아요 수
 
     private String boardTag;            // 게시판 해시태그
 
     private LocalDateTime boardDate;    // 작성한 시간
 
+
+ }
 }
