@@ -1,18 +1,20 @@
 package com.codehows.mobul.controller;
 
 import com.codehows.mobul.dto.BoardsDTO;
-import com.codehows.mobul.entity.Boards;
+import com.codehows.mobul.dto.BoardsFormDTO;
 import com.codehows.mobul.service.BoardsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-//import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
-//import java.util.concurrent.ExecutionException;
+import javax.validation.Valid;
+import java.util.List;
 
-//board 뒤에 붙게 대표 주소 /board 입력
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
@@ -40,75 +42,38 @@ public class BoardsController {
     @GetMapping("/comment")
     public String commentForm(){return "boards/comment";}
 
-    @GetMapping("/writer")
-    public String writerForm(){return  "boards/writer";}
 
     @GetMapping("/admin")
     public String adminForm(){return  "boards/admin";}
 
-//--
-    // BoardsFIleFormDTO를 model에 담아서 뷰로 전달
-    // value, return 확인필요
-//    @GetMapping(value = "/new")
-//    public String writer(Model model) {
-//        model.addAttribute("boardsFileDTO", new BoardsFormDTO());
-//        return "boards/writer";
-//    }
 
-    // /write 페이지 보이기 - 데이터 가져오기 - boards/writer.html에서
-    @GetMapping("/write")
-    public String boardWriteForm(){
-        // 어떤 html파일로 이동할지
-        return "boards/writer";
-    }
 
-    // 게시물 등록
-    @PostMapping("/write")
-    public String boardsWrite(Boards boards) {
-        boardsService.write(boards);
 
-        return "boards/writer";
+    // 혜영
+    @GetMapping("/writer")     // writerForm -> boardWriteForm
+    public String writerForm(Model model){
+        model.addAttribute("boardsFormDTO", new BoardsFormDTO());
+
+        return  "boards/writer";
     }
 
 
+    //     게시물 등록
+    @PostMapping("/writer")
+    public String boardsWrite(@Valid BoardsFormDTO boardsFormDTO, BindingResult bindingResult, Model model,
+                              @RequestParam("boardsFile") List<MultipartFile> fileList){
+        if(bindingResult.hasErrors()){ return "/boards/writer"; }
+
+        try{
+            boardsService.saveBoard(boardsFormDTO, fileList);
+        } catch (Exception e){
+            model.addAttribute("errorMessage", "파일 등록 중 에러가 발생하였습니다");
+            return "/boards/writer";
+        }
 
 
-    // 게시물+파일 업로드 수정중
-//    @PostMapping("/write")
-//    public String boardsWrite(Boards boards, Model model, MultipartFile file) throws Exception {
-//        boardsService.write(boards, file);
-//        model.addAttribute("message", "글 작성이 완료되었습니다");
-//        model.addAttribute("searchUrl", "/board/list");
-//
-////        return "boards/writer";
-//          return "message";
-//    }
-
-
-
-
-
-
-//    @PostMapping("/writerpro")
-//    public String boardWritePro(B)
-
-//    @PostMapping(value = "/new")
-//    public String boardsNew(@Valid BoardsFormDTO boardsFormDTO, BindingResult bindingResult,
-//                            Model model) {
-//        if (bindingResult.hasErrors()) {      // 상품 등록 시 필수 값 없으면 상품 페이지로 전환
-//            return "boards/boardsForm";
-//        }
-//
-//        try {
-//            boardsService.saveBoards(boardsFormDTO);
-//
-//        } catch (Exception e) {
-//            model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다");
-//            return "boards/boardsForm";
-//        }
-//        return "redirect:/";        // 정상 등록 -> 메인페이지 이동
-//    }
-//
+        return "redirect:/";
+    }
 
 
 }

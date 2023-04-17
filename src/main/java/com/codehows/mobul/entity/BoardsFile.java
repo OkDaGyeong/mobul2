@@ -17,12 +17,10 @@ public class BoardsFile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fileId;
 
-    // 게시글 번호       fk  not null
-    @OneToOne
-    @JoinColumn(name="board_id")
-    private Boards boards;
-//    @Column(name = "file_board_num", nullable = false)
-//    private Long fileBoardNum;
+    // 게시글 번호
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="file_board_num")
+    private Boards fileBoardNum;
 
     // 저장 파일명
     @Column(name = "file_name")
@@ -35,5 +33,13 @@ public class BoardsFile {
     // 파일 조회 경로
     @Column(name = "file_path")
     private String filePath;
+
+    public void updateFile(String fileOriName, String fileName, String filePath){
+        this.fileOriName = fileOriName;
+        this.fileName = fileName;
+        this.filePath = filePath;
+
+    }
+
 
 }

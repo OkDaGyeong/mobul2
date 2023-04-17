@@ -1,7 +1,9 @@
 package com.codehows.mobul.entity;
 
+import com.codehows.mobul.dto.BoardsFormDTO;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,9 +32,26 @@ public class Boards {
     @Column(columnDefinition = "integer default 0")
     private Long boardView;
 
-    //게시글 작성자 not null fk 설정   users 테이블의 user_id와 연결
-    @Column(nullable = false, length = 20)
-    private String boardWriter;
+    // 작성자 - 확인중
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")  // 포린키 설정
+    private Users users;
+
+
+    // -- 수정필요
+//    //게시글 작성자 not null fk 설정   users 테이블의 user_id와 연결
+//    @Column(nullable = false, length = 20)
+//    private String boardWriter;
+
+
+    //    게시글 작성자 not null fk 설정   users 테이블의 user_id와 연결
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "board_writer", referencedColumnName="user_id")  // 포린키 설정
+//    private Users boardWriter;
+
+
+    // --
+
 
     //게시글 좋아요   default 0  : 좋아요 낫널 확인필요
     @Column(columnDefinition = "integer default 0")
@@ -47,13 +66,25 @@ public class Boards {
     @Column(columnDefinition = "timestamp")
     private LocalDateTime boardDate;
 
-    // 포린키를 생성시는 꼭 클래스의 객체를 만들어 줘야 한다
-    // users 객체가 user_id 칼럼이 되고
-    // users 의 user_id  동작이 같이 ...
-   @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")  // 포린키 설정
-    private Users users;
 
+    // BoardsFormDTO를 엔티티로 변경
+    public static Boards toBoards(BoardsFormDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(dto, Boards.class);
+    }
+
+
+
+    // -- 확인
+//    // 포린키를 생성시는 꼭 클래스의 객체를 만들어 줘야 한다
+//    // users 객체가 user_id 칼럼이 되고
+//    // users 의 user_id  동작이 같이 ...
+//   @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")  // 포린키 설정
+//    private Users users;
+//
+
+    // --
 
 
 //    // 파일 업로드 -- 수정중
