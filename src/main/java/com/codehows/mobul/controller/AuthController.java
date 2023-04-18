@@ -59,7 +59,7 @@ public class AuthController {
         authService.save(usersDTO);
 
 
-        return "redirect:/";
+        return "redirect:/auth/signin";
 
     }
 
