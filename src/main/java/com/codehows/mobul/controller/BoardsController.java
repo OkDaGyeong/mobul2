@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 //import org.springframework.web.multipart.MultipartFile;
@@ -66,23 +67,21 @@ public class BoardsController {
     public String writerForm(Model model){
         model.addAttribute("boardsFormDTO", new BoardsFormDTO());
 
-        return  "boards/writer";
+        return  "/boards/writer";
     }
 
     // 작성페이지
     @PostMapping("/writer")
     public String boardsWrite(@Valid BoardsFormDTO boardsFormDTO, BindingResult bindingResult, Model model,
-                              @RequestParam("boardsFile") List<MultipartFile> fileList){
+                              @RequestParam("boardsFile") List<MultipartFile> fileList, HttpSession session){
         if(bindingResult.hasErrors()){ return "/boards/writer"; }
 
         try{
-            boardsService.saveBoard(boardsFormDTO, fileList);
+            boardsService.saveBoard(boardsFormDTO, fileList,session);
         } catch (Exception e){
             model.addAttribute("errorMessage", "파일 등록 중 에러가 발생하였습니다");
             return "boards/writer";
         }
-
-
         return "redirect:/";
     }
 
@@ -129,16 +128,13 @@ public class BoardsController {
     //----상세페이지 불러오기
     @GetMapping(value="/comment/{boardId}")
     public String boardDtl(Model model, @PathVariable("boardId") Long boardId){
-        try {
-            BoardsFormDTO boardsFormDTO =boardsService.getBoardDtl(boardId);
-            model.addAttribute("boardFormDTO", boardsFormDTO);
-        } catch(EntityNotFoundException e){
-            model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
-            model.addAttribute("boardFormDTO", new BoardsFormDTO());
-            return "/comment";
-        }
-        return "/comment";
+        boardsService.updateView(boardId);
+        BoardsFormDTO boardsFormDTO = boardsService.getBoardDtl(boardId);
+        model.addAttribute("boardsForm", boardsFormDTO);
+        return "/boards/comment";
     }
+
+
 
 
 }

@@ -17,19 +17,15 @@ public class BoardsDTO {
 
     private String boardContent;        // 게시판 내용
 
-    private Long boardView;             // 게시판 조회수
+    private Integer boardView;             // 게시판 조회수
 
     private Users boardWriter ;         // 게시판 작성자
 
-    //private Users users;         // 게시판 작성자
-
-
-    private Long boardLike;             // 게시판 좋아요 수
+    private Integer boardLike;             // 게시판 좋아요 수
 
     private String boardTag;            // 게시판 해시태그
 
     private LocalDateTime boardDate;    // 작성한 시간
 
 
-
-}
+ }

@@ -4,6 +4,9 @@ import com.codehows.mobul.entity.Boards;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,6 +29,15 @@ public interface BoardsRepository extends JpaRepository<Boards, Long> {
     //본문으로 검색
     Page<Boards> findByBoardContentContaining(String searchContent, Pageable pageable);
 
-    //개별 게시글 조회
-    Boards findByBoardId(Long boardId);
+    //조회수 변경
+    @Modifying
+    @Query("update Boards p set p.boardView = p.boardView + 1 where p.boardId = :board_id AND p.boardId IS NOT NULL")
+    int updateBoardView(@Param("board_id") Long boardId);
+
+
+    //좋아요 증가
+//    @Modifying
+//    @Query("update Boards p set p.boardLike = p.boardLike + 1 where p.boardId = :board_id AND p.boardId IS NOT NULL")
+//    int updateBoardLike(@Param("board_id") Long boardId);
+
 }

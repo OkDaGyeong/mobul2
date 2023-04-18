@@ -1,10 +1,14 @@
 package com.codehows.mobul.service;
 
 
+
 import com.codehows.mobul.dto.BoardsFileDTO;
+
 import com.codehows.mobul.dto.BoardsFormDTO;
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.BoardsFile;
+import com.codehows.mobul.entity.Users;
+import com.codehows.mobul.repository.AuthRepository;
 import com.codehows.mobul.repository.BoardsFileRepository;
 import com.codehows.mobul.repository.BoardsRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +18,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.util.ArrayList;
+
+import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpSession;
+
 import java.util.List;
 
 @Service
@@ -22,14 +32,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardsService {
 
+
     private final BoardsRepository boardsRepository;
 
     private final BoardsFileService boardsFileService;
 
     private final BoardsFileRepository boardsFileRepository;
 
-//    @Autowired
-//    private UserRepository userRepository;    //
+    @Autowired
+    private AuthRepository authRepository;
+
+
 
     // 파일 입력
     public void write(Boards boards) {boardsRepository.save(boards);}
@@ -57,10 +70,11 @@ public class BoardsService {
 
 
 
+    //hy
     // 수정페이지 : 개별 게시글 불러오기
     @Transactional(readOnly = true)
     public BoardsFormDTO getBoardDtl(Long boardId){ //-257
-        Boards boards = boardsRepository.findByBoardId(boardId);
+        Boards boards = boardsRepository.findByBoardId(boardId);//.orElseThrow(EntityNotFoundException::new);
         List<BoardsFile> boardsFileList = boardsFileRepository.findByFileBoardNumOrderByFileIdAsc(boards);
         List<BoardsFileDTO> boardsFileDTOList = new ArrayList<>();
         for(BoardsFile boardsFile : boardsFileList){
@@ -69,7 +83,7 @@ public class BoardsService {
         }
 
         BoardsFormDTO boardsFormDTO = BoardsFormDTO.of(boards);
-        boardsFormDTO.setBoardsFileDTOList(boardsFileDTOList);
+//        boardsFormDTO.setBoardsFileDTOList(boardsFileDTOList);
         return boardsFormDTO;
     }
 
@@ -95,11 +109,14 @@ public class BoardsService {
 
 
     // 게시글 저장 : 본문 + 파일
-    public Long saveBoard(BoardsFormDTO boardsFormDTO, List<MultipartFile> fileList) throws Exception{
-        // 게시글 등록
-//        Users users = usersRepository.findById(boardsDTO.getUsersId()).orElse(null);
+    public Long saveBoard(BoardsFormDTO boardsFormDTO, List<MultipartFile> fileList, HttpSession session) throws Exception{
+        // 세션에서 사용자 정보를 가져옴
+        String userId = (String) session.getAttribute("userId");
+        Users users = authRepository.findByUserId(userId).orElse(null);
 
+        //게시글 등록
         Boards boards = boardsFormDTO.createBoard();
+        boards.setBoardWriter(users); // 로그인한 사용자의 아이디 정보를 게시글 엔티티에 저장
         boardsRepository.save(boards);
 
         // 이미지 등록
@@ -111,5 +128,16 @@ public class BoardsService {
 
         return boards.getBoardId();
     }
+
+    public Boards boardview(Long boardId){
+        return boardsRepository.getOne(boardId);
+    }
+
+    //조회수 올리기
+    @Transactional
+    public int updateView(Long boardId) {
+        return boardsRepository.updateBoardView(boardId);
+    }
+
 
 }
