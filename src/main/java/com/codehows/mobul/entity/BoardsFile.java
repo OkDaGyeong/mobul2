@@ -2,24 +2,23 @@ package com.codehows.mobul.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "boards_file")
-@Getter @Setter @ToString
+@Getter @Setter
 public class BoardsFile {
 
     // 파일 고유 번호     pk  not null    auto_increment
     @Id
     @Column(name = "file_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long fileId;
 
     // 게시글 번호
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="file_board_num")
+    @JoinColumn(name="board_id")
     private Boards fileBoardNum;
 
     // 저장 파일명
@@ -38,8 +37,5 @@ public class BoardsFile {
         this.fileOriName = fileOriName;
         this.fileName = fileName;
         this.filePath = filePath;
-
     }
-
-
 }

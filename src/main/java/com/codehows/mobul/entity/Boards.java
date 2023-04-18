@@ -30,12 +30,14 @@ public class Boards {
 
     //게시글 조회수 int defalt 0
     @Column(columnDefinition = "integer default 0")
+
     private Integer boardView;
 
     //    게시글 작성자 not null fk 설정   users 테이블의 user_id와 연결
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_writer", referencedColumnName="user_id")  // 포린키 설정
     private Users boardWriter;
+
 
     //게시글 좋아요   default 0  : 좋아요 낫널 확인필요
     @Column(columnDefinition = "integer default 0")
@@ -55,6 +57,16 @@ public class Boards {
     public static Boards toBoards(BoardsFormDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(dto, Boards.class);
+    }
+
+
+    public void updateBoard(BoardsFormDTO boardsFormDTO){
+        this.boardId = boardsFormDTO.getBoardId();
+        this.boardTitle = boardsFormDTO.getBoardTitle();
+        this.boardContent = boardsFormDTO.getBoardContent();
+//        this.users = boardsFormDTO.getUsers();
+        this.boardTag = boardsFormDTO.getBoardTag();
+        this.boardDate = boardsFormDTO.getBoardDate();
     }
 
 }

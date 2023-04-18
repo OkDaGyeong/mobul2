@@ -2,12 +2,10 @@ package com.codehows.mobul.controller;
 
 import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.dto.BoardsFormDTO;
-import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.service.BoardsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -72,7 +70,7 @@ public class BoardsController {
         return  "/boards/writer";
     }
 
-    //게시물 등록
+    // 작성페이지
     @PostMapping("/writer")
     public String boardsWrite(@Valid BoardsFormDTO boardsFormDTO, BindingResult bindingResult, Model model,
                               @RequestParam("boardsFile") List<MultipartFile> fileList, HttpSession session){
@@ -82,10 +80,49 @@ public class BoardsController {
             boardsService.saveBoard(boardsFormDTO, fileList,session);
         } catch (Exception e){
             model.addAttribute("errorMessage", "파일 등록 중 에러가 발생하였습니다");
-            return "/boards/writer";
+            return "boards/writer";
         }
         return "redirect:/";
     }
+
+    // 수정페이지
+    @GetMapping(value="/writer/{boardId}")
+    public String boardDtlUpdate(Model model, @PathVariable("boardId") Long boardId){
+        try {
+            BoardsFormDTO boardsFormDTO =boardsService.getBoardDtl(boardId);
+            model.addAttribute("boardsFormDTO", boardsFormDTO);
+        } catch(EntityNotFoundException e){
+            model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
+            model.addAttribute("boardFormDTO", new BoardsFormDTO());
+            return "boards/writer";
+        }
+        return "boards/writer";
+    }
+
+    @PostMapping(value="writer/{boardId}")
+    public String boardsUpdate(@Valid BoardsFormDTO boardsFormDTO, BindingResult bindingResult,
+                               @RequestParam("boardsFile") List<MultipartFile> boardsFileList, Model model){
+
+        System.out.println("11111111111111111111");
+        if(bindingResult.hasErrors()){
+            System.out.println("222222222222222");
+            return "boards/writer";
+        }
+
+        try{
+            boardsService.updateBoard(boardsFormDTO, boardsFileList);
+            System.out.println("333333333333333333");
+        } catch (Exception e){
+            model.addAttribute("errorMessage", "게시글 수정 중 에러가 발생하였습니다");
+            System.out.println("4444444444444444");
+            return "boards/writer";
+        }
+        System.out.println("55555555555555555");
+        return "index";
+    }
+
+
+
 
 
     //----상세페이지 불러오기
