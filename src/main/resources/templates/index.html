@@ -104,14 +104,14 @@
                 <th style="width:100px;">날짜 <a th:href="@{/(sort='boardDate')}">정렬</a></th>
                 <th style="width:50px;">조회수 <a th:href="@{/(sort='boardView')}">정렬</a></th>
             </tr>
-            <th:block th:if="${list.isEmpty()}">
-                <tr>
-                    <td></td>
-                    <td>등록된 게시글이 없습니다.</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </th:block>
+<!--            <th:block th:if="${list==null}">-->
+<!--                <tr>-->
+<!--                    <td></td>-->
+<!--                    <td>등록된 게시글이 없습니다.</td>-->
+<!--                    <td></td>-->
+<!--                    <td></td>-->
+<!--                </tr>-->
+<!--            </th:block>-->
             <tr th:each="board:${list}">
                 <td th:text="${board.boardId}"></td>
                 <td><a th:text="${board.boardTitle}" th:href="@{/board/comment/{boardId}(boardId=${board.boardId})}"
