@@ -32,7 +32,6 @@ public class BoardsFormDTO {
 
     private String boardTag;            // 게시판 해시태그
 
-    @NotBlank
     private LocalDateTime boardDate;    // 작성한 시간
 
     private List<BoardsFileDTO> boardsFileDTOList = new ArrayList<>();   // 이미지 수정 시 이미지 정보 저장 리스트

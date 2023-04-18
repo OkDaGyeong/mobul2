@@ -18,7 +18,7 @@ public interface BoardsRepository extends JpaRepository<Boards, Long> {
 
     // 게시글 조회
 //    Boards findByBoardTitle(String boardTitle);
-//    Boards findByBoardId(Long boardId);
+    Boards findByBoardId(Long boardId);
 
     //게시글 목록 조회
     List<Boards> findAll(); //게시글 모두 불러오기 -d
