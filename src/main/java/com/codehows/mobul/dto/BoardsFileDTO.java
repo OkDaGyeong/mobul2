@@ -5,9 +5,7 @@ import com.codehows.mobul.entity.BoardsFile;
 import lombok.*;
 import org.modelmapper.ModelMapper;
 
-@Getter @Setter @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
 public class BoardsFileDTO {
 
     private Long fileId;                // 파일 고유 번호

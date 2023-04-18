@@ -1,12 +1,8 @@
 package com.codehows.mobul.dto;
 
-import com.codehows.mobul.entity.Boards;
-
 import com.codehows.mobul.entity.Users;
 import lombok.*;
-import org.modelmapper.ModelMapper;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 
@@ -35,5 +31,5 @@ public class BoardsDTO {
     private LocalDateTime boardDate;    // 작성한 시간
 
 
- }
+
 }

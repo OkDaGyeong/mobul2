@@ -1,7 +1,6 @@
 package com.codehows.mobul.dto;
 
 import com.codehows.mobul.entity.Boards;
-import com.codehows.mobul.entity.Users;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,8 +25,8 @@ public class BoardsFormDTO {
     private String boardContent;        // 게시판 내용
 
 
-    @NotBlank
-    private Users users;         // 게시판 작성자
+//    @NotBlank
+//    private Users users;         // 게시판 작성자
 
     private String boardTag;            // 게시판 해시태그
 

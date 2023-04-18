@@ -47,7 +47,8 @@
 
         <input type="button" class="btn-navy" value="글 목록" id="listBtn" style="font-weight : bold">
 
-        <form action="/board/writer" method="post" th:object="${boardsFormDTO}" enctype="multipart/form-data">  <!-- 혜영  -->
+        <form method="post" th:object="${boardsFormDTO}" enctype="multipart/form-data">  <!-- 혜영  -->
+            <input type="hidden" th:field="*{boardId}">
             <div id="tableBox">
                 <tr>
                     <td>
@@ -91,7 +92,6 @@
                             </label>
                             <input type="file" class="custom-file-input" name="boardsFile">
                             <input type="hidden" name="fileId" th:value="${boardsFileDTO.fileId}">
-
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                 </div>
 
                 <div th:unless="${#strings.isEmpty(boardsFormDTO.boardId)}" style="text-align: center">
-                    <button th:formaction="@{'/board/writer' + ${boardsFormDTO.boardId}}" type="submit" class="btn btn-primary">수정</button>
+                    <button th:formaction="@{'/board/writer/' + ${boardsFormDTO.boardId}}" type="submit" class="btn btn-primary">수정</button>
                 </div>
                 <!--                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 
