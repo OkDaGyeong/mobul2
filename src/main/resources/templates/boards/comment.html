@@ -19,23 +19,26 @@
         <p><a href="/">SAY SOMETHING</a></p>
     </div>
 
+<!--    <input type="hidden" id="boardId" th:value="${boardsFormDTO.boardId}">-->
+
     <!-- 테이블 섹션 -->
 
     <div id="tableWrap">
         <input type="button" value="글 목록" id="listBtn" style="font-weight : bold ;" onclick="location.href='/'">
         <div id="tableBox">
-            <div class="titleArea">
-                <p class="date"  >th:text="${boardFormDTO.boardDate}"</p>
-                <p class="title">th:text="${boardFormDTO.boardTitle}" </p>
+            <div class="titleArea" >
+
+                <p class="date" th:text="${boardsForm.boardDate}" ></p>
+                <p class="title" th:text="${boardsForm.boardTitle}" ></p>
                 <div id="viewbox">
-                    <p class="view">view</p>
-                    <p class="viewCount">15656</p>
+                    <p class="view" >view</p>
+                    <p class="viewCount" th:text="${boardsForm.boardView}" >0</p>
                 </div>
             </div>
             <div id="mainText">
-                <p>프론트엔드는 더 이상 설 자리가 없어요</p>
+                <p th:text="${boardsForm.boardContent}">content</p>
                 <div id="hashArea">
-                    <p>#내_일자리</p>
+                    <p  th:text="${boardsForm.boardTag}"></p>
                 </div>
             </div>
             <td>
@@ -52,7 +55,7 @@
             </div>
             <div class="likeBtn">
                 <p>♡</p>
-                <span class="likeNum">1</span>
+                <span class="likeNum" th:text="${boardsForm.boardTag}"></span>
             </div>
         </div>
 

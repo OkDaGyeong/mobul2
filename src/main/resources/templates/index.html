@@ -101,19 +101,24 @@
             <tr class="table-header">
                 <th style="width:150px;">번호 <a th:href="@{/(sort='boardId')}">정렬</a></th>
                 <th>제목 <a th:href="@{/(sort='boardTitle')}">정렬</a></th>
-                <th style="width:150px;">날짜 <a th:href="@{/(sort='boardDate')}">정렬</a></th>
+                <th style="width:100px;">날짜 <a th:href="@{/(sort='boardDate')}">정렬</a></th>
+                <th style="width:50px;">조회수 <a th:href="@{/(sort='boardView')}">정렬</a></th>
             </tr>
             <th:block th:if="${list.isEmpty()}">
-<!--                <script>-->
-<!--                    alert("검색 결과가 없습니다.");-->
-<!--                    window.location.href='/';-->
-<!--                </script>-->
+                <tr>
+                    <td></td>
+                    <td>등록된 게시글이 없습니다.</td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </th:block>
             <tr th:each="board:${list}">
                 <td th:text="${board.boardId}"></td>
-                <td><a th:text="${board.boardTitle}" th:href="@{/board/comment(boardId=${board.boardId})}"
-                style="text-align:left; display:block;"></a></td>
+                <td><a th:text="${board.boardTitle}" th:href="@{/board/comment/{boardId}(boardId=${board.boardId})}"
+
+                       style="text-align:left; display:block;"></a></td>
                 <td th:text="${#temporals.format(board.boardDate, 'yyyy-MM-dd')}"></td>
+                <td th:text="${board.boardView}+' view'"></td>
             </tr>
 
         </table>

@@ -52,13 +52,13 @@
                 <tr>
                     <td>
                         <input name="boardTitle" type="text" placeholder="제목을 입력하세요"
-                               th:field="*{boardTitle}">
+                               th:field="*{boardTitle}" required>
                     </td>
                 </tr>
                 <tr>
                     <td>
                             <textarea name="boardContent" placeholder="내용을 입력하세요" id="text"
-                                      th:field="*{boardContent}"></textarea>
+                                      th:field="*{boardContent}" required></textarea>
                     </td>
                 </tr>
                 <tr>

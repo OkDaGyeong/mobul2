@@ -91,7 +91,9 @@ public class AuthController extends SessionListener {
         authService.save(usersDTO);
         System.out.println(usersDTO.toString());
 
+
         return mav;
+
 
     }
 /*
