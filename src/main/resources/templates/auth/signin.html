@@ -23,6 +23,9 @@
       <div class="btnBox">
         <button type="submit" class="btn-green">Login</button>
       </div>
+        <div th:if="${error}">
+            <p style="color: red" th:text="${error}"></p>
+        </div>
 
     </form>
 

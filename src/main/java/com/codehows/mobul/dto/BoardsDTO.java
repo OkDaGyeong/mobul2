@@ -21,11 +21,11 @@ public class BoardsDTO {
 
     private String boardContent;        // 게시판 내용
 
-    private int boardView;             // 게시판 조회수
+    private Integer boardView;             // 게시판 조회수
 
     private Users boardWriter ;         // 게시판 작성자
 
-    private int boardLike;             // 게시판 좋아요 수
+    private Integer boardLike;             // 게시판 좋아요 수
 
     private String boardTag;            // 게시판 해시태그
 
