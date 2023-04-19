@@ -12,103 +12,97 @@
     <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap}" rel="stylesheet">
 </head>
 <body>
-<div id="wrap">
-    <!-- 헤더 -->
+    <div id="wrap">
+        <!-- 헤더 -->
 
-    <div id="logo" class="clearfix">
-        <p><a href="/">SAY SOMETHING</a></p>
-    </div>
-
-<!--    <input type="hidden" id="boardId" th:value="${boardsFormDTO.boardId}">-->
-
-    <!-- 테이블 섹션 -->
-
-    <div id="tableWrap">
-        <input type="button" value="글 목록" id="listBtn" style="font-weight : bold ;" onclick="location.href='/'">
-        <div id="tableBox">
-            <div class="titleArea" >
-
-                <p class="date" th:text="${boardsForm.boardDate}" ></p>
-                <p class="title" th:text="${boardsForm.boardTitle}" ></p>
-                <div id="viewbox">
-                    <p class="view" >view</p>
-                    <p class="viewCount" th:text="${boardsForm.boardView}" >0</p>
-                </div>
-            </div>
-            <div id="mainText">
-                <p th:text="${boardsForm.boardContent}">content</p>
-                <div id="hashArea">
-                    <p  th:text="${boardsForm.boardTag}"></p>
-                </div>
-            </div>
-            <td>
-                <input type="button" value="삭제" style="font-weight : bold ;">
-                <input type="button" value="수정" style="font-weight : bold ;">
-            </td>
+        <div id="logo" class="clearfix">
+            <p><a href="/">SAY SOMETHING</a></p>
         </div>
+        <!--    <div th:if="${session.userId}">-->
+        <!--        <span id="loginUser" th:text="${session.userId}"></span><span>가 로그인</span>-->
+        <!--        <span th:text="${boardsForm.boardWriter}"></span><span>가 작성</span>-->
 
-        <!-- 댓글 -->
-        <div id="commentArea">
-            <div class="comment">
-                <p>댓글</p>
-                <span class="commentNum">3</span>
+        <!--    </div>-->
+
+        <!--    <input type="hidden" id="boardId" th:value="${boardsFormDTO.boardId}">-->
+
+        <!-- 테이블 섹션 -->
+
+        <div id="tableWrap">
+            <input type="button" value="글 목록" id="listBtn" style="font-weight : bold ;" onclick="location.href='/'">
+            <div id="tableBox">
+                <div class="titleArea" >
+
+                    <p class="date" th:text="${boardsForm.boardDate}" ></p>
+                    <p class="title" th:text="${boardsForm.boardTitle}" ></p>
+                    <div id="viewbox">
+                        <p class="view" >view</p>
+                        <p class="viewCount" th:text="${boardsForm.boardView}" >0</p>
+                    </div>
+                </div>
+                <div id="mainText">
+                    <p th:text="${boardsForm.boardContent}">content</p>
+                    <div id="hashArea">
+                        <p  th:text="${boardsForm.boardTag}"></p>
+                    </div>
+                </div>
+                <td th:if="${session.userId}">
+
+<!--        삭제 작성중            -->
+
+                    <form>
+<!--                        <button style="font-weight : bold ;">삭제</button>-->
+<!--                        <button th:formaction="@{/comment/delete}" type="button" class="btn btn-primary">삭제</button>-->
+                        <a th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
+<!--             --------------------------------------------------           -->
+
+                        <a th:href="@{/board/writer/{boardId}(boardId=${boardsForm.boardId})}">수정</a>
+
+                    </form>
+
+<!--  여기까지  -->
+
+                </td>
             </div>
-            <div class="likeBtn">
-                <p>♡</p>
-                <span class="likeNum" th:text="${boardsForm.boardTag}"></span>
+
+            <!-- 댓글 -->
+            <div id="commentArea">
+                <div class="comment">
+                    <p>댓글</p>
+                    <span class="commentNum">3</span>
+                </div>
+                <div class="likeBtn">
+                    <p>♡</p>
+                    <span class="likeNum" th:text="${boardsForm.boardLike}"></span>
+                </div>
+            </div>
+
+            <ul id="comListWrap">
+
+                <li class="comList">
+                    <div class="anonymousWrap">
+                        <span class="anonymous">익명</span>
+                        <button class="anonymousBtn" font-weight="bold">댓글달기</button>
+                    </div>
+                    <span class="itemText">ㅎㅇ</span>
+                    <div clss="dateWrap">
+                        <span class="comDate">04/10</span>
+                        <span class="comTime">15:40</span>
+                    </div>
+                </li>
+            </ul>
+
+            <div id="postComment">
+                <textarea id="postArea" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"style="overflow=hidden white-space: pre-wrap;" ></textarea>
+                <button id="post">작성하기</button>
             </div>
         </div>
-
-        <ul id="comListWrap">
-
-            <li class="comList">
-                <div class="anonymousWrap">
-                    <span class="anonymous">익명</span>
-                    <button class="anonymousBtn" font-weight="bold">댓글달기</button>
-                </div>
-                <span class="itemText">ㅎㅇ</span>
-                <div clss="dateWrap">
-                    <span class="comDate">04/10</span>
-                    <span class="comTime">15:40</span>
-                </div>
-            </li>
-
-            <li class="comList">
-                <div class="anonymousWrap">
-                    <span class="anonymous">익명</span>
-                    <button class="anonymousBtn" font-weight : bold >댓글달기</button>
-                </div>
-                <span class="itemText">인정따리 인정따.</span>
-                <div class="dateWrap">
-                    <span class="comDate">04/10</span>
-                    <span class="comTime">15:40</span>
-                </div>
-            </li>
-
-            <li class="comList">
-                <div class="anonymousWrap">
-                    <span class="anonymous">익명</span>
-                    <button class="anonymousBtn" font-weight : bold ;>댓글달기</button>
-                </div>
-                <span class="itemText">2222</span>
-                <div class="dateWrap">
-                    <span class="comDate">04/10</span>
-                    <span class="comTime">15:40</span>
-                </div>
-            </li>
-        </ul>
-
-        <div id="postComment">
-            <textarea id="postArea" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"style="overflow=hidden white-space: pre-wrap;" ></textarea>
-            <button id="post">작성하기</button>
+        <!--푸터-->
+        <div class="footer centerContent">
+            <p>@ create by MOBUL</p>
         </div>
     </div>
-    <!--푸터-->
-    <div class="footer centerContent">
-        <p>@ create by MOBUL</p>
     </div>
-</div>
-</div>
-</div>
+    </div>
 </body>
 </html>
