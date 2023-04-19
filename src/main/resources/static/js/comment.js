@@ -90,16 +90,3 @@ window.onload = function(){
   });
 }
 
-
-
-
-// 좋아요 버튼 클릭하면 카운트 된다
-const likeBtn = document.querySelector('.likeBtn');
-const likeNum = document.querySelector('.likeNum');
-
-let count = 1;
-
-likeBtn.addEventListener('click', () => {
-  likeNum.textContent = count;
-  count++;
-});

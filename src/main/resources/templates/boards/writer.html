@@ -75,9 +75,11 @@
                         <div class="custom-file img-div">
                             <label for="file-upload" class="custom-file-label" th:text="파일선택 + ${num}"></label>
                             <input  id="file-upload" type="file" class="custom-file-input" name="boardsFile">
+
                             <div id="fileName" >
                                 <input type="file" name="boardsFile">
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -90,6 +92,7 @@
                                         ? ${boardsFileDTO.fileOriName} : '파일' + ${status.index+1}">
                             </label>
                             <input  id="file-upload2" type="file" class="custom-file-input" name="boardsFile">
+
                             <input type="hidden" name="fileId" th:value="${boardsFileDTO.fileId}">
 
                         </div>

@@ -44,8 +44,8 @@ public class BoardsFileService {
     // 수정페이지 : 파일
     public void updateFile(Long fileId, MultipartFile file) throws Exception{
         if(!file.isEmpty()){
-            BoardsFile savedFile = boardsFileRepository.findById(fileId)
-                    .orElseThrow(EntityNotFoundException::new);
+            BoardsFile savedFile = boardsFileRepository.findByFileId(fileId);
+//                    .orElseThrow(EntityNotFoundException::new);
 
         // 기존 이미지 파일 삭제
         if(!StringUtils.isEmpty(savedFile.getFileName())) {

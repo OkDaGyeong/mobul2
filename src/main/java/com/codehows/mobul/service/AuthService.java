@@ -81,6 +81,11 @@ public class AuthService {
         return users;
     }
 
+    public Optional<Users> findByUserId(String userId){
+        Optional<Users> users = authRepository.findByUserId(userId);
+        return users;
+    }
+
 }
 
 

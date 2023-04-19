@@ -10,6 +10,7 @@ import java.util.List;
 public interface BoardsFileRepository extends JpaRepository<BoardsFile, Long> {
 
     List<BoardsFile> findByFileBoardNumOrderByFileIdAsc(Boards boardId);
+    BoardsFile findByFileId(Long fileId);
 
 //    List<BoardsFile> findByFileBoardNumOrderByFileIdAsc(Long fileBoardNum);
 
