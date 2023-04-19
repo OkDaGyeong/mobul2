@@ -20,6 +20,7 @@ public interface BoardsRepository extends JpaRepository<Boards, Long> {
 //    Boards findByBoardTitle(String boardTitle);
     Boards findByBoardId(Long boardId);
 
+    Boards deleteByBoardId(Long boardId);
     //게시글 목록 조회
     List<Boards> findAll(); //게시글 모두 불러오기 -d
 
@@ -33,6 +34,7 @@ public interface BoardsRepository extends JpaRepository<Boards, Long> {
     @Modifying
     @Query("update Boards p set p.boardView = p.boardView + 1 where p.boardId = :board_id AND p.boardId IS NOT NULL")
     int updateBoardView(@Param("board_id") Long boardId);
+
 
 
     //좋아요 증가

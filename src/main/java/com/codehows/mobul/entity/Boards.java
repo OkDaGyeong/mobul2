@@ -7,6 +7,8 @@ import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "boards")
@@ -30,7 +32,6 @@ public class Boards {
 
     //게시글 조회수 int defalt 0
     @Column(columnDefinition = "integer default 0")
-
     private Integer boardView;
 
     //    게시글 작성자 not null fk 설정   users 테이블의 user_id와 연결
@@ -52,6 +53,10 @@ public class Boards {
     @Column(columnDefinition = "timestamp")
     private LocalDateTime boardDate;
 
+//// 테스트 추가
+//    @OneToMany(mappedBy = "fileBoardNum", cascade = CascadeType.ALL)
+//    private List<BoardsFile> boardsFiles = new ArrayList<>();
+
 
     // BoardsFormDTO를 엔티티로 변경
     public static Boards toBoards(BoardsFormDTO dto) {
@@ -64,7 +69,7 @@ public class Boards {
         this.boardId = boardsFormDTO.getBoardId();
         this.boardTitle = boardsFormDTO.getBoardTitle();
         this.boardContent = boardsFormDTO.getBoardContent();
-//        this.users = boardsFormDTO.getUsers();
+        this.boardWriter = boardsFormDTO.getBoardWriter();
         this.boardTag = boardsFormDTO.getBoardTag();
         this.boardDate = boardsFormDTO.getBoardDate();
     }

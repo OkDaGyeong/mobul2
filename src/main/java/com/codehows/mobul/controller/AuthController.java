@@ -6,9 +6,6 @@ import com.codehows.mobul.entity.Users;
 import com.codehows.mobul.repository.AuthRepository;
 import com.codehows.mobul.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +25,8 @@ public class AuthController extends SessionListener {
 
     private final AuthService authService;  // 생성자 주입 방식 AuthController
 
-    @Autowired
-    private AuthRepository authRepository;
+//    @Autowired
+    private final AuthRepository authRepository;
 
 
     @GetMapping(value="/signin")         // 로그인

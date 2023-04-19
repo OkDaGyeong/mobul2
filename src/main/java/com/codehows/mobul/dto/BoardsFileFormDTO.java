@@ -18,4 +18,5 @@ public class BoardsFileFormDTO {
 
     private String filePath;        // 파일 조회 경로
 
+
 }
