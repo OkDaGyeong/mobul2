@@ -14,6 +14,7 @@ import com.codehows.mobul.repository.BoardsRepository;
 import com.codehows.mobul.service.BoardsService;
 import com.codehows.mobul.service.LikeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -133,8 +134,8 @@ public class BoardsController {
         }
         System.out.println("55555555555555555");
 
-            return "boards/writer";
-        }
+//            return "boards/writer";
+//        }
 
         return "redirect:/";
     }
