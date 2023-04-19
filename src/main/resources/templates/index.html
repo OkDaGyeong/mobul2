@@ -122,12 +122,12 @@
 
         </table>
     </div>
-    <div class="page centerContent" style="margin-top:30px">
+
+    <div class="page centerContent" style="margin-top:30px" th:unless="${startPage}==null or ${startPage}==null">
         <li class="page-item">
             <a class="page-link"
                th:href="@{/(page=${nowPage > 5 ? nowPage-5 : 0}, searchTitle=${param.searchTitle},searchContent=${param.searchContent})}">&laquo;</a>
         </li>
-
 
         <th:block th:each="page:${#numbers.sequence(startPage,endPage)}" class="page-item">
             <li>
@@ -138,6 +138,7 @@
                         style="color:var(--green); border:2px solid var(--green);"></strong>
             </li>
         </th:block>
+
         <li class="page-item">
             <a class="page-link"
                th:href="@{/(page=${nowPage < endPage - 5 ? nowPage+5 : endPage-1}, searchTitle=${param.searchTitle},searchContent=${param.searchContent})}">&raquo;</a>

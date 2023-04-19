@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MOBUL 로그인</title>
   <link rel="stylesheet" th:href="@{/css/auth.css}" />
+  <script th:src="@{/js/kakao.js}" defer></script>
 </head>
 
 <body>
@@ -49,15 +50,5 @@
   </div>
 </div>
 
-<script>
-    const btnKakao = document.querySelector('.btn-kakao');
-
-btnKakao.addEventListener('click', (event) => {
-  event.preventDefault(); // 버튼 클릭 시 기본 동작을 막음
-
-  const url = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=f16a9a399cece2acaaf3110b8761e417&redirect_uri=http://localhost:9095/kakao/code&response_type=code&prompt=login";
-  window.location.href = url; // 특정 URL로 이동
-});
-</script>
 </body>
 </html>
