@@ -66,10 +66,11 @@ public class Boards {
 
 
     public void updateBoard(BoardsFormDTO boardsFormDTO){
+
         this.boardId = boardsFormDTO.getBoardId();
         this.boardTitle = boardsFormDTO.getBoardTitle();
         this.boardContent = boardsFormDTO.getBoardContent();
-        this.boardWriter = boardsFormDTO.getBoardWriter();
+//        this.boardWriter = boardsFormDTO.getBoardWriter();
         this.boardTag = boardsFormDTO.getBoardTag();
         this.boardDate = boardsFormDTO.getBoardDate();
     }
