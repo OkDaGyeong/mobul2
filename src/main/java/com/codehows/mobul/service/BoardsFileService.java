@@ -40,9 +40,9 @@ public class BoardsFileService {
         boardsFileRepository.save(boardsfile);
     }
 
+
     // 수정페이지 : 파일
     public void updateFile(Long fileId, MultipartFile file) throws Exception{
-        System.out.println("파일수정@@@@@@@@@@@@@@@@");
         if(!file.isEmpty()){
             BoardsFile savedFile = boardsFileRepository.findByFileId(fileId);
 //                    .orElseThrow(EntityNotFoundException::new);
@@ -54,7 +54,7 @@ public class BoardsFileService {
         String fileOriName = file.getOriginalFilename();
         String fileName = fileService.uploadFile(fileLocation, fileOriName, file.getBytes());
         String fileUrl = "/images/board/" + fileName;
-        savedFile.updateFile(fileOriName, fileUrl, fileUrl);
+        savedFile.updateFile(fileOriName, fileName, fileUrl);
         }
     }
 

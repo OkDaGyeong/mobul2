@@ -28,7 +28,9 @@ public class BoardsFormDTO {
     private int boardView; //조회수--추가
     private int boardLike;
 
+
     private Users boardWriter ;         // 게시판 작성자--추가
+
 
     private String boardTag;            // 게시판 해시태그
 

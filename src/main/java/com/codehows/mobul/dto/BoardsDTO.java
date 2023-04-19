@@ -19,6 +19,8 @@ public class BoardsDTO {
 
     private Integer boardView;             // 게시판 조회수
 
+
+  // -- 수정
     private Users boardWriter ;         // 게시판 작성자
 
     private Integer boardLike;             // 게시판 좋아요 수

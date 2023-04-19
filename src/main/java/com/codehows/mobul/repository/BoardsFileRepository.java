@@ -12,6 +12,9 @@ public interface BoardsFileRepository extends JpaRepository<BoardsFile, Long> {
     List<BoardsFile> findByFileBoardNumOrderByFileIdAsc(Boards boardId);
     BoardsFile findByFileId(Long fileId);
 
-   // List<BoardsFile> findByFileBoardNumOrderByFileIdAsc(Long fileBoardNum);
+//    List<BoardsFile> findByFileBoardNumOrderByFileIdAsc(Long fileBoardNum);
+
+//    deleteByFileBoardNum
+//    Boards deleteAllByFileBoardNum(Boards boards);
 
 }

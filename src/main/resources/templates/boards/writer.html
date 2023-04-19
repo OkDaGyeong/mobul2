@@ -48,7 +48,7 @@
         <input type="button" class="btn-navy" value="글 목록" id="listBtn" style="font-weight : bold">
 
         <form method="post" th:object="${boardsFormDTO}" enctype="multipart/form-data">  <!-- 혜영  -->
-            <input type="hidden" th:field="*{boardId}">
+            <input type="hidden" th:field="*{boardId}" th:value="*{boardId}">
             <div id="tableBox">
                 <tr>
                     <td>
@@ -70,8 +70,7 @@
                 </tr>
 
 
-
-                <div th:if="${#lists.isEmpty(boardsFormDTO.boardsFileDTOList)}">
+                 <div th:if="${#lists.isEmpty(boardsFormDTO.boardsFileDTOList)}">
                     <div class="form-group" th:each="num: ${#numbers.sequence(1,2)}">
                         <div class="custom-file img-div">
                             <label for="file-upload" class="custom-file-label" th:text="파일선택 + ${num}"></label>
@@ -99,6 +98,7 @@
                         </div>
                     </div>
                 </div>
+
 
 
                 <div th:if="${#strings.isEmpty(boardsFormDTO.boardId)}" style="text-align: center">
