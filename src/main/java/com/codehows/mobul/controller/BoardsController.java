@@ -2,7 +2,11 @@ package com.codehows.mobul.controller;
 
 import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.dto.BoardsFormDTO;
+import com.codehows.mobul.entity.Boards;
+import com.codehows.mobul.entity.Users;
+import com.codehows.mobul.service.AuthService;
 import com.codehows.mobul.service.BoardsService;
+import com.codehows.mobul.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 //import org.springframework.web.multipart.MultipartFile;
 
 //import java.util.concurrent.ExecutionException;
@@ -26,6 +31,10 @@ import java.util.List;
 public class BoardsController {
     @Autowired
     private BoardsService boardsService;
+    @Autowired
+    private LikeService likeService;
+    @Autowired
+    private AuthService authService;
 
 
     @GetMapping("/save")
@@ -114,11 +123,11 @@ public class BoardsController {
             System.out.println("333333333333333333");
         } catch (Exception e){
             model.addAttribute("errorMessage", "게시글 수정 중 에러가 발생하였습니다");
-            System.out.println("4444444444444444");
+            System.out.println("44"+e);
             return "boards/writer";
         }
         System.out.println("55555555555555555");
-        return "index";
+        return "redirect:/";
     }
 
 
@@ -127,10 +136,32 @@ public class BoardsController {
 
     //----상세페이지 불러오기
     @GetMapping(value="/comment/{boardId}")
-    public String boardDtl(Model model, @PathVariable("boardId") Long boardId){
-        boardsService.updateView(boardId);
+    public String boardDtl(Model model, @PathVariable("boardId") Long boardId , HttpSession session ){
+        boardsService.updateView(boardId); //조회수 증가
+        Boards boards = boardsService.findByBoardId(boardId);
+
         BoardsFormDTO boardsFormDTO = boardsService.getBoardDtl(boardId);
         model.addAttribute("boardsForm", boardsFormDTO);
+
+        //--like관련
+        Long likeCount = likeService.findLikeCount(boards);
+        model.addAttribute("likeCount", likeCount);
+
+        // 로그인 유저 아이디 확인,
+        System.out.println("로그인된 유저 id : "+session.getAttribute("userId"));
+        String loginUserId = (String)session.getAttribute("userId");
+
+        Optional<Users> users = authService.findByUserId(loginUserId);
+
+        if(loginUserId != null){ // 로그인 했는지 구분
+            if(likeService.findLike(users, boards)){ // 게시글에 좋아요를 누른 사람인지 확인
+                model.addAttribute("isLiked",true);
+            }else {
+                model.addAttribute("isLiked", false);
+            }
+        }else {
+            model.addAttribute("isLiked", false);
+        }
         return "/boards/comment";
     }
 

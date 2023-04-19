@@ -10,7 +10,7 @@ public class BoardsFileFormDTO {
 
     private Long fileId;            // 게시글 번호
 
-    private Boards fileBoardNum;          // 게시글 번호
+    private Boards fileBoardNum;    // 게시글 번호
 
     private String fileName;        // 저장 파일명
 

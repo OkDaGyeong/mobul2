@@ -27,6 +27,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -68,7 +69,19 @@ public class BoardsService {
         return boardsRepository.findByBoardContentContaining(searchContent,pageable);
     }
 
+    //작성자 불러오기
+    public String getBoardWriter(Long boardId){
+        Boards boards = boardsRepository.findByBoardId(boardId);
+        if(boards == null){
+            return null;
+        }
+        Optional<Users> usersOptional = authRepository.findByUserId(String.valueOf(boards.getBoardWriter()));
+        if(usersOptional.isEmpty()){
+            return null;
+        }
+        return usersOptional.get().getUserId();
 
+    }
 
 
     //hy
@@ -77,33 +90,59 @@ public class BoardsService {
     public BoardsFormDTO getBoardDtl(Long boardId){ //-257
         Boards boards = boardsRepository.findByBoardId(boardId);//.orElseThrow(EntityNotFoundException::new);
         List<BoardsFile> boardsFileList = boardsFileRepository.findByFileBoardNumOrderByFileIdAsc(boards);
+
         List<BoardsFileDTO> boardsFileDTOList = new ArrayList<>();
         for(BoardsFile boardsFile : boardsFileList){
+
             BoardsFileDTO boardsFileDTO = BoardsFileDTO.of(boardsFile);
             boardsFileDTOList.add(boardsFileDTO);
         }
 
         BoardsFormDTO boardsFormDTO = BoardsFormDTO.of(boards);
         boardsFormDTO.setBoardsFileDTOList(boardsFileDTOList);
+
         return boardsFormDTO;
     }
 
     public Long updateBoard(BoardsFormDTO boardsFormDTO, List<MultipartFile> fileList) throws Exception{
-        // 게시글 수정
-        System.out.println("게시글수정@@@@@@@@@@@@@@@@");
-        Boards boards = boardsRepository.findByBoardId(boardsFormDTO.getBoardId());
-//                .orElseThrow(EntityNotFoundException::new);
-        System.out.println("게시글수정22222222@@@@@@@@@@@@@@@@");
-        boards.updateBoard(boardsFormDTO);
-        System.out.println("게시글수정3333333333333");
-        List<Long> fileIds =  boardsFormDTO.getFileId();
-        System.out.println("게시글수정44444444444");
-        // 이미지 등록
-        for(int i=0; i<fileList.size();i++){
-            boardsFileService.updateFile(fileIds.get(i), fileList.get(1));
+//        // 게시글 수정
+//        System.out.println("게시글수정@@@@@@@@@@@@@@@@");
+//        Boards boards = boardsRepository.findByBoardId(boardsFormDTO.getBoardId());
+////                .orElseThrow(EntityNotFoundException::new);
+//        System.out.println("게시글수정22222222@@@@@@@@@@@@@@@@");
+//        boards.updateBoard(boardsFormDTO);
+//        System.out.println("게시글수정3333333333333");
+//        List<Long> fileIds =  boardsFormDTO.getFileId();
+//        System.out.println("게시글수정44444444444");
+//
+//        // 이미지 등록
+//        for(int i=0; i<fileList.size();i++){
+//            boardsFileService.updateFile(fileIds.get(i), fileList.get(1));
+//        }
+//        System.out.println("게시글수정5555555555555");
+//        return boards.getBoardId();
+        try {
+            // 게시글 수정
+            System.out.println("게시글수정@@@@@@@@@@@@@@@@");
+            Boards boards = boardsRepository.findByBoardId(boardsFormDTO.getBoardId());
+            System.out.println("게시글수정22222222@@@@@@@@@@@@@@@@");
+            boards.updateBoard(boardsFormDTO);
+            System.out.println("게시글수정3333333333333");
+            List<Long> fileIds =  boardsFormDTO.getFileId();
+            System.out.println("게시글수정44444444444");
+
+            System.out.println(fileIds);
+            // 이미지 등록
+//            for(int i=0; i<fileList.size();i++){
+//                boardsFileService.updateFile(fileIds.get(i), fileList.get(i));
+//            }
+            System.out.println("게시글수정5555555555555");
+            return boards.getBoardId();
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
         }
-        System.out.println("게시글수정5555555555555");
-        return boards.getBoardId();
+
     }
 
 
@@ -141,4 +180,8 @@ public class BoardsService {
     }
 
 
+    // 게시글 ID로 게시글 조회
+    public Boards findByBoardId(Long boardId) {
+        return boardsRepository.findByBoardId(boardId);
+    }
 }

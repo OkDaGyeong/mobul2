@@ -1,6 +1,7 @@
 package com.codehows.mobul.dto;
 
 import com.codehows.mobul.entity.Boards;
+import com.codehows.mobul.entity.Users;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,8 +28,7 @@ public class BoardsFormDTO {
     private int boardView; //조회수--추가
     private int boardLike;
 
-//    @NotBlank
-//    private Users users;         // 게시판 작성자
+    private Users boardWriter ;         // 게시판 작성자--추가
 
     private String boardTag;            // 게시판 해시태그
 
@@ -46,5 +46,9 @@ public class BoardsFormDTO {
 
     public static BoardsFormDTO of(Boards boards){
         return modelMapper.map(boards, BoardsFormDTO.class);
+    }
+
+    public String getBoardWriter(){
+        return this.boardWriter.getUserId();
     }
 }

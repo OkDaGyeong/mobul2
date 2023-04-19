@@ -5,6 +5,7 @@ import com.codehows.mobul.dto.UsersDTO;
 import lombok.*;
 
 import javax.persistence.*;
+
 @Entity
 @Getter @Setter
 @Table(name = "users")
