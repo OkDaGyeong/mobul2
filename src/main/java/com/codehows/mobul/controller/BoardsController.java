@@ -2,9 +2,11 @@ package com.codehows.mobul.controller;
 
 import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.dto.BoardsFormDTO;
+
 import com.codehows.mobul.service.BoardsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -125,7 +127,7 @@ public class BoardsController {
 
 
 
-    //----상세페이지 불러오기
+    //----상세페이지
     @GetMapping(value="/comment/{boardId}")
     public String boardDtl(Model model, @PathVariable("boardId") Long boardId){
         boardsService.updateView(boardId);
@@ -133,8 +135,5 @@ public class BoardsController {
         model.addAttribute("boardsForm", boardsFormDTO);
         return "/boards/comment";
     }
-
-
-
 
 }

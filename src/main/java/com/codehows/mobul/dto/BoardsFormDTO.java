@@ -44,6 +44,7 @@ public class BoardsFormDTO {
         return modelMapper.map(this, Boards.class);
     }
 
+
     public static BoardsFormDTO of(Boards boards){
         return modelMapper.map(boards, BoardsFormDTO.class);
     }

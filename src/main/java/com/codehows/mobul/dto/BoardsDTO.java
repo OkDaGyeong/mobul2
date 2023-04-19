@@ -1,5 +1,6 @@
 package com.codehows.mobul.dto;
 
+import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.Users;
 import lombok.*;
 
@@ -27,5 +28,22 @@ public class BoardsDTO {
 
     private LocalDateTime boardDate;    // 작성한 시간
 
+    public  BoardsDTO (Long boardId, String boardContent, String boardTitle, int boardLike, LocalDateTime boardDate){
+        this.boardId = boardId;
+        this.boardContent = boardContent;
+        this.boardTitle = boardTitle;
+        this.boardLike = boardLike;
+        this.boardDate = boardDate;
+    }
 
+    public static BoardsDTO toBoardDTO(Boards boards, Users users){
+        BoardsDTO boardsDTO = new BoardsDTO();
+        boardsDTO.setBoardId(boards.getBoardId());
+        boardsDTO.setBoardWriter(users);
+        boardsDTO.setBoardTitle(boards.getBoardTitle());
+        boardsDTO.setBoardContent(boards.getBoardContent());
+        boardsDTO.setBoardView(boards.getBoardView());
+        boardsDTO.setBoardDate(boards.getBoardDate());
+        return boardsDTO;
+    }
  }
