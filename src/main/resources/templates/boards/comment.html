@@ -48,14 +48,17 @@
                 </div>
             </div>
             <div id="mainText">
-
+                <p th:text="${boardsForm.boardContent}">content</p>
                 <div id="hashArea">
                     <p  th:text="${boardsForm.boardTag}"></p>
                 </div>
             </div>
             <td th:if="${session.userId}">
                 <form th:if="${session.userId}==${boardsForm.boardWriter}">
-                    <button style="font-weight : bold ;">삭제</button>
+                    <!-- <button style="font-weight : bold ;">삭제</button>-->
+                    <!-- <button th:formaction="@{/comment/delete}" type="button" class="btn btn-primary">삭제</button>-->
+                    <a th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
+<!--                    <button style="font-weight : bold ;">삭제</button>-->
 
                     <a th:href="@{/board/writer/{boardId}(boardId=${boardsForm.boardId})}">수정</a>
 
