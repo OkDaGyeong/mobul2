@@ -76,7 +76,6 @@ input[type="search"]:focus {
 
 .btn-navy {
   background-color: transparent;
-  /* background-color: var(--navy); */
   color: var(--navy);
   font-size: 16px;
   border: none;
@@ -87,6 +86,7 @@ input[type="search"]:focus {
   border: 2px solid transparent;
   border-radius: 100px;
   transition: 0.3s;
+  font-weight:600;
 }
 .btn-navy:hover {
   border: 2px solid var(--navy);

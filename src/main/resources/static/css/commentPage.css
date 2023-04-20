@@ -62,9 +62,14 @@ input[type="button"]{
   padding: 25px;
   box-sizing: border-box;
 }
+#mainContentBox{
+min-height:150px;
+width:100%;
+}
+
 #hashArea{
   width: 100%;
-  padding-top: 100px;
+  margin-top:30px;
   color: #5E6790;
   font-size: 15px;
 }
@@ -299,8 +304,43 @@ height:20px;}
 
 
 
+.btn-navy {
+  background-color: transparent;
+  color: var(--navy);
+  font-size: 16px;
+  border: none;
+  padding: 7px 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  border-radius: 100px;
+  transition: 0.3s;
+  float:right;
+  font-weight:600;
+
+}
+.btn-navy:hover {
+  border: 2px solid var(--navy);
+  background-color: transparent;
+  color: var(--navy);
+}
 
 
+.btn-form{
+padding: 10px 25px;
+display:flex;
+justify-content: flex-end;
+}
 
+.btn-modify{
+margin-left:10px;
+color:var(--navy);
+padding : 5px 10px;
+border-radius:5px;
+}
+.btn-modify:hover{
+font-weight: bold;
 
-
+background-color:rgba(94,103,144,0.2);
+}
