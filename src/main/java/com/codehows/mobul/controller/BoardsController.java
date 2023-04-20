@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -145,8 +148,39 @@ public class BoardsController {
 
     //----상세페이지
     @GetMapping(value="/comment/{boardId}")
-    public String boardDtl(Model model, @PathVariable("boardId") Long boardId , HttpSession session ){
-        boardsService.updateView(boardId); //조회수 증가
+    public String boardDtl(Model model, @PathVariable("boardId") Long boardId ,
+                           HttpSession session, HttpServletRequest request, HttpServletResponse response){
+        //-- 조회수 무제한증가 방지
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("boardView")){
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if(oldCookie != null){
+            if(!oldCookie.getValue().contains("[" + boardId.toString() + "]")){
+                boardsService.updateView(boardId); //조회수 증가
+                oldCookie.setValue(oldCookie.getValue() + "_[" + boardId + "]");
+                oldCookie.setPath("/"); //왜 주소가 저거지?
+                oldCookie.setMaxAge(60*60*24);
+                response.addCookie(oldCookie);
+            }
+        }
+        else{
+            boardsService.updateView(boardId); //조회수 증가
+            Cookie newCookie = new Cookie("boardView","["+boardId+"]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60*60*24);
+            response.addCookie(newCookie);
+        }
+
+        //--
+
+
         Boards boards = boardsService.findByBoardId(boardId);
 
         BoardsFormDTO boardsFormDTO = boardsService.getBoardDtl(boardId);
