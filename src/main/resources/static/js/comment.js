@@ -1,4 +1,5 @@
 
+
 // 댓글 목록에 대한 변수
 const comListWrap = document.getElementById('comListWrap');
 
@@ -8,6 +9,7 @@ const postBtn = document.getElementById('post');
 
 // 댓글 수에 대한 변수
 let commentNum = 0;
+
 
 window.onload = function(){
   // 댓글 삭제 버튼 클릭 시
@@ -66,13 +68,13 @@ window.onload = function(){
     const date = new Date();
     const comDate = document.createElement('span');
     comDate.classList.add('comDate');
-    comDate.textContent = `${date.getMonth() + 1}/${date.getDate()}`;
+    comDate.textContent = `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
     dateWrap.appendChild(comDate);
 
     // 댓글 작성시간
     const comTime = document.createElement('span');
     comTime.classList.add('comTime');
-    comTime.textContent = `${date.getHours()}:${date.getMinutes()}`;
+    comTime.textContent = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
     dateWrap.appendChild(comTime);
 
     newComment.appendChild(dateWrap);
@@ -103,3 +105,5 @@ likeBtn.addEventListener('click', () => {
   likeNum.textContent = count;
   count++;
 });
+
+

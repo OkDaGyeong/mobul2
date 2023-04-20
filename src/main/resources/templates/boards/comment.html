@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/commentPage.css?after}">
     <script th:src="@{/js/comment.js}" defer></script>
     <script th:src="@{/js/reply.js}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap}" rel="stylesheet">
@@ -42,8 +43,32 @@
                 </div>
             </div>
             <td>
-                <input type="button" value="삭제" style="font-weight : bold ;">
-                <input type="button" value="수정" style="font-weight : bold ;">
+<!--                 파일 목록 출력 및 버튼에 대한 동적 이벤트 처리-->
+
+<!--                <ul class="fileListWrap">-->
+<!--                    <span class="fileList">파일목록</span>-->
+<!--                    &lt;!&ndash; 파일 목록 출력 &ndash;&gt;-->
+<!--                    <li th:each="fileDTO : ${boardsForm.boardsFileDTOList}">-->
+<!--                        <a th:href="${fileDTO.filePath}" target="_blank" th:text="${fileDTO.fileName}"></a>-->
+<!--                    </li>-->
+<!--                    <li th:each="fileDTO : ${boardsForm.boardsFileDTOList}">-->
+<!--                        <img th:src="@{'/images/board/' + ${fileDTO.fileName}}" alt="사진" />-->
+<!--                    </li>-->
+
+<!--                    <li th:each="file : ${fileList}">-->
+<!--                        <h3 th:text="${file.fileName}"></h3>-->
+<!--                        <img th:src="@{'/image/' + ${file.filePath} + '/' + ${file.fileName}}" width="200" height="200" alt="Image">-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                <span id="buttonWrap">-->
+
+<!--                    <input type="button" value="삭제" style="font-weight : bold ;">-->
+<!--                    <input type="button" value="수정" style="font-weight : bold ;">-->
+<!--                </span>-->
+
+<!--                <img th:src="@{/image/{fileId}(fileId=${boardsForm.boardsFileDTOList[0].fileId})}" alt="Image">-->
+
+
             </td>
         </div>
 
@@ -110,5 +135,21 @@
 </div>
 </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    // 이미지를 서버에서 가져와서 imageContainer에 추가
+    var fileOriName = "/images/board/d95b084a-99c7-4c35-b1e8-bc4b8a91ed14.jpg"; // 파일의 원본 이름으로 수정해야 함
+    $.get("/image/" + fileOriName, function(data) {  // 이미지 URL을 서버로 요청
+        var img = $('<img />').attr({  // 이미지 요소 생성 및 속성 설정
+            src: "data:/images/board/d95b084a-99c7-4c35-b1e8-bc4b8a91ed14.jpg;base64," + data,  // 이미지 데이터를 Base64로 변환하여 src에 설정
+            width: 200,
+            height: 200,
+            alt: "Image"
+        });
+        $(".fileListWrap").append(img);  // 이미지를 imageContainer에 추가
+    });
+});
+</script>
 </body>
 </html>

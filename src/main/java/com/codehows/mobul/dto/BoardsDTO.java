@@ -1,5 +1,6 @@
 package com.codehows.mobul.dto;
 
+import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.Users;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter @Setter @ToString
 @NoArgsConstructor      //기본 생성자
 @AllArgsConstructor     // 모든 필드를 매개변수로 하는 생성자     들을 자동으로 만들어줌
-public class BoardsDTO {
+public class BoardsDTO  {
 
     private Long boardId;               // 게시판 번호
 
@@ -28,4 +29,4 @@ public class BoardsDTO {
     private LocalDateTime boardDate;    // 작성한 시간
 
 
- }
+}

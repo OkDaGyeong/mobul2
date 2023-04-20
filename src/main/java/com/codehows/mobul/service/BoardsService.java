@@ -2,6 +2,7 @@ package com.codehows.mobul.service;
 
 
 
+import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.dto.BoardsFileDTO;
 
 import com.codehows.mobul.dto.BoardsFormDTO;
@@ -27,6 +28,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -42,7 +44,6 @@ public class BoardsService {
 
     @Autowired
     private AuthRepository authRepository;
-
 
 
     // 파일 입력
@@ -127,6 +128,10 @@ public class BoardsService {
             boardsFileService.saveFile(boardsFile, fileList.get(i));
         }
 
+        //user.dir은 프로젝트 경로를 받아줌
+         String pojectpath = System.getProperty("user.dir") + "src/main/resources/static/images";
+
+
         return boards.getBoardId();
     }
 
@@ -139,6 +144,7 @@ public class BoardsService {
     public int updateView(Long boardId) {
         return boardsRepository.updateBoardView(boardId);
     }
+
 
 
 }

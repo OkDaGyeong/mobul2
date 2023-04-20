@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 //import org.springframework.web.multipart.MultipartFile;
 
@@ -52,6 +55,7 @@ public class BoardsController {
 
     @GetMapping("/admin")
     public String adminForm(){return  "boards/admin";}
+
 
 //--
     // BoardsFIleFormDTO를 model에 담아서 뷰로 전달
@@ -125,13 +129,16 @@ public class BoardsController {
 
 
 
+
+
     //----상세페이지 불러오기
     @GetMapping(value="/comment/{boardId}")
     public String boardDtl(Model model, @PathVariable("boardId") Long boardId){
         boardsService.updateView(boardId);
         BoardsFormDTO boardsFormDTO = boardsService.getBoardDtl(boardId);
+        System.out.println("파일 여기까지 넘어옴 333" + boardsFormDTO.getBoardsFileDTOList().get(0).getFileName());
         model.addAttribute("boardsForm", boardsFormDTO);
-        return "/boards/comment";
+        return "boards/comment";
     }
 
 
