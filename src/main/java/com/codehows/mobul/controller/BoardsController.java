@@ -12,6 +12,7 @@ import com.codehows.mobul.repository.BoardsFileRepository;
 import com.codehows.mobul.repository.BoardsRepository;
 
 import com.codehows.mobul.service.BoardsService;
+import com.codehows.mobul.service.CommentsService;
 import com.codehows.mobul.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,13 @@ import java.util.Optional;
 @RequestMapping("/board")
 public class BoardsController {
 
-    @Autowired
-    private BoardsService boardsService;
-    @Autowired
-    private LikeService likeService;
-    @Autowired
-    private AuthService authService;
+    private final BoardsService boardsService;
 
+    private final LikeService likeService;
+
+    private final AuthService authService;
+
+    private final CommentsService commentsService;
 
     private final BoardsRepository boardsRepository;
 
@@ -64,9 +65,6 @@ public class BoardsController {
         return null;
     }
 
-//경원--
-    @GetMapping("/comment")
-    public String commentForm(){return "boards/comment";}
 
 //    @GetMapping("/writer")
 //    public String writerForm(){return  "boards/writer";}
@@ -142,59 +140,6 @@ public class BoardsController {
 
 
 
-
-    //----상세페이지
-    @GetMapping(value="/comment/{boardId}")
-    public String boardDtl(Model model, @PathVariable("boardId") Long boardId , HttpSession session ){
-        boardsService.updateView(boardId); //조회수 증가
-        Boards boards = boardsService.findByBoardId(boardId);
-
-        BoardsFormDTO boardsFormDTO = boardsService.getBoardDtl(boardId);
-        model.addAttribute("boardsForm", boardsFormDTO);
-
-        //--like관련
-        Long likeCount = likeService.findLikeCount(boards);
-        model.addAttribute("likeCount", likeCount);
-
-        // 로그인 유저 아이디 확인,
-        System.out.println("로그인된 유저 id : "+session.getAttribute("userId"));
-        String loginUserId = (String)session.getAttribute("userId");
-
-        Optional<Users> users = authService.findByUserId(loginUserId);
-
-        if(loginUserId != null){ // 로그인 했는지 구분
-            if(likeService.findLike(users, boards)){ // 게시글에 좋아요를 누른 사람인지 확인
-                model.addAttribute("isLiked",true);
-            }else {
-                model.addAttribute("isLiked", false);
-            }
-        }else {
-            model.addAttribute("isLiked", false);
-        }
-        return "/boards/comment";
-    }
-
-
-
-    // 게시글 삭제
-    @GetMapping("/comment/delete/{boardId}")
-    public String deleteBoard(@PathVariable Long boardId){
-
-        // id 조회
-        Boards board = boardsRepository.findByBoardId(boardId);
-        //                .orElseThrow(() -> new IllegalArgumentException("Invalid board Id:" + boardId));
-
-        // file 객체 삭제
-        List<BoardsFile> files = boardsFileRepository.findByFileBoardNumOrderByFileIdAsc(board);   //
-        if(!files.isEmpty()){
-            boardsFileRepository.deleteAll(files);
-        }
-
-        // Boards 객체 삭제
-        boardsRepository.delete(board);
-
-        return "redirect:/";
-    }
 
 
 
