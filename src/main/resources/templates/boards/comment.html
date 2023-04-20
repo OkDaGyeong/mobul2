@@ -10,6 +10,8 @@
     <script th:src="@{/js/like.js}" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+</head>
     <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap}" rel="stylesheet">
 </head>
 <body>
@@ -114,11 +116,47 @@
 
         </ul>
 
-        <div id="postComment">
-            <textarea id="postArea" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"style="overflow=hidden white-space: pre-wrap;" ></textarea>
+        <div id="comment-write">
+            <textarea id="postArea" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"style="overflow:hidden; white-space: pre-wrap;" ></textarea>
             <button id="post">작성하기</button>
+            <input type="text" id="commentWriter" placeholder="작성자">
+            <input type="text" id="commentContents" placeholder="내용">
+            <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
         </div>
     </div>
+    <!-- 댓글 작성 부분 -->
+
+
+
+
+    <!-- 댓글 출력 부분 -->
+    <div id="comment-list">
+        <table>
+            <tr>
+                <th>댓글번호</th>
+                <th>작성자</th>
+                <th>내용</th>
+                <th>작성시간</th>
+            </tr>
+            <tr th:each="comment:${commentsList}">
+                <td th:text="${comment.commentId}"></td>
+                <td th:text="${comment.commentWriter}"></td>
+                <td th:text="${comment.commentContents}"></td>
+                <td th:text="${comment.commentDateTime}"></td>
+            </tr>
+        </table>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
     <!--푸터-->
     <div class="footer centerContent">
         <p>@ create by MOBUL</p>
@@ -127,4 +165,53 @@
 </div>
 </div>
 </body>
+<script th:inline="javascript">
+    const commentWrite = () => {
+        const writer = document.getElementById("commentWriter").value;
+
+
+        const contents = document.getElementById("commentContents").value;
+        console.log("작성자: ", writer);               // 댓글 작성자
+        console.log("내용: ", contents);                // 댓글 내용
+        const id = [[${boardsForm.boardId}]];           // 게시글 번호
+
+        $.ajax({
+            // 요청 방식 : post, 주소 : board/comment/{boardId},  요청 데이터 : 작성자, 작성내용
+            type : "post",
+            url : "/board/comment/save",
+            data : {
+                "commentWriter" : writer,
+                "commentContents" : contents,
+                "boardId" : id
+            },
+            success: function (res) {
+                console.log("요청성공", res);
+                let output = "<table>";
+                output += "<tr><th>댓글번호</th>";
+                output += "<th>작성자</th>";
+                output += "<th>내용</th>";
+                output += "<th>작성시간</th></tr>";
+                for (let i in res) {
+                    output += "<tr>";
+                    output += "<td>" + res[i].commentId + "</td>";
+                    output += "<td>" + res[i].commentWriter + "</td>";
+                    output += "<td>" + res[i].commentContents + "</td>";
+                    output += "<td>" + res[i].commentDateTime + "</td>";
+                    output += "</tr>";
+                }
+                output += "</table>";
+                document.getElementById('comment-list').innerHTML = output;
+                document.getElementById('commentWriter').value = '';
+                document.getElementById('commentContents').value = '';
+            },
+            error: function (err) {
+                console.log("요청실패", err);
+            }
+        });
+
+    }
+
+</script>
+
+</script>
 </html>

@@ -1,3 +1,4 @@
+/*
 package com.codehows.mobul.config;
 
 import javax.servlet.ServletContext;
@@ -46,4 +47,4 @@ public class SessionListener implements ServletContextListener, HttpSessionListe
             session.invalidate();
         }
     }
-}
+}*/
