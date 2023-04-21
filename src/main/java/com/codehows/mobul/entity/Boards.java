@@ -53,6 +53,8 @@ public class Boards {
     @Column(columnDefinition = "timestamp")
     private LocalDateTime boardDate;
 
+
+
 //// 테스트 추가
 //    @OneToMany(mappedBy = "fileBoardNum", cascade = CascadeType.ALL)
 //    private List<BoardsFile> boardsFiles = new ArrayList<>();

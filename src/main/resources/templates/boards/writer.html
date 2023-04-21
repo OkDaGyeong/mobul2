@@ -9,15 +9,20 @@
 
     <link rel="stylesheet" th:href="@{/css/reset.css}">
     <link rel="stylesheet" th:href="@{/css/writerPage.css}">
+    <link rel="stylesheet" th:href="@{/css/hashtag.css}">
     <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
     <link rel="preconnect" crossorigin th:href="@{https://fonts.gstatic.com}">
     <link rel="stylesheet"
           th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&amp;family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;family=Noto+Serif+KR&amp;family=Playfair+Display:wght@400;500;600;700;800;900&amp;display=swap}">
 
     <script th:src="@{/js/write.js}" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+
 </head>
 <body>
-<div id="wrap">
+<div id="wrap" style="margin-bottom:150px;">
     <!-- 헤더 -->
     <div id="logo" class="clearfix">
         <p><a >SAY SOMETHING</a></p>
@@ -43,9 +48,9 @@
                       th:field="*{boardContent}" required></textarea>
 
         </div>
-        <div>
-            <textarea name="boardTag" placeholder="#해시태그" id="hash" style="overflow:hidden"
-                      th:field="*{boardTag}"></textarea>      <!--확인-->
+        <div class="hashBox">
+            <input  placeholder="#해시태그" id="myTags" />
+            <input type="hidden" id="qq" value=""  th:field="*{boardTag}" >
 
         </div>
 
@@ -89,9 +94,26 @@
         </div>
 
     </form>
+
+        <script>
+              // 태그 추가 이벤트 발생 시 value값만 input 태그에 전달
+    const input1 = document.getElementById('myTags');
+    const tagify1 = new Tagify(input1);
+const allTag = document.getElementById('qq');
+      tagify1.on('add', function() {
+        const tagValues = tagify1.value.map(tag => tag.value);
+        input1.value = tagValues.join('  #'); // tag 값을 (#)로 구분한 문자열로 설정
+
+        console.log(input1.value);
+        console.log(input1.value.toString());
+
+        allTag.value=input1.value.toString();
+     console.log("모든태그 : "+ allTag.value);
+     });
+        </script>
+</div>
     <div class="footer centerContent">
         <p>@ create by MOBUL</p>
     </div>
-</div>
 </body>
 </html>

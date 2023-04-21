@@ -4,6 +4,7 @@ import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.dto.BoardsFormDTO;
 import com.codehows.mobul.entity.Boards;
 
+import com.codehows.mobul.entity.Like;
 import com.codehows.mobul.entity.Users;
 import com.codehows.mobul.service.AuthService;
 
@@ -178,15 +179,13 @@ public class BoardsController {
             response.addCookie(newCookie);
         }
 
-        //--
-
-
+        //-- 게시글 불러오기
         Boards boards = boardsService.findByBoardId(boardId);
 
         BoardsFormDTO boardsFormDTO = boardsService.getBoardDtl(boardId);
         model.addAttribute("boardsForm", boardsFormDTO);
 
-        //--like관련
+        //--like
         Long likeCount = likeService.findLikeCount(boards);
         model.addAttribute("likeCount", likeCount);
 
@@ -223,11 +222,23 @@ public class BoardsController {
         if(!files.isEmpty()){
             boardsFileRepository.deleteAll(files);
         }
+        Users user = board.getBoardWriter();  // 유저 객체에서 보드 라이더 값을 받아오고
+        String findUser = user.getUserId();     //  유저 아이디를 넣어준다
 
+        Long valueCheck = likeService.findLikeCount(board);
+
+        if (valueCheck ==0){
+            boardsRepository.delete(board);
+
+            return "redirect:/";
+        } else{
+
+        likeService.deleteLike(findUser, boardId);
         // Boards 객체 삭제
         boardsRepository.delete(board);
 
         return "redirect:/";
+        }
     }
 
 
