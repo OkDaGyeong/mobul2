@@ -6,9 +6,11 @@ import com.codehows.mobul.dto.CommentsDTO;
 import com.codehows.mobul.dto.UsersDTO;
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.BoardsFile;
+import com.codehows.mobul.entity.Comments;
 import com.codehows.mobul.entity.Users;
 import com.codehows.mobul.repository.BoardsFileRepository;
 import com.codehows.mobul.repository.BoardsRepository;
+import com.codehows.mobul.repository.CommentsRepository;
 import com.codehows.mobul.service.AuthService;
 import com.codehows.mobul.service.BoardsService;
 import com.codehows.mobul.service.CommentsService;
@@ -40,6 +42,7 @@ public class CommentsController {
     private final CommentsService commentsService;
     private final BoardsFileRepository boardsFileRepository;
     private final BoardsRepository boardsRepository;
+    private final CommentsRepository commentsRepository;
 
 
     //----상세페이지
@@ -137,4 +140,18 @@ public class CommentsController {
 
         return "redirect:/";
     }
+
+    // 댓글삭제
+    @GetMapping("/comment/delete/{commentId}")
+    public String deleteComment(@PathVariable Long commentId){
+        // 댓글 번호 조회
+        Comments comments = commentsRepository.findByCommentId(commentId);
+
+        //Comments 객체 삭제
+        commentsRepository.delete(comments);
+
+        return "redirect:/";
+
+    }
+
 }

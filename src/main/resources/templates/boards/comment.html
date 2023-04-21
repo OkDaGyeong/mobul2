@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
     <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap}" rel="stylesheet">
 </head>
@@ -56,17 +57,17 @@
                 </div>
             </div>
             <td th:if="${session.userId}">
-                <form th:if="${session.userId}==${boardsForm.boardWriter}">
-                    <!-- <button style="font-weight : bold ;">삭제</button>-->
-                    <!-- <button th:formaction="@{/comment/delete}" type="button" class="btn btn-primary">삭제</button>-->
-                    <a th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
-<!--                    <button style="font-weight : bold ;">삭제</button>-->
+            <form th:if="${session.userId}==${boardsForm.boardWriter}">
+                <!-- <button style="font-weight : bold ;">삭제</button>-->
+                <!-- <button th:formaction="@{/comment/delete}" type="button" class="btn btn-primary">삭제</button>-->
+                <a th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
+                <!--                    <button style="font-weight : bold ;">삭제</button>-->
 
-                    <a th:href="@{/board/writer/{boardId}(boardId=${boardsForm.boardId})}">수정</a>
+                <a th:href="@{/board/writer/{boardId}(boardId=${boardsForm.boardId})}">수정</a>
 
-                </form>
+            </form>
 
-            </td>
+        </td>
         </div>
 
         <!-- 댓글 -->
@@ -106,6 +107,9 @@
                 <div class="anonymousWrap">
                     <span class="anonymous">익명</span>
                     <button class="anonymousBtn" font-weight="bold">댓글달기</button>
+                    <button class="anonymousBtn" font-weight="bold">삭제</button>
+
+
                 </div>
                 <span class="itemText">ㅎㅇ</span>
                 <div clss="dateWrap">
@@ -116,6 +120,9 @@
 
         </ul>
 
+
+        <!-- 댓글 작성 부분 -->
+
         <div id="comment-write">
             <textarea id="postArea" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"style="overflow:hidden; white-space: pre-wrap;" ></textarea>
             <button id="post">작성하기</button>
@@ -124,7 +131,6 @@
             <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
         </div>
     </div>
-    <!-- 댓글 작성 부분 -->
 
 
 
@@ -143,6 +149,7 @@
                 <td th:text="${comment.commentWriter}"></td>
                 <td th:text="${comment.commentContents}"></td>
                 <td th:text="${comment.commentDateTime}"></td>
+                <td><button class="delete-reply-btn" th:attr="data-comment-id=${comment.commentId}">삭제</button></td>
             </tr>
         </table>
 
@@ -209,9 +216,31 @@
             }
         });
 
+        $(document).on("click", ".delete-reply-btn", function() {
+            var commentId = $(this).data("commentId");
+            var boardId = $("#boardId").val();
+            console.log(boardId);
+            $.ajax({
+                type: "DELETE",
+                url: "/board/delete/" + commentId,
+                success: function(data) {
+                    // 댓글 삭제가 성공적으로 처리된 경우, 댓글 목록을 업데이트
+                    updateReplyList(boardId);
+                    alert("댓글이 삭제되었습니다.");
+                },
+                error: function(e) {
+                    alert("댓글 삭제 실패!");
+                }
+            });
+        });
+
+
     }
 
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </script>
 </html>

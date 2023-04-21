@@ -11,4 +11,6 @@ public interface CommentsRepository extends JpaRepository<Comments, Long> {
     List<Comments> findAllByBoardsOrderByCommentIdDesc(Boards boards); // Jpa 문법 board_id 기준으로 조회 할때는 매개변수로 클래스가 들어가야 한다
 
 
+    Comments findByCommentId(Long commentId);
+
 }
