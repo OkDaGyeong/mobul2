@@ -126,6 +126,7 @@ public class BoardsController {
         }
 
         try{
+
             boardsService.updateBoard(boardsFormDTO, boardsFileList);
         } catch (Exception e){
             model.addAttribute("errorMessage", "게시글 수정 중 에러가 발생하였습니다");

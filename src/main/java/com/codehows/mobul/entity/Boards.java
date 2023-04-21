@@ -1,14 +1,14 @@
 package com.codehows.mobul.entity;
 
 import com.codehows.mobul.dto.BoardsFormDTO;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "boards")

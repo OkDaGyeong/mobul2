@@ -83,6 +83,7 @@ public class BoardsService {
     @Transactional(readOnly = true)
     public BoardsFormDTO getBoardDtl(Long boardId){ //-257
         Boards boards = boardsRepository.findByBoardId(boardId);//.orElseThrow(EntityNotFoundException::new);
+
         List<BoardsFile> boardsFileList = boardsFileRepository.findByFileBoardNumOrderByFileIdAsc(boards);
 
         List<BoardsFileDTO> boardsFileDTOList = new ArrayList<>();
@@ -103,20 +104,14 @@ public class BoardsService {
 /*-------
         try {
             // 게시글 수정
-            System.out.println("게시글수정@@@@@@@@@@@@@@@@");
             Boards boards = boardsRepository.findByBoardId(boardsFormDTO.getBoardId());
-            System.out.println("게시글수정22222222@@@@@@@@@@@@@@@@");
             boards.updateBoard(boardsFormDTO);
-            System.out.println("게시글수정3333333333333");
             List<Long> fileIds =  boardsFormDTO.getFileId();
-            System.out.println("게시글수정44444444444");
 
-            System.out.println(fileIds);
             // 이미지 등록
 //            for(int i=0; i<fileList.size();i++){
 //                boardsFileService.updateFile(fileIds.get(i), fileList.get(i));
 //            }
-            System.out.println("게시글수정5555555555555");
             return boards.getBoardId();
         } catch(Exception e) {
             e.printStackTrace();
@@ -125,11 +120,12 @@ public class BoardsService {
 ----*/
 
         // 게시글 수정
-
+        System.out.println("태그 테스트: " + boardsFormDTO.getBoardTag());
         Boards boards = boardsRepository.findByBoardId(boardsFormDTO.getBoardId());
 //                .orElseThrow(EntityNotFoundException::new);
-        boards.updateBoard(boardsFormDTO);
 
+        System.out.println("테스트 tag : " + boardsFormDTO.getBoardTag());
+        boards.updateBoard(boardsFormDTO);
         List<Long> fileIds =  boardsFormDTO.getFileId();
 
         // 이미지 등록
@@ -162,6 +158,7 @@ public class BoardsService {
             boardsFile.setFileBoardNum(boards);
             boardsFileService.saveFile(boardsFile, fileList.get(i));
         }
+
 
         return boards.getBoardId();
     }
