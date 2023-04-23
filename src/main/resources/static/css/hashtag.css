@@ -96,6 +96,9 @@
   }
 }
 
+
+//////
+
 .tagify[disabled] .tagify__tag__removeBtn,.tagify[readonly] .tagify__tag__removeBtn {
   display: none
 }

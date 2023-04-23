@@ -72,7 +72,7 @@ public class Boards {
         this.boardContent = boardsFormDTO.getBoardContent();
 //        this.boardWriter = boardsFormDTO.getBoardWriter();
         this.boardTag = boardsFormDTO.getBoardTag();
-        this.boardDate = boardsFormDTO.getBoardDate();
+//        this.boardDate = boardsFormDTO.getBoardDate();    // 업데이트 시 시간 그대로
     }
 
 }
