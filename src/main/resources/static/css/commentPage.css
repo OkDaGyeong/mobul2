@@ -474,3 +474,15 @@ border-radius:5px;
 .btn-modify:hover{
 font-weight: bold;
 }
+
+.hashLink{
+display:inline;
+}
+
+.hashLink span a{
+color: var(--navy);
+cursor:pointer;
+}
+.hashLink span a:hover{
+font-weight:700;
+}
