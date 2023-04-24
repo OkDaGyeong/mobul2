@@ -1,6 +1,5 @@
 package com.codehows.mobul.controller;
 
-import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.service.BoardsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +10,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 

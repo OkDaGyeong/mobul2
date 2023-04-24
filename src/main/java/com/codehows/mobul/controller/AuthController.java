@@ -1,14 +1,11 @@
 package com.codehows.mobul.controller;
 
-import com.codehows.mobul.config.SessionListener;
+
 import com.codehows.mobul.dto.UsersDTO;
 import com.codehows.mobul.entity.Users;
 import com.codehows.mobul.repository.AuthRepository;
 import com.codehows.mobul.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +19,14 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value="/auth") // url에 /auth로 들어오는 요청을 이 AuthController가 처리하도록함
-public class AuthController extends SessionListener {
+public class AuthController{
 
 
 
     private final AuthService authService;  // 생성자 주입 방식 AuthController
 
-    @Autowired
-    private AuthRepository authRepository;
+//    @Autowired
+    private final AuthRepository authRepository;
 
 
     @GetMapping(value="/signin")         // 로그인
@@ -47,7 +44,7 @@ public class AuthController extends SessionListener {
             session.setAttribute("userId", signInResult.getUserId()); //로그인 한 회원 정보를 세션에 담아준다
             mav.setViewName("redirect:/");   //메인 페이지로 돌아간다
         } else { //로그인 실패
-            mav.addObject("error", "로그인 실패. 아이디와 비밀번호를 확인해주세요"); // 에러 메시지 모델 추가
+            mav.addObject("error", "로그인 실패. 아이디와 비번 확인 바람"); // 에러 메시지 모델 추가
             mav.setViewName("/auth/signin");  // signin 페이지로 이동한다
 
             System.out.println("AuthController.signIn");
@@ -73,14 +70,14 @@ public class AuthController extends SessionListener {
         if(optionalExistingUser.isPresent()) {  // 만약 값이 없으면
             Users existingUser = optionalExistingUser.get();  //옵셔널의 값을 벗기겄다
             if(existingUser != null){
-                mav.addObject("errorMessage", "이미 존재하는 회원입니다");
+                mav.addObject("errorMessage", "이미 존재하는 회원");
                 mav.setViewName("/auth/signup");    // 에러메시지를 출력하고 다시 회원가입 페이지로 돌아온다
                 return mav;
             }
         }
         //비밀번호 같은지 확인 메서드
         if(!usersDTO.getUserPassword().equals(userPasswordConfirm)){
-            mav.addObject("passwordError", "비밀번호가 일치하지않습니다");
+            mav.addObject("passwordError", "비밀번호 불일치");
             mav.setViewName("/auth/signup");
             return mav;
         }

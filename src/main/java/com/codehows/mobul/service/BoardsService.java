@@ -1,10 +1,7 @@
 package com.codehows.mobul.service;
 
 
-
-import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.dto.BoardsFileDTO;
-
 import com.codehows.mobul.dto.BoardsFormDTO;
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.BoardsFile;
@@ -20,15 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import java.util.ArrayList;
-
-import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -44,6 +36,7 @@ public class BoardsService {
 
     @Autowired
     private AuthRepository authRepository;
+
 
 
     // 파일 입력
@@ -69,43 +62,85 @@ public class BoardsService {
         return boardsRepository.findByBoardContentContaining(searchContent,pageable);
     }
 
+    //작성자 불러오기
+    public String getBoardWriter(Long boardId){
+        Boards boards = boardsRepository.findByBoardId(boardId);
+        if(boards == null){
+            return null;
+        }
+        Optional<Users> usersOptional = authRepository.findByUserId(String.valueOf(boards.getBoardWriter()));
+        if(usersOptional.isEmpty()){
+            return null;
+        }
+        return usersOptional.get().getUserId();
 
+    }
 
-
+    //hy
+// 수정페이지 수정전
     //hy
     // 수정페이지 : 개별 게시글 불러오기
     @Transactional(readOnly = true)
     public BoardsFormDTO getBoardDtl(Long boardId){ //-257
         Boards boards = boardsRepository.findByBoardId(boardId);//.orElseThrow(EntityNotFoundException::new);
         List<BoardsFile> boardsFileList = boardsFileRepository.findByFileBoardNumOrderByFileIdAsc(boards);
+
         List<BoardsFileDTO> boardsFileDTOList = new ArrayList<>();
         for(BoardsFile boardsFile : boardsFileList){
+
             BoardsFileDTO boardsFileDTO = BoardsFileDTO.of(boardsFile);
             boardsFileDTOList.add(boardsFileDTO);
         }
 
         BoardsFormDTO boardsFormDTO = BoardsFormDTO.of(boards);
         boardsFormDTO.setBoardsFileDTOList(boardsFileDTOList);
+
         return boardsFormDTO;
     }
 
     public Long updateBoard(BoardsFormDTO boardsFormDTO, List<MultipartFile> fileList) throws Exception{
+
+/*-------
+        try {
+            // 게시글 수정
+            System.out.println("게시글수정@@@@@@@@@@@@@@@@");
+            Boards boards = boardsRepository.findByBoardId(boardsFormDTO.getBoardId());
+            System.out.println("게시글수정22222222@@@@@@@@@@@@@@@@");
+            boards.updateBoard(boardsFormDTO);
+            System.out.println("게시글수정3333333333333");
+            List<Long> fileIds =  boardsFormDTO.getFileId();
+            System.out.println("게시글수정44444444444");
+
+            System.out.println(fileIds);
+            // 이미지 등록
+//            for(int i=0; i<fileList.size();i++){
+//                boardsFileService.updateFile(fileIds.get(i), fileList.get(i));
+//            }
+            System.out.println("게시글수정5555555555555");
+            return boards.getBoardId();
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+----*/
+
         // 게시글 수정
-        System.out.println("게시글수정@@@@@@@@@@@@@@@@");
+
         Boards boards = boardsRepository.findByBoardId(boardsFormDTO.getBoardId());
 //                .orElseThrow(EntityNotFoundException::new);
-        System.out.println("게시글수정22222222@@@@@@@@@@@@@@@@");
         boards.updateBoard(boardsFormDTO);
-        System.out.println("게시글수정3333333333333");
+
         List<Long> fileIds =  boardsFormDTO.getFileId();
-        System.out.println("게시글수정44444444444");
+
         // 이미지 등록
         for(int i=0; i<fileList.size();i++){
-            boardsFileService.updateFile(fileIds.get(i), fileList.get(1));
+            boardsFileService.updateFile(fileIds.get(i), fileList.get(i));
         }
-        System.out.println("게시글수정5555555555555");
+
         return boards.getBoardId();
+
     }
+
 
 
 
@@ -128,10 +163,6 @@ public class BoardsService {
             boardsFileService.saveFile(boardsFile, fileList.get(i));
         }
 
-        //user.dir은 프로젝트 경로를 받아줌
-         String pojectpath = System.getProperty("user.dir") + "src/main/resources/static/images";
-
-
         return boards.getBoardId();
     }
 
@@ -146,5 +177,14 @@ public class BoardsService {
     }
 
 
+    // 게시글 ID로 게시글 조회
+    public Boards findByBoardId(Long boardId) {
+        return boardsRepository.findByBoardId(boardId);
+    }
+    // 상세페이지
+    // 삭제
+    public void deleteBoard(Long boardId){
+        boardsRepository.deleteByBoardId(boardId);
+    }
 
 }

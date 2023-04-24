@@ -2,10 +2,9 @@ package com.codehows.mobul.dto;
 
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.BoardsFile;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.modelmapper.ModelMapper;
-
-import java.util.List;
 
 @Getter @Setter
 public class BoardsFileDTO {
@@ -20,21 +19,11 @@ public class BoardsFileDTO {
 
     private String filePath;            // 파일 조회 경로
 
-    private List<BoardsFile> files;    // 첨부 파일 목록
-
-
-
-
-
-
     private static ModelMapper modelMapper = new ModelMapper();
-
 
     public static BoardsFileDTO of(BoardsFile boardsFile) {   // BoardsFile 엔티티 객체 -> DTO 변환
         return modelMapper.map(boardsFile, BoardsFileDTO.class);
     }
-
-
 
 //    public static BoardsFileDTO boardsFileDTO(BoardsFile boardsFile) {   // BoardsFile 엔티티 객체 -> DTO 변환
 //        ModelMapper modelMapper = new ModelMapper();

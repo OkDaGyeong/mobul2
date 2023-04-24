@@ -11,10 +11,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("/**")               // /images/** 뭔지 확인
-//                .addResourceLocations(uploadPath)
-//                .addResourceLocations("classpath:/static/"); // 추가적인 정적 리소스 경로
-                .addResourceLocations("file:///C:/mobul/board/");
-
+        registry.addResourceHandler("/images/**")               // /images/** 뭔지 확인
+                .addResourceLocations(uploadPath);
     }
 }

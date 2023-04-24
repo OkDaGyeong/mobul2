@@ -57,7 +57,7 @@
                 </tr>
                 <tr>
                     <td>
-                            <textarea name="boardContent" placeholder="내용을 입력하세요" id="text"
+                            <textarea style="white-space:pre;" name="boardContent" placeholder="내용을 입력하세요" id="text"
                                       th:field="*{boardContent}" required></textarea>
                     </td>
                 </tr>
@@ -145,6 +145,10 @@
     tagify.on('add', function() {
       console.log(tagify.value); // 입력된 태그 정보 객체
     })
+
+
+
+
 
 
 </script>

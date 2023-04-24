@@ -29,17 +29,17 @@
                pattern="[0-9]+" title="숫자만 입력"/>
       </div>
 <!--      회원가입 버튼-->
-      <div class="btnBox">
-          <p th:if="${errorMessage}" style="color: red; margin-left:10px;" th:text="${errorMessage}"></p>
-          <p th:if="${passwordError}" style="color: red; margin-left:10px;" th:text="${passwordError}"></p>
-        <button type="submit" class="btn-green">SignUp</button>
-      </div>
+        <div class="btnBox">
+            <p th:if="${errorMessage}" style="color: red; margin-left:10px;" th:text="${errorMessage}"></p>
+            <p th:if="${passwordError}" style="color: red; margin-left:10px;" th:text="${passwordError}"></p>
+            <button type="submit" class="btn-green">SignUp</button>
+        </div>
     </form>
 
 <div>
-
-<!--        <p th:if="${errorMessage}" style="color: red" th:text="${errorMessage}"></p>-->
-
+<!--    <div th:if="${errorMessage}">-->
+<!--        <p style="color: red" th:text="${errorMessage}"></p>-->
+<!--    </div>-->
 <!--    <div th:if="${passwordError}">-->
 <!--        <p style="color: blue" th:text="${passwordError}"></p>-->
 <!--    </div>-->

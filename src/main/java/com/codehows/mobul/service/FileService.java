@@ -2,8 +2,6 @@ package com.codehows.mobul.service;
 
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,8 +38,3 @@ public class FileService {
         }
     }
 }
-
-
-
-
-

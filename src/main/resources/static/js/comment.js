@@ -4,7 +4,7 @@
 const comListWrap = document.getElementById('comListWrap');
 
 // 댓글 작성창에 대한 변수
-const postArea = document.getElementById('postArea');
+const postArea = document.getElementById('commentContents');
 const postBtn = document.getElementById('post');
 
 // 댓글 수에 대한 변수
@@ -105,5 +105,15 @@ likeBtn.addEventListener('click', () => {
   likeNum.textContent = count;
   count++;
 });
+
+
+//function commentWrite() {
+//    var commentWriter = document.getElementById("commentWriter").value;
+//    var commentContents = document.getElementById("commentContents").value;
+//    // 스프링 부트로 댓글 내용 전송
+//    // AJAX를 사용하여 스프링 부트로 댓글 내용을 전송하고, 성공적으로 전송된 후에는 댓글 목록을 갱신하는 등의 작업을 수행할 수 있습니다.
+//}
+
+
 
 

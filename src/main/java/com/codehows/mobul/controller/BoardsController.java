@@ -2,9 +2,13 @@ package com.codehows.mobul.controller;
 
 import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.dto.BoardsFormDTO;
+import com.codehows.mobul.repository.BoardsFileRepository;
+import com.codehows.mobul.repository.BoardsRepository;
+import com.codehows.mobul.service.AuthService;
 import com.codehows.mobul.service.BoardsService;
+import com.codehows.mobul.service.CommentsService;
+import com.codehows.mobul.service.LikeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,22 +18,28 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 //import org.springframework.web.multipart.MultipartFile;
 
-//import java.util.concurrent.ExecutionException;
+
 
 //board 뒤에 붙게 대표 주소 /board 입력
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardsController {
-    @Autowired
-    private BoardsService boardsService;
 
+    private final BoardsService boardsService;
+
+    private final LikeService likeService;
+
+    private final AuthService authService;
+
+    private final CommentsService commentsService;
+
+    private final BoardsRepository boardsRepository;
+
+    private final BoardsFileRepository boardsFileRepository;
 
     @GetMapping("/save")
     public String saveForm() {
@@ -46,9 +56,6 @@ public class BoardsController {
         return null;
     }
 
-//경원--
-    @GetMapping("/comment")
-    public String commentForm(){return "boards/comment";}
 
 //    @GetMapping("/writer")
 //    public String writerForm(){return  "boards/writer";}
@@ -57,14 +64,6 @@ public class BoardsController {
     public String adminForm(){return  "boards/admin";}
 
 
-//--
-    // BoardsFIleFormDTO를 model에 담아서 뷰로 전달
-    // value, return 확인필요
-//    @GetMapping(value = "/new")
-//    public String writer(Model model) {
-//        model.addAttribute("boardsFileDTO", new BoardsFormDTO());
-//        return "boards/writer";
-//    }
 
     // /write 페이지 보이기 - 데이터 가져오기 - boards/writer.html에서
     @GetMapping("/writer")     // writerForm -> boardWriteForm
@@ -81,7 +80,7 @@ public class BoardsController {
         if(bindingResult.hasErrors()){ return "/boards/writer"; }
 
         try{
-            boardsService.saveBoard(boardsFormDTO, fileList,session);
+            boardsService.saveBoard(boardsFormDTO, fileList, session);
         } catch (Exception e){
             model.addAttribute("errorMessage", "파일 등록 중 에러가 발생하였습니다");
             return "boards/writer";
@@ -89,40 +88,45 @@ public class BoardsController {
         return "redirect:/";
     }
 
+
+
     // 수정페이지
     @GetMapping(value="/writer/{boardId}")
     public String boardDtlUpdate(Model model, @PathVariable("boardId") Long boardId){
+
         try {
             BoardsFormDTO boardsFormDTO =boardsService.getBoardDtl(boardId);
             model.addAttribute("boardsFormDTO", boardsFormDTO);
         } catch(EntityNotFoundException e){
             model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
-            model.addAttribute("boardFormDTO", new BoardsFormDTO());
+//            model.addAttribute("boardsFormDTO", new BoardsFormDTO());    //
             return "boards/writer";
         }
         return "boards/writer";
     }
 
-    @PostMapping(value="writer/{boardId}")
+
+    @PostMapping(value="/writer/{boardId}")
     public String boardsUpdate(@Valid BoardsFormDTO boardsFormDTO, BindingResult bindingResult,
                                @RequestParam("boardsFile") List<MultipartFile> boardsFileList, Model model){
 
-        System.out.println("11111111111111111111");
         if(bindingResult.hasErrors()){
-            System.out.println("222222222222222");
             return "boards/writer";
         }
 
         try{
             boardsService.updateBoard(boardsFormDTO, boardsFileList);
-            System.out.println("333333333333333333");
         } catch (Exception e){
             model.addAttribute("errorMessage", "게시글 수정 중 에러가 발생하였습니다");
-            System.out.println("4444444444444444");
+           System.out.println("44"+e);
             return "boards/writer";
         }
         System.out.println("55555555555555555");
-        return "index";
+
+//            return "boards/writer";
+//        }
+
+        return "redirect:/";
     }
 
 
@@ -131,17 +135,28 @@ public class BoardsController {
 
 
 
-    //----상세페이지 불러오기
-    @GetMapping(value="/comment/{boardId}")
-    public String boardDtl(Model model, @PathVariable("boardId") Long boardId){
-        boardsService.updateView(boardId);
-        BoardsFormDTO boardsFormDTO = boardsService.getBoardDtl(boardId);
-        System.out.println("파일 여기까지 넘어옴 333" + boardsFormDTO.getBoardsFileDTOList().get(0).getFileName());
-        model.addAttribute("boardsForm", boardsFormDTO);
-        return "boards/comment";
-    }
+
+//    @Autowired
+//    BoardsFileRepository boardsFileRepository;
+//    @Autowired
+//    BoardsRepository boardsRepository;
 
 
-
+//    @GetMapping(value="/comment/drop")
+//    public String dropBoard(){
+//
+//    }
+//    @GetMapping(value="/comment/delete")
+//    public String boardDelete2(){
+//
+//        Boards boards = boardsRepository.findByBoardId(3L);
+//        boardsFileRepository.deleteAllByFileBoardNum(boards);
+//        boardsService.boardDelete(3L);
+//
+//
+//        // 게시물 삭제 후 게시물 리스트
+//        return "redirect:/";
+//    }
+//
 
 }
