@@ -57,8 +57,8 @@ public class LikeService {
         Optional<Users> users = authRepository.findByUserId(userId);
         Boards boards = boardsRepository.findByBoardId(boardId);
         Like like = likeRepository.findByLikeUserIdAndLikeBoardId(users, boards);
-
         likeRepository.delete(like);
+
         return like.getLikeId();
     }
 }

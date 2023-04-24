@@ -29,6 +29,8 @@ public interface BoardsRepository extends JpaRepository<Boards, Long> {
 
     //본문으로 검색
     Page<Boards> findByBoardContentContaining(String searchContent, Pageable pageable);
+    //해시로 검색
+    Page<Boards> findByBoardTagContaining(String searchHashtag, Pageable pageable);
 
     //조회수 변경
     @Modifying

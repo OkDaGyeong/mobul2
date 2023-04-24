@@ -24,6 +24,16 @@ public class BoardsFileDTO {
         return modelMapper.map(boardsFile, BoardsFileDTO.class);
     }
 
+
+    //0-
+//    public BoardsFileDTO(Long fileId, Boards fileBoardNum, String fileName, String fileOriName, String filePath){
+//        this.fileId = fileId;
+//        this.fileBoardNum = fileBoardNum;
+//        this.fileName = fileName;
+//        this.fileOriName = fileOriName;
+//        this.filePath = filePath;
+//
+//    }
 //    public static BoardsFileDTO boardsFileDTO(BoardsFile boardsFile) {   // BoardsFile 엔티티 객체 -> DTO 변환
 //        ModelMapper modelMapper = new ModelMapper();
 //        return modelMapper.map(boardsFile, BoardsFileDTO.class);

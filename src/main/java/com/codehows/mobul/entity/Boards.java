@@ -53,6 +53,8 @@ public class Boards {
     @Column(columnDefinition = "timestamp")
     private LocalDateTime boardDate;
 
+
+
 //// 테스트 추가
 //    @OneToMany(mappedBy = "fileBoardNum", cascade = CascadeType.ALL)
 //    private List<BoardsFile> boardsFiles = new ArrayList<>();
@@ -72,7 +74,7 @@ public class Boards {
         this.boardContent = boardsFormDTO.getBoardContent();
 //        this.boardWriter = boardsFormDTO.getBoardWriter();
         this.boardTag = boardsFormDTO.getBoardTag();
-        this.boardDate = boardsFormDTO.getBoardDate();
+       // this.boardDate = boardsFormDTO.getBoardDate();
     }
 
 }

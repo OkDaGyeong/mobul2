@@ -5,73 +5,102 @@
     <title>SAY SOMETHING</title>
     <link rel="stylesheet" th:href="@{/css/reset.css}">
     <link rel="stylesheet" th:href="@{/css/commentPage.css?after}">
+    <link rel="stylesheet" th:href="@{/css/fileView.css}">
     <script th:src="@{/js/comment.js}" defer></script>
     <script th:src="@{/js/reply.js}" defer></script>
     <script th:src="@{/js/like.js}" defer></script>
+    <script th:src="@{/js/fileView.js}" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap}" rel="stylesheet">
+    <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap}"
+          rel="stylesheet">
 </head>
 <body>
-<script>
 
-</script>
 <div id="wrap">
     <!-- 헤더 -->
-
     <div id="logo" class="clearfix">
         <p><a href="/">SAY SOMETHING</a></p>
     </div>
-<!--    <div th:if="${session.userId}">-->
-<!--        <span id="loginUser" th:text="${session.userId}"></span><span>가 로그인</span>-->
-<!--        <span th:text="${boardsForm.boardWriter}"></span><span>가 작성</span>-->
-
-<!--    </div>-->
-
-<!--    <input type="hidden" id="boardId" th:value="${boardsFormDTO.boardId}">-->
 
     <!-- 테이블 섹션 -->
-
     <div id="tableWrap">
-        <input type="button" value="글 목록" id="listBtn" style="font-weight : bold ;" onclick="location.href='/'">
+        <div th:if="${session.userId}" >
+            <div th:if="${session.isAdmin}" class="btn-form-admin" >
+                <button class="btn-navy" onclick="window.history.back()">글 목록</button>
+                <a class="btn-navy" th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}"
+                   onclick="return confirm('정말로 삭제하시겠습니까?')">관리자 권한으로 삭제</a>
+            </div>
+        </div>
+        <div th:unless="${session.isAdmin}" class="rightBtnBox">
+            <button class="btn-navy" onclick="window.history.back()">글 목록</button>
+        </div>
+
         <div id="tableBox">
-            <div class="titleArea" >
-
-                <p class="date" th:text="${#temporals.format(boardsForm.boardDate, 'yy-MM-dd　hh:mm')}" ></p>
-                <p class="title" th:text="${boardsForm.boardTitle}" ></p>
-                <div id="viewbox">
-                    <img  class="icon" src="/images/view.png" alt="view" />
+            <div class="titleArea">
+                <p class="date" th:text="${#temporals.format(boardsForm.boardDate, 'yy-MM-dd　hh:mm')}"></p>
+                <p class="title" th:text="${boardsForm.boardTitle}"></p>
+                <div class="title-right">
+                    <div id="viewbox">
+                        <img class="icon" src="/images/view.png" alt="view"/>
                         　<span th:text="${boardsForm.boardView}"></span>
-
-<!--                    <p class="view" ><img class="icon" src="/images/view.png" alt="view" /></p>-->
-<!--                    <p class="viewCount"  >0</p>-->
+                    </div>
+                    <div th:if="${session.isAdmin}" id="writerBox" style="margin-right: 30px;">
+                        <img class="icon" src="/images/signinIcon.png" alt="writer"/>
+                        　<span th:text="${boardsForm.boardWriter}"></span>
+                    </div>
+                    <div th:if="${session.userId}">
+                        <div th:if="not ${session.isAdmin} and ${session.userId}==${boardsForm.boardWriter}" class="btn-form">
+                            <a class="btn-modify" th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}"
+                               onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
+                            <a class="btn-modify" th:href="@{/board/writer/{boardId}(boardId=${boardsForm.boardId})}">수정</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="mainText">
-                <p th:text="${boardsForm.boardContent}">content</p>
-                <div id="hashArea">
-                    <p  th:text="${boardsForm.boardTag}"></p>
+                <div id="mainContentBox">
+                    <p th:text="${boardsForm.boardContent}">content</p>
+                </div>
+                <div id="hashArea" th:if="${boardsForm.boardTag != ''}">
+                    <p th:text="'#'+${boardsForm.boardTag}"></p>
                 </div>
             </div>
-            <td th:if="${session.userId}">
-                <form th:if="${session.userId}==${boardsForm.boardWriter}">
-                    <!-- <button style="font-weight : bold ;">삭제</button>-->
-                    <!-- <button th:formaction="@{/comment/delete}" type="button" class="btn btn-primary">삭제</button>-->
-                    <a th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
-<!--                    <button style="font-weight : bold ;">삭제</button>-->
+            <div id="fileBox">
+<!--                <div style="display:flex; justify-content: space-between;">-->
+<!--                    <button onclick="toggleFileArea()" id="bnt-openClose">첨부파일 열기 ▼</button>-->
+<!--                    <p th:text="'by. ' + ${boardsForm.boardWriter}"></p>-->
+<!--                </div>-->
+                <button onclick="toggleFileArea()" id="bnt-openClose">첨부파일 열기 ▼</button>
 
-                    <a th:href="@{/board/writer/{boardId}(boardId=${boardsForm.boardId})}">수정</a>
+                <div id="fileArea" style="display:none">
+                    <div th:each="fileDTO : ${boardsForm.boardsFileDTOList}">
+                        <div class="flexBox" th:if="${not #strings.isEmpty(fileDTO.filePath)}">
+                            <span style="line-height: 30px;">[[${fileDTO.fileOriName}]]</span>
+                            <div>
+                                <button class="btn-file" th:data-file-name="${fileDTO.fileOriName}"
+                                        onclick="fileViewer(this.dataset.fileName)"
+                                        style="height: 30px;">미리보기
+                                </button>
+                                <a class="btn-file"
+                                   th:href="@{'/files/' + ${fileDTO.fileOriName}}"
+                                   th:download="${fileDTO.fileOriName}" >다운로드</a>
+                            </div>
 
-                </form>
 
-            </td>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
 
         <!-- 댓글 -->
         <div id="commentArea">
             <div class="comment">
-                <img class="icon" src="/images/chat.png" alt="view" style="margin-right:4px;" />
-                 댓글 <span class="commentNum">3　</span>
+                <img class="icon" src="/images/chat.png" alt="view" style="margin-right:4px;"/>
+                댓글 <span class="commentNum">3　</span>
 
             </div>
 
@@ -81,19 +110,21 @@
                 <!--로그인 상태일 경우-->
                 <div th:if="${session.userId}">
                     <!-- 좋아요를 누르지 않은 상태 -->
-                    <button class="likeBtn" th:if="${!isLiked}" th:onclick="|likeCheck('${boardsForm.boardId}', ${isLiked})|">
-                        <img class="icon" src="/images/like_line.png" alt="view" />
-                        좋아요 <span >[[${likeCount}]]</span></button>
+                    <button class="likeBtn" th:if="${!isLiked}"
+                            th:onclick="|likeCheck('${boardsForm.boardId}', ${isLiked})|">
+                        <img class="icon" src="/images/like_line.png" alt="view"/>
+                        좋아요 <span>[[${likeCount}]]</span></button>
                     <!-- 좋아요를 누른 상태 -->
-                    <button class="likeBtn" th:if="${isLiked}" th:onclick="|likeCheck('${boardsForm.boardId}', ${isLiked})|">
-                        <img class="icon" src="/images/like_fill.png" alt="view" />
-                        좋아요 <span >[[${likeCount}]]</span></button>
+                    <button class="likeBtn" th:if="${isLiked}"
+                            th:onclick="|likeCheck('${boardsForm.boardId}', ${isLiked})|">
+                        <img class="icon" src="/images/like_fill.png" alt="view"/>
+                        좋아요 <span>[[${likeCount}]]</span></button>
                 </div>
                 <!-- 로그인이 안된 상태일 경우 -->
                 <div th:unless="${session.userId}">
-                    <button  class="likeBtn" onclick="alert('로그인후 이용해주세요.')">
-                        <img class="icon" src="/images/like_line.png" alt="view" />
-                        좋아요 <span >[[${likeCount}]]</span></button>
+                    <button class="likeBtn" onclick="alert('로그인후 이용해주세요.')">
+                        <img class="icon" src="/images/like_line.png" alt="view"/>
+                        좋아요 <span>[[${likeCount}]]</span></button>
                 </div>
 
             </div>
@@ -115,7 +146,8 @@
         </ul>
 
         <div id="postComment">
-            <textarea id="postArea" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"style="overflow=hidden white-space: pre-wrap;" ></textarea>
+            <textarea id="postArea" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"
+                      style="overflow=hidden white-space: pre-wrap;"></textarea>
             <button id="post">작성하기</button>
         </div>
     </div>
