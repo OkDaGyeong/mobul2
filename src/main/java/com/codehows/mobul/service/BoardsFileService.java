@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -74,7 +73,9 @@ public class BoardsFileService {
         }
         String fileOriName = file.getOriginalFilename();
         String fileName = fileService.uploadFile(fileLocation, fileOriName, file.getBytes());
+
         String fileUrl = "/files/board/" + fileName;
+
         savedFile.updateFile(fileOriName, fileName, fileUrl);
         }
     }

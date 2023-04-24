@@ -38,6 +38,7 @@
     <div class="searchBox betweenBox">
         <form th:action="@{/}" method="get">
             <select name="category" id="searchCategory">
+
                 <option name="title" value="title" selected>제목</option>
                 <option name="content" value="content">내용</option>
                 <option name="hashtag" value="hashtag">해시태그</option>
@@ -46,6 +47,7 @@
             <button type="button" id="resetButton" onclick="resetSearch()"  >
                 <img class="icon2" src="/images/undo.png" alt="reset"/>
             </button>
+
         </form>
         <button  th:if="${session.userId}" class="btn-navy" onclick="window.location.href='/board/writer'">글 작성하기</button>
     </div>

@@ -29,6 +29,7 @@ public class BoardsFormDTO {
 
     private int boardLike;
 
+
     private Users boardWriter ;         // 게시판 작성자--추가
 
 

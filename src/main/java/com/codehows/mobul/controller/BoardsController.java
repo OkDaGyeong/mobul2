@@ -9,9 +9,9 @@ import com.codehows.mobul.repository.BoardsFileRepository;
 import com.codehows.mobul.repository.BoardsRepository;
 import com.codehows.mobul.service.AuthService;
 import com.codehows.mobul.service.BoardsService;
+import com.codehows.mobul.service.CommentsService;
 import com.codehows.mobul.service.LikeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,13 +36,13 @@ import java.util.Optional;
 @RequestMapping("/board")
 public class BoardsController {
 
-    @Autowired
-    private BoardsService boardsService;
-    @Autowired
-    private LikeService likeService;
-    @Autowired
-    private AuthService authService;
+    private final BoardsService boardsService;
 
+    private final LikeService likeService;
+
+    private final AuthService authService;
+
+    private final CommentsService commentsService;
 
     private final BoardsRepository boardsRepository;
 
@@ -63,9 +63,6 @@ public class BoardsController {
         return null;
     }
 
-//경원--
-    @GetMapping("/comment")
-    public String commentForm(){return "boards/comment";}
 
 
     @GetMapping("/admin")
@@ -118,7 +115,7 @@ public class BoardsController {
             BoardsFormDTO boardsFormDTO =boardsService.getBoardDtl(boardId);
             model.addAttribute("boardsFormDTO", boardsFormDTO);
         } catch(EntityNotFoundException e){
-            model.addAttribute("errorMessage", "존재하지 않는 게시물입니다.");
+            model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
 //            model.addAttribute("boardsFormDTO", new BoardsFormDTO());    //
             return "boards/writer";
         }
@@ -149,6 +146,7 @@ public class BoardsController {
 //        System.out.println("-----------boardsFormDTO : " + boardsFormDTO);
         return "redirect:/";
     }
+
 
 
 

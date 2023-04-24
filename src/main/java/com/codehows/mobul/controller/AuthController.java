@@ -1,6 +1,6 @@
 package com.codehows.mobul.controller;
 
-import com.codehows.mobul.config.SessionListener;
+
 import com.codehows.mobul.dto.UsersDTO;
 import com.codehows.mobul.entity.Users;
 import com.codehows.mobul.repository.AuthRepository;
@@ -19,7 +19,7 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value="/auth") // url에 /auth로 들어오는 요청을 이 AuthController가 처리하도록함
-public class AuthController extends SessionListener {
+public class AuthController{
 
 
 
