@@ -61,8 +61,16 @@ textarea::-webkit-scrollbar-thumb{
     border: 2px solid transparent;
 }
 
+.hashBlock {
+margin:10px 0px;
+}
 
-
+.hashBlock tags .tagify__input{
+display:block;
+width:100%;
+margin:10px 0;
+border-radius: 3px;
+}
 /* 해시태그 */
 #hash{
   /*margin:15px 15px;*/
@@ -71,8 +79,7 @@ textarea::-webkit-scrollbar-thumb{
 .tagify{
   width: 1100px;
   max-width: 1100px;
-   margin-left:15px;
-  /* background-color: #fff; */
+
 }
 
 .tagify--outside{
@@ -103,9 +110,7 @@ textarea::-webkit-scrollbar-thumb{
 }
 
 
-.tagify{
-  border-style: none;
-}
+
 
 /* 본문 작성 높이값 */
 #text{

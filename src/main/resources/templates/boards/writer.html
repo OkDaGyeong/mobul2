@@ -50,9 +50,9 @@
                       th:field="*{boardContent}" required></textarea>
 
             </div>
-            <div>
-                    <input  placeholder="#해시태그" id="myTags" />
-                    <input type="hidden" id="qq"  th:field="*{boardTag}"/>
+            <div class="hashBlock">
+                    <input  placeholder="#해시태그" id="myTags"/>
+                    <input type="hidden" id="inputHashTag"  th:field="*{boardTag}"/>
             </div>
 
 
@@ -100,7 +100,7 @@
     // 해시태그
 
     const input = document.getElementById('myTags');
-    const allTag = document.getElementById('qq');
+    const allTag = document.getElementById('inputHashTag');
 
     // boardTag 값을 input 태그에 적용
     input.value = allTag.value;

@@ -92,7 +92,6 @@ input[type="button"] {
 #logo{
   width: 100%;
   height: auto;
-  padding-top: 70px;
   display: flex;
   justify-content: center;
 }
@@ -159,3 +158,23 @@ height:20px;}
 .icon2{
 width:25px;
 height:25px;}
+
+/* */
+.rightBox {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+/*로그인, 회원가입, 사용자아이디, 로그아웃*/
+#signBox {
+  margin: 20px;
+}
+#signBox a {
+  margin-left: 20px;
+  transition: 0.3s;
+}
+#signBox a:hover {
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}

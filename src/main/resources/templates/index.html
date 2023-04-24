@@ -16,7 +16,8 @@
         <div id="signBox">
             <div th:if="${session.userId}">
                 <span th:if="${session.isAdmin}" th:text="관리자" style="font-weight:600; color:#047d5a;"></span>
-                <span th:unless="${session.isAdmin}" id="loginUser" style="font-weight:600; color:#5e6790;" th:text="${session.userId + ' 님'}"></span>
+                <span th:unless="${session.isAdmin}" id="loginUser" style="font-weight:600; color:#5e6790;"
+                      th:text="${session.userId + ' 님'}"></span>
                 <a th:href="@{/auth/logout}">로그아웃</a>
             </div>
             <div th:unless="${session.userId}">
@@ -27,7 +28,7 @@
     </div>
     <div>
         <a href="/">
-        <p id="logoTitle">SAY SOMETHINGS</p></a>
+            <p id="logoTitle">SAY SOMETHINGS</p></a>
     </div>
 </div>
 
@@ -44,23 +45,36 @@
 
             </select>
             <input type="search" name="searchTitle" id="searchKeyword" placeholder="검색어를 입력하세요" value=""/>
-            <button type="button" id="resetButton" onclick="resetSearch()"  >
+            <button type="button" id="resetButton" onclick="resetSearch()">
                 <img class="icon2" src="/images/undo.png" alt="reset"/>
             </button>
 
         </form>
-        <button  th:if="${session.userId}" class="btn-navy" onclick="window.location.href='/board/writer'">글 작성하기</button>
+        <button th:if="${session.userId}" class="btn-navy" onclick="window.location.href='/board/writer'">글 작성하기
+        </button>
     </div>
 
 
     <div class="tableBox">
         <table class="table-style">
             <tr class="table-header">
-                <th style="width:50px;">번호 <a th:href="@{/(sort='boardId')}">정렬</a></th>
-                <th>제목 <a th:href="@{/(sort='boardTitle')}">정렬</a></th>
-                <th th:if="${session.isAdmin}"  style="width:100px;">작성자</th>
-                <th style="width:100px;">날짜 <a th:href="@{/(sort='boardDate')}">정렬</a></th>
-                <th style="width:50px;">조회수 <a th:href="@{/(sort='boardView')}">정렬</a></th>
+                <th><a th:href="@{/(sort='boardId',dir='asc',
+                   searchTitle=${param.searchTitle != null ? param.searchTitle : ''},
+                    searchContent=${param.searchContent != null ? param.searchContent : ''},
+                    searchHashtag=${param.searchHashtag != null ? param.searchHashtag : ''})}">번호 ⬆</a></th>
+                <th style="width:600px"><a th:href="@{/(sort='boardTitle',dir='asc',
+                   searchTitle=${param.searchTitle != null ? param.searchTitle : ''},
+                    searchContent=${param.searchContent != null ? param.searchContent : ''},
+                    searchHashtag=${param.searchHashtag != null ? param.searchHashtag : ''})}">제목 ⬆</a></th>
+                <th th:if="${session.isAdmin}">작성자</th>
+                <th><a th:href="@{/(sort='boardDate',dir='desc',
+                    searchTitle=${param.searchTitle != null ? param.searchTitle : ''},
+                    searchContent=${param.searchContent != null ? param.searchContent : ''},
+                    searchHashtag=${param.searchHashtag != null ? param.searchHashtag : ''})}">날짜 ⬇</a></th>
+                <th><a th:href="@{/(sort='boardView',dir='desc',
+                    searchTitle=${param.searchTitle != null ? param.searchTitle : ''},
+                    searchContent=${param.searchContent != null ? param.searchContent : ''},
+                    searchHashtag=${param.searchHashtag != null ? param.searchHashtag : ''})}">조회수 ⬇</a></th>
             </tr>
             <th:block th:if="${list == null or list.isEmpty()}">
                 <tr>
@@ -71,8 +85,9 @@
             <tr th:each="board:${list}">
                 <td th:text="${board.boardId}"></td>
                 <td><a th:text="${board.boardTitle}" th:href="@{/board/comment/{boardId}(boardId=${board.boardId})}"
-                        style="text-align:left; display:block;"></a></td>
-                <td th:if="${session.isAdmin}" th:text="${board.boardWriter.getUserId()}"> </td>
+                       style="text-align:left; display:block;"></a></td>
+                <td th:if="${session.isAdmin}"
+                    th:text="${board.boardWriter.getUserId()}=='admin'?'관리자':${board.boardWriter.getUserId()}"></td>
                 <td th:text="${#temporals.format(board.boardDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${board.boardView}+' view'"></td>
             </tr>
@@ -81,24 +96,39 @@
     </div>
 
     <div class="page centerContent" style="margin-top:30px" th:unless="${startPage}==null or ${startPage}==null">
-        <li class="page-item">
+        <li class="page-item" >
             <a class="page-link"
-               th:href="@{/(page=${nowPage > 5 ? nowPage-5 : 0}, searchTitle=${param.searchTitle},searchContent=${param.searchContent}, searchHashtag=${param.searchHashtag})}">&laquo;</a>
+               th:href="@{/(page=${nowPage > 5 ? nowPage-5 : 0},
+               sort=${param.sort},
+                dir=${param.dir},
+               searchTitle=${param.searchTitle},
+               searchContent=${param.searchContent},
+                searchHashtag=${param.searchHashtag})}">&laquo;</a>
         </li>
 
         <th:block th:each="page:${#numbers.sequence(startPage,endPage)}" class="page-item">
             <li>
                 <a class="page-link" th:if="${page != nowPage and page>0}"
-                   th:href="@{/(page=${page-1}, searchTitle=${param.searchTitle},searchContent=${param.searchContent}, searchHashtag=${param.searchHashtag})}"
+                   th:href="@{/(page=${page-1},
+                   sort=${param.sort},
+                   dir=${param.dir},
+                   searchTitle=${param.searchTitle},
+                   searchContent=${param.searchContent},
+                   searchHashtag=${param.searchHashtag})}"
                    th:text="${page}"></a>
                 <strong class="page-link" th:if="${page==nowPage}" th:text="${page}"
                         style="color:var(--green); border:2px solid var(--green);"></strong>
             </li>
         </th:block>
 
-        <li class="page-item">
+        <li class="page-item" >
             <a class="page-link"
-               th:href="@{/(page=${nowPage < endPage - 5 ? nowPage+5 : endPage-1}, searchTitle=${param.searchTitle},searchContent=${param.searchContent}, searchHashtag=${param.searchHashtag})}">&raquo;</a>
+               th:href="@{/(page=${nowPage < endPage - 5 ? nowPage+5 : endPage-1},
+               sort=${param.sort},
+               dir=${param.dir},
+               searchTitle=${param.searchTitle},
+               searchContent=${param.searchContent},
+               searchHashtag=${param.searchHashtag})}">&raquo;</a>
         </li>
     </div>
 </div>

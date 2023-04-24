@@ -4,12 +4,14 @@ import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.service.BoardsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 
@@ -19,8 +21,19 @@ public class HomeController {
     private BoardsService boardsService;
 
     @GetMapping("/")
-    public String boardList(Model model, @PageableDefault(page=0, size=15, sort="boardId",
-        direction= Sort.Direction.DESC) Pageable pageable, String searchTitle, String searchContent, String searchHashtag){
+    public String boardList(Model model,
+                            @RequestParam(name = "page", defaultValue = "0") int page,
+                            @RequestParam(name = "size", defaultValue = "15") int size,
+                            @RequestParam(name = "sort", defaultValue = "boardId") String sort,
+                            @RequestParam(name = "dir", defaultValue = "desc") String dir,
+                           /* Pageable pageable,*/
+                            String searchTitle, String searchContent, String searchHashtag)
+    {
+        // 파라미터로 전달받은 sort와 dir을 이용하여 Sort 객체를 생성
+        Sort pageableSort = Sort.by(Sort.Direction.fromString(dir), sort);
+        // Pageable 객체를 생성
+
+        Pageable pageable = PageRequest.of(page, size, pageableSort);
 
         //Page<Boards> list = boardsService.boardList(pageable);
         Page<Boards> list=null;

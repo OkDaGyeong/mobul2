@@ -22,29 +22,13 @@ body {
   border: 1px solid var(--grey);
 }
 
-.rightBox {
-  display: flex;
-  flex-direction: row-reverse;
 
-}
 .betweenBox {
   display: flex;
   justify-content: space-between;
 }
 
 
-#signBox {
-  margin: 20px;
-}
-#signBox a {
-  margin-left: 20px;
-  transition: 0.3s;
-}
-#signBox a:hover {
-  font-weight: bold;
-  text-decoration: underline;
-  text-underline-offset: 5px;
-}
 
 /* 검색박스스 */
 .searchBox {
@@ -136,12 +120,14 @@ table {
 
 th {
   background-color: var(--navy);
-  color: var(--ivory);
   font-weight: bold;
   padding: 10px;
   text-align: center;
   text-transform: uppercase;
 }
+th a,th{
+
+  color: var(--ivory);}
 
 td {
   border: 1px solid #ccc;
