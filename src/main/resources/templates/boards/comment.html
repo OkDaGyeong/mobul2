@@ -69,9 +69,13 @@
                     <p th:text="${boardsForm.boardContent}">content</p>
                 </div>
                 <div id="hashArea" th:if="${boardsForm.boardTag != ''}">
-                    <a th:href="@{/(category=hashtag,searchHashtag=${boardsForm.boardTag})}" th:text="'#'+${boardsForm.boardTag}">test</a>
+                    <p th:text="${boardsForm.boardTag}"></p>
+                    <div th:each="tag : ${#strings.arraySplit(boardsForm.boardTag, ' ,')}">
+                        <div>
+                            <a th:href="@{/(category=hashtag,searchHashtag=${#strings.replace(tag, '#', '')})}" th:text="${tag}"></a>
+                            </div>
+                   </div>
                 </div>
-            </div>
             <div id="fileBox">
 
                 <button onclick="toggleFileArea()" id="bnt-openClose">첨부파일 열기 ▼</button>
@@ -90,10 +94,11 @@
                                    th:download="${fileDTO.fileOriName}" >다운로드</a>
                             </div>
 
-
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
 

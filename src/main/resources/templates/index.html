@@ -42,6 +42,7 @@
                 <option name="title" value="title" selected>제목</option>
                 <option name="content" value="content">내용</option>
                 <option name="hashtag" value="hashtag">해시태그</option>
+
             </select>
             <input type="search" name="searchTitle" id="searchKeyword" placeholder="검색어를 입력하세요" value=""/>
             <button type="button" id="resetButton" onclick="resetSearch()"  >
@@ -51,6 +52,7 @@
         </form>
         <button  th:if="${session.userId}" class="btn-navy" onclick="window.location.href='/board/writer'">글 작성하기</button>
     </div>
+
 
     <div class="tableBox">
         <table class="table-style">

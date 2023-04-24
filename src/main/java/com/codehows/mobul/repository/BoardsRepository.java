@@ -32,6 +32,9 @@ public interface BoardsRepository extends JpaRepository<Boards, Long> {
     //해시로 검색
     Page<Boards> findByBoardTagContaining(String searchHashtag, Pageable pageable);
 
+    // 해시태그 검색
+    Page<Boards> findByBoardTagContaining(String searchTag, Pageable pageable);
+
     //조회수 변경
     @Modifying
     @Query("update Boards p set p.boardView = p.boardView + 1 where p.boardId = :board_id AND p.boardId IS NOT NULL")

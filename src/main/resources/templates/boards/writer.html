@@ -120,8 +120,10 @@
     // 태그 추가 이벤트 핸들러
     tagify.on('add', function() {
       const tagValues = tagify.value.map(tag => tag.value);
-      input.value = tagValues.join(' #');
-      allTag.value = input.value;
+
+      input.value = tagValues.join(',');
+      allTag.value = ',' + input.value + ',';
+
 
       console.log("모든태그 : " + allTag.value);
 

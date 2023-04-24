@@ -187,6 +187,17 @@ public class BoardsController {
         Boards boards = boardsService.findByBoardId(boardId);
 
         BoardsFormDTO boardsFormDTO = boardsService.getBoardDtl(boardId);
+
+        // comment창에서 해시태그 #붙여서 보이게
+        String hashTag = boardsFormDTO.getBoardTag();
+        if (hashTag.length()>0){
+            hashTag = hashTag.substring(0, hashTag.length() - 1);
+        }
+
+        hashTag = hashTag.replace(",", " #");
+        boardsFormDTO.setBoardTag(hashTag);
+
+
         model.addAttribute("boardsForm", boardsFormDTO);
 
         //--like
