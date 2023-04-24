@@ -34,44 +34,6 @@ public class CommentsController {
     private final BoardsRepository boardsRepository;
     private final CommentsRepository commentsRepository;
 
-    //----상세페이지
-//    @GetMapping(value="/comment/{boardId}")
-//    public String boardDtl(Model model, @PathVariable("boardId") Long boardId , HttpSession session ){
-//        boardsService.updateView(boardId); //조회수 증가
-//        Boards boards = boardsService.findByBoardId(boardId);
-//
-//        // 댓글 목록 가져오기
-//        List<CommentsDTO> commentsDTOList = commentsService.findAll(boardId);
-//        model.addAttribute("commentsList", commentsDTOList);   //  html에서 사용할 수 있게 값들을 넘겨 준다
-//        System.out.println("commentsDTOList = " + commentsDTOList);
-//        BoardsFormDTO boardsFormDTO = boardsService.getBoardDtl(boardId);
-//
-//        model.addAttribute("boardsForm", boardsFormDTO);
-//
-//        //--like관련
-//        Long likeCount = likeService.findLikeCount(boards);
-//        model.addAttribute("likeCount", likeCount);
-//
-//        // 로그인 유저 아이디 확인,
-//        System.out.println("로그인된 유저 id : "+session.getAttribute("userId"));
-//        String loginUserId = (String)session.getAttribute("userId");
-//
-//        Optional<Users> users = authService.findByUserId(loginUserId);
-//
-//        if(loginUserId != null){ // 로그인 했는지 구분
-//            if(likeService.findLike(users, boards)){ // 게시글에 좋아요를 누른 사람인지 확인
-//                model.addAttribute("isLiked",true);
-//            }else {
-//                model.addAttribute("isLiked", false);
-//            }
-//        }else {
-//            model.addAttribute("isLiked", false);
-//        }
-//        return "/boards/comment";
-//    }
-
-
-
     @PostMapping("/comment/save")
     public ResponseEntity save(@ModelAttribute CommentsDTO commentsDTO){
 
@@ -90,32 +52,9 @@ public class CommentsController {
 
     }
 
-
-
-    // 게시글 삭제
-//    @GetMapping("/comment/delete/{boardId}")
-//    public String deleteBoard(@PathVariable Long boardId){
-//
-//        // id 조회
-//        Boards board = boardsRepository.findByBoardId(boardId);
-//        //                .orElseThrow(() -> new IllegalArgumentException("Invalid board Id:" + boardId));
-//
-//        // file 객체 삭제
-//        List<BoardsFile> files = boardsFileRepository.findByFileBoardNumOrderByFileIdAsc(board);   //
-//        if(!files.isEmpty()){
-//            boardsFileRepository.deleteAll(files);
-//        }
-//
-//        // Boards 객체 삭제
-//        boardsRepository.delete(board);
-//
-//        return "redirect:/";
-//    }
-
     // 댓글삭제
     @DeleteMapping(value = "/comment/delete/{commentId}")
     public @ResponseBody ResponseEntity deleteComment(@PathVariable("commentId") Long commentId) {
-        System.out.println("정성욱" + commentId);
         commentsRepository.deleteById(commentId);
         return ResponseEntity.ok(commentId);
     }
