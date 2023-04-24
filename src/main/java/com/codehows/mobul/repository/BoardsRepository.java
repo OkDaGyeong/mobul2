@@ -32,8 +32,6 @@ public interface BoardsRepository extends JpaRepository<Boards, Long> {
     //해시로 검색
     Page<Boards> findByBoardTagContaining(String searchHashtag, Pageable pageable);
 
-    // 해시태그 검색
-    Page<Boards> findByBoardTagContaining(String searchTag, Pageable pageable);
 
     //조회수 변경
     @Modifying

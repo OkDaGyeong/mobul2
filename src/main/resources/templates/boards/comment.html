@@ -7,8 +7,8 @@
     <link rel="stylesheet" th:href="@{/css/commentPage.css?after}">
     <link rel="stylesheet" th:href="@{/css/fileView.css}">
     <script th:src="@{/js/comment.js}" defer></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+            integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 
     <script th:src="@{/js/like.js}" defer></script>
     <script th:src="@{/js/fileView.js}" defer></script>
@@ -20,19 +20,21 @@
 <body>
 
 <div id="wrap">
+
     <!-- 헤더 -->
+
     <div id="logo" class="clearfix">
         <p><a href="/">SAY SOMETHING</a></p>
     </div>
-<!--    <div th:if="${session.userId}">-->
-<!--        <span id="loginUser" th:text="${session.userId}"></span><span>가 로그인</span>-->
-<!--        <span th:text="${boardsForm.boardWriter}"></span><span>가 작성</span>-->
-<!--    </div>-->
+    <!--    <div th:if="${session.userId}">-->
+    <!--        <span id="loginUser" th:text="${session.userId}"></span><span>가 로그인</span>-->
+    <!--        <span th:text="${boardsForm.boardWriter}"></span><span>가 작성</span>-->
+    <!--    </div>-->
 
     <!-- 테이블 섹션 -->
     <div id="tableWrap">
-        <div th:if="${session.userId}" >
-            <div th:if="${session.isAdmin}" class="btn-form-admin" >
+        <div th:if="${session.userId}">
+            <div th:if="${session.isAdmin}" class="btn-form-admin">
                 <button class="btn-navy" onclick="window.history.back()">글 목록</button>
                 <a class="btn-navy" th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}"
                    onclick="return confirm('정말로 삭제하시겠습니까?')">관리자 권한으로 삭제</a>
@@ -56,10 +58,13 @@
                         　<span th:text="${boardsForm.boardWriter}"></span>
                     </div>
                     <div th:if="${session.userId}">
-                        <div th:if="not ${session.isAdmin} and ${session.userId}==${boardsForm.boardWriter}" class="btn-form">
-                            <a class="btn-modify" th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}"
+                        <div th:if="not ${session.isAdmin} and ${session.userId}==${boardsForm.boardWriter}"
+                             class="btn-form">
+                            <a class="btn-modify"
+                               th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}"
                                onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
-                            <a class="btn-modify" th:href="@{/board/writer/{boardId}(boardId=${boardsForm.boardId})}">수정</a>
+                            <a class="btn-modify"
+                               th:href="@{/board/writer/{boardId}(boardId=${boardsForm.boardId})}">수정</a>
                         </div>
                     </div>
                 </div>
@@ -72,35 +77,33 @@
                     <p th:text="${boardsForm.boardTag}"></p>
                     <div th:each="tag : ${#strings.arraySplit(boardsForm.boardTag, ' ,')}">
                         <div>
-                            <a th:href="@{/(category=hashtag,searchHashtag=${#strings.replace(tag, '#', '')})}" th:text="${tag}"></a>
-                            </div>
-                   </div>
-                </div>
-            <div id="fileBox">
-
-                <button onclick="toggleFileArea()" id="bnt-openClose">첨부파일 열기 ▼</button>
-
-                <div id="fileArea" style="display:none">
-                    <div th:each="fileDTO : ${boardsForm.boardsFileDTOList}">
-                        <div class="flexBox" th:if="${not #strings.isEmpty(fileDTO.filePath)}">
-                            <span style="line-height: 30px;">[[${fileDTO.fileOriName}]]</span>
-                            <div>
-                                <button class="btn-file" th:data-file-name="${fileDTO.fileOriName}"
-                                        onclick="fileViewer(this.dataset.fileName)"
-                                        style="height: 30px;">미리보기
-                                </button>
-                                <a class="btn-file"
-                                   th:href="@{'/files/' + ${fileDTO.fileOriName}}"
-                                   th:download="${fileDTO.fileOriName}" >다운로드</a>
-                            </div>
-
+                            <a th:href="@{/(category=hashtag,searchHashtag=${#strings.replace(tag, '#', '')})}"
+                               th:text="${tag}"></a>
                         </div>
                     </div>
                 </div>
+                <div id="fileBox">
 
+                    <button onclick="toggleFileArea()" id="bnt-openClose">첨부파일 열기 ▼</button>
 
+                    <div id="fileArea" style="display:none">
+                        <div th:each="fileDTO : ${boardsForm.boardsFileDTOList}">
+                            <div class="flexBox" th:if="${not #strings.isEmpty(fileDTO.filePath)}">
+                                <span style="line-height: 30px;">[[${fileDTO.fileOriName}]]</span>
+                                <div>
+                                    <button class="btn-file" th:data-file-name="${fileDTO.fileOriName}"
+                                            onclick="fileViewer(this.dataset.fileName)"
+                                            style="height: 30px;">미리보기
+                                    </button>
+                                    <a class="btn-file"
+                                       th:href="@{'/files/' + ${fileDTO.fileOriName}}"
+                                       th:download="${fileDTO.fileOriName}">다운로드</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
 
         </div>
 
@@ -140,41 +143,43 @@
 
         <div id="postComment">
             <form id="postWrap">
-                <input type="hidden" id="commentWriter" placeholder="익명" th:if="${session.userId != null}" th:attr="value=${session.userId}"
+                <input type="hidden" id="commentWriter" placeholder="익명" th:if="${session.userId != null}"
+                       th:attr="value=${session.userId}"
                 >
-                <textarea id="commentContents" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"style="overflow=hidden white-space: pre-wrap;" required></textarea>
+                <textarea id="commentContents" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"
+                          style="overflow=hidden white-space: pre-wrap;"
+                          ></textarea>
                 <button id="post" onclick="commentWrite()">작성하기</button>
+
             </form>
         </div>
 
-    <ul id="comListWrap">
-        <li class="comList" th:each="comment:${commentsList}">
+        <ul id="comListWrap">
+            <li class="comList" th:each="comment:${commentsList}">
 
-            <div class="anonymousWrap">
-                <input type="hidden" th:value="${comment.commentId}" class="cID"/>
+                <div class="anonymousWrap">
+                    <input type="hidden" th:value="${comment.commentId}" class="cID"/>
 
-                <span class="anonymous">익명</span>
-                <button class="deleteBtn" font-weight="bold">삭제</button>
-            </div>
-            <span class="itemText" th:text="${comment.commentContents}"></span>
-            <div class="dateWrap">
+                    <span class="anonymous">익명</span>
+                    <button class="deleteBtn" font-weight="bold">삭제</button>
+                </div>
+                <span class="itemText" th:text="${comment.commentContents}"></span>
+                <div class="dateWrap">
 
-                <span class="comDate comTime" th:text="${#temporals.format(comment.commentDateTime, 'MM/dd HH:mm')}"></span>
-            </div>
-        </li>
-    </ul>
-
-
-    </div>
+                    <span class="comDate comTime"
+                          th:text="${#temporals.format(comment.commentDateTime, 'MM/dd HH:mm')}"></span>
+                </div>
+            </li>
+        </ul>
 
 
-    <!--푸터-->
-    <div class="footer centerContent">
-        <p>@ create by MOBUL</p>
+        <!--푸터-->
+        <div class="footer centerContent">
+            <p>@ create by MOBUL</p>
+        </div>
     </div>
 </div>
-</div>
-        <div id="topbtn"></div>
+<div id="topbtn"></div>
 
 </div>
 </body>
@@ -198,7 +203,6 @@
         },
         success: function (res) {
             console.log("요청성공", res);
-            location.reload(); // 데이터 전송 성공 시 페이지 새로고침
         },
         error: function (err) {
             console.log("요청실패", err);
@@ -246,9 +250,14 @@ $(document).on("click", ".deleteBtn", function () {
 
 
 
+
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 </html>
