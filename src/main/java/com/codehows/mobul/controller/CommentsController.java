@@ -142,16 +142,22 @@ public class CommentsController {
     }
 
     // 댓글삭제
-    @GetMapping("/comment/delete/{commentId}")
-    public String deleteComment(@PathVariable Long commentId){
-        // 댓글 번호 조회
-        Comments comments = commentsRepository.findByCommentId(commentId);
-
-        //Comments 객체 삭제
-        commentsRepository.delete(comments);
-
-        return "redirect:/";
-
+    @DeleteMapping(value = "/comment/delete/{commentId}")
+    public @ResponseBody ResponseEntity deleteComment(@PathVariable("commentId") Long commentId) {
+        System.out.println("정성욱" + commentId);
+        commentsRepository.deleteById(commentId);
+        return ResponseEntity.ok(commentId);
     }
+//    public String deleteComment(@PathVariable Long commentId){
+//        System.out.println("정성욱" + commentId);
+//        // 댓글 번호 조회
+//        Comments comments = commentsRepository.findByCommentId(commentId);
+//
+//        //Comments 객체 삭제
+//        commentsRepository.delete(comments);
+//
+//        return "redirect:/";
+//
+//    }
 
 }

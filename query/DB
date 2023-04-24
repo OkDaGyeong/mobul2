@@ -1,23 +1,21 @@
 
-use mobul;
 -- 게시판 자동생성
 
 DELIMITER $$
-
-create procedure autoboardsBoards()
+create procedure autoBoards()
 Begin
 	declare i int default 1;
     
     while i <= 120 do
-		insert into boards(board_id, board_title, board_content)
-			value(concat(auto), concat('안녕하세요',i), concat('내용',i));
+		insert into boards(board_title, board_content)
+			value(concat('안녕하세요',i), concat('내용',i));
 		set i = i + 1;
 	end while;
 END $$
+call authBoards();
 
-DELIMITER $$  
-  
-call autoBoards;
+DELIMITER $$     
+
 
 
 select * from boards;

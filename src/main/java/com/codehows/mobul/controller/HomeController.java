@@ -5,6 +5,7 @@ import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.service.BoardsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -18,13 +19,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-
 public class HomeController {
     // 기본 주소 요청 이 오면 띄워 주는 메서드
     @Autowired
     private BoardsService boardsService;
 
     @GetMapping("/")
+    public String boardList(Model model, @PageableDefault(page=0, size=15, sort="boardId", direction=Sort.Direction.DESC) Pageable pageable, String searchTitle, String searchContent){
+
+        Page<Boards> list = null;
+
+        if (searchTitle == null && searchContent == null) {
+            // If there is no search term, the previous screen is displayed.
+            list = boardsService.boardList(pageable);
+        } else if (searchTitle != null) {
+            if (pageable.getSort().isUnsorted()) {
+                // If the pageable sort is not set, then set it to sort by title
+                pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("title").descending());
+            }
+            list = boardsService.boardSearchList(searchTitle, pageable);
+        } else if (searchContent != null) {
+            if (pageable.getSort().isUnsorted()) {
+                // If the pageable sort is not set, then set it to sort by content
+                pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("content").descending());
+            }
+            list = boardsService.boardSearchList2(searchContent, pageable);
+        }
+
+        // handle page block
+        int nowPage = list.getPageable().getPageNumber() + 1;
+        int pageCnt = 5;
+        int startPage = Math.max(nowPage - (pageCnt / 2), 1);
+        int endPage = Math.min(startPage + pageCnt - 1, list.getTotalPages());
+
+        if (endPage == list.getTotalPages()) {
+            startPage = Math.max(endPage - pageCnt + 1, 1);
+        } else if (startPage == 1) {
+            endPage = Math.min(startPage + pageCnt - 1, list.getTotalPages());
+        }
+        model.addAttribute("list", list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return "index";
+    }
+
+
+/*    @GetMapping("/")
     public String boardList(Model model, @PageableDefault(page=0, size=15, sort="boardId",
             direction= Sort.Direction.DESC) Pageable pageable, String searchTitle, String searchContent){
 
@@ -63,6 +105,6 @@ public class HomeController {
         model.addAttribute("endPage", endPage);
 
         return "index";
-    }
+    }*/
 
 }
