@@ -49,9 +49,19 @@
             </div>
             <div id="mainText">
                 <p th:text="${boardsForm.boardContent}">content</p>
+<!--                <div id="hashArea">-->
+<!--                    <p  th:text="${boardsForm.boardTag}"></p>-->
+<!--                </div>-->
                 <div id="hashArea">
-                    <p  th:text="${boardsForm.boardTag}"></p>
+                    <p th:text="${boardsForm.boardTag}"></p>
+                    <div th:each="tag : ${#strings.arraySplit(boardsForm.boardTag, ' ,')}">
+                        <div>
+                            <a th:href="@{/(category=hashtag,searchHashtag=${#strings.replace(tag, '#', '')})}" th:text="${tag}"></a>
+                        </div>
+                    </div>
                 </div>
+
+
             </div>
             <td th:if="${session.userId}">
                 <form th:if="${session.userId}==${boardsForm.boardWriter}">
