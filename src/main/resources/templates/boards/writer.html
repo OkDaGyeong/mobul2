@@ -4,29 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
     <title>SAY SOMETHING</title>
     <!-- css  -->
-    <link rel="stylesheet" th:href="@{/css/reset.css}"defer>
-    <link rel="stylesheet" th:href="@{/css/writerPage.css}"defer>
-    <link rel="stylesheet" th:href="@{/css/hashtag.css}"defer>
-
-
-
-    <!-- 스크립트 -->
-    <!-- 폴리필 (구버젼 브라우저 지원) -->
-    <!-- 소스-->
-    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-    <!--    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />-->
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <link rel="stylesheet" th:href="@{/css/reset.css}">
     <link rel="stylesheet" th:href="@{/css/writerPage.css}">
     <link rel="stylesheet" th:href="@{/css/hashtag.css}">
-
     <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
     <link rel="preconnect" crossorigin th:href="@{https://fonts.gstatic.com}">
     <link rel="stylesheet"
@@ -39,123 +22,79 @@
 
 </head>
 <body>
-
 <div id="wrap" style="margin-bottom:200px;">
     <!-- 헤더 -->
     <div id="logo" class="clearfix">
         <p><a >SAY SOMETHING</a></p>
     </div>
 
+
     <div class="writeBox">
 
 
-    <div class="rightBtnBox">
-        <button class="btn-navy" onclick="window.location.href='/'">글 목록</button>
-    </div>
-
-    <form method="post" th:object="${boardsFormDTO}" enctype="multipart/form-data" id="formBox">   <!-- 혜영  -->
-        <input type="hidden" th:field="*{boardId}" th:value="*{boardId}">
-
-
-    <!-- 테이블 섹션 -->
-    <div id="tableWrap">
-
-        <input type="button" class="btn-navy" value="글 목록" id="listBtn" style="font-weight : bold">
-
-        <form method="post" th:object="${boardsFormDTO}" enctype="multipart/form-data">  <!-- 혜영  -->
-            <input type="hidden" th:field="*{boardId}">
-            <div id="tableBox">
-                <div>
-                        <input name="boardTitle" type="text" placeholder="제목을 입력하세요"
-                               th:field="*{boardTitle}" required>
-                 </div>
-                <div>
-                            <textarea name="boardContent" placeholder="내용을 입력하세요" id="text" th:field="*{boardContent}" required></textarea>
-                 </div>
-
-                <div class="hashBox">
-                        <input  placeholder="#해시태그" id="myTags" />
-                        <input type="hidden" id="qq"  th:field="*{boardTag}"/>
-                  </div>
-
-        <div th:if="${#lists.isEmpty(boardsFormDTO.boardsFileDTOList)}">
-            <div th:each="num: ${#numbers.sequence(1,2)}">
-                <div class="file-input-wrapper">
-                    <input  type="file" class="custom-file-input" name="boardsFile">
-                    <label  class="custom-file-label" th:text="파일선택 + ${num}"></label>
-
-
-                </div>
-            </div>
+        <div class="rightBtnBox">
+            <button class="btn-navy" onclick="window.location.href='/'">글 목록</button>
         </div>
 
+        <form method="post" th:object="${boardsFormDTO}" enctype="multipart/form-data" id="formBox">   <!-- 혜영  -->
+            <input type="hidden" th:field="*{boardId}" th:value="*{boardId}">
 
-        <div th:if="${not #lists.isEmpty(boardsFormDTO.boardsFileDTOList)}">
-            <div th:each="boardsFileDTO, status: ${boardsFormDTO.boardsFileDTOList}">
-                <div class="file-input-wrapper" >
-                    <input type="file" class="custom-file-input" name="boardsFile" >
-                    <input type="hidden" name="fileId" th:value="${boardsFileDTO.fileId}">
+            <div>
+                <input name="boardTitle" type="text" placeholder="제목을 입력하세요" th:field="*{boardTitle}" required>
+            </div>
 
-                    <label  class="custom-file-label" data-file-label="'파일' + ${status.index+1}"
-                           th:text="${not #strings.isEmpty(boardsFileDTO.fileOriName)}
+            <div>
+            <textarea name="boardContent" placeholder="내용을 입력하세요" id="text"
+                      th:field="*{boardContent}" required></textarea>
+
+            </div>
+            <div>
+                    <input  placeholder="#해시태그" id="myTags" />
+                    <input type="hidden" id="qq"  th:field="*{boardTag}"/>
+            </div>
+
+
+            <div th:if="${#lists.isEmpty(boardsFormDTO.boardsFileDTOList)}">
+                <div th:each="num: ${#numbers.sequence(1,2)}">
+                    <div class="file-input-wrapper">
+                        <input  type="file" class="custom-file-input" name="boardsFile">
+                        <label  class="custom-file-label" th:text="파일선택 + ${num}"></label>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div th:if="${not #lists.isEmpty(boardsFormDTO.boardsFileDTOList)}">
+                <div th:each="boardsFileDTO, status: ${boardsFormDTO.boardsFileDTOList}">
+                    <div class="file-input-wrapper" >
+                        <input type="file" class="custom-file-input" name="boardsFile" >
+                        <input type="hidden" name="fileId" th:value="${boardsFileDTO.fileId}">
+
+                        <label  class="custom-file-label" data-file-label="'파일' + ${status.index+1}"
+                                th:text="${not #strings.isEmpty(boardsFileDTO.fileOriName)}
                                         ? ${boardsFileDTO.fileOriName} : '파일' + ${status.index+1}" >
-                    </label>
+                        </label>
 
+                    </div>
                 </div>
             </div>
-        </div>
-        
 
-        <div th:if="${#strings.isEmpty(boardsFormDTO.boardId)}" class="rightBtnBox">
-            <button th:formaction="@{/board/writer}" type="submit" class="btn-save">저장</button>
-        </div>
 
-        <div th:unless="${#strings.isEmpty(boardsFormDTO.boardId)}" class="rightBtnBox">
-            <button th:formaction="@{'/board/writer/' + ${boardsFormDTO.boardId}}" type="submit"
-                    class="btn-save">수정
-            </button>
-        </div>
+            <div th:if="${#strings.isEmpty(boardsFormDTO.boardId)}" class="rightBtnBox">
+                <button th:formaction="@{/board/writer}" type="submit" class="btn-save">저장</button>
+            </div>
 
-    </form>
+            <div th:unless="${#strings.isEmpty(boardsFormDTO.boardId)}" class="rightBtnBox">
+                <button th:formaction="@{'/board/writer/' + ${boardsFormDTO.boardId}}" type="submit"
+                        class="btn-save">수정
+                </button>
+            </div>
+
+        </form>
 
         <script>
-              // 태그 추가 이벤트 발생 시 value값만 input 태그에 전달
-    const input1 = document.getElementById('myTags');
-    const tagify1 = new Tagify(input1);
-const allTag = document.getElementById('qq');
-      tagify1.on('add', function() {
-        const tagValues = tagify1.value.map(tag => tag.value);
-        input1.value = tagValues.join('  #'); // tag 값을 (#)로 구분한 문자열로 설정
-
-        console.log(input1.value);
-        console.log(input1.value.toString());
-
-        allTag.value=input1.value.toString();
-     console.log("모든태그 : "+ allTag.value);
-     });
-        </script>
-</div>
-
-
-<script>
-       window.onload = function() {
-          bindDomEvent();
-       };
-
-    function bindDomEvent() {
-      var fileInput = document.querySelector(".custom-file-input");
-      fileInput.addEventListener("change", function() {
-        var fileName = fileInput.value.split("\\").pop();
-        var fileExt = fileName.substring(fileName.lastIndexOf(".") + 1);
-        fileExt = fileExt.toLowerCase();
-
-        var label = fileInput.nextElementSibling;
-        label.innerHTML = fileName;
-      });
-    }
-
-
-
     // 해시태그
 
     const input = document.getElementById('myTags');
@@ -179,7 +118,7 @@ const allTag = document.getElementById('qq');
     // 태그 추가 이벤트 핸들러
     tagify.on('add', function() {
       const tagValues = tagify.value.map(tag => tag.value);
-      input.value = tagValues.join(',');
+      input.value = tagValues.join(' #');
       allTag.value = input.value;
 
       console.log("모든태그 : " + allTag.value);
@@ -196,10 +135,8 @@ const allTag = document.getElementById('qq');
 
       console.log("모든태그 : " + allTag.value);
 
-    });
-
-</script>
-
+    });</script>
+    </div>
     <div class="footer centerContent">
         <p>@ create by MOBUL</p>
     </div>
