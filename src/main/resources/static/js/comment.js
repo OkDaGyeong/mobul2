@@ -1,5 +1,3 @@
-
-
 // 댓글 목록에 대한 변수
 const comListWrap = document.getElementById('comListWrap');
 
@@ -7,9 +5,7 @@ const comListWrap = document.getElementById('comListWrap');
 const postArea = document.getElementById('commentContents');
 const postBtn = document.getElementById('post');
 
-// 댓글 수에 대한 변수
-let commentNum = 0;
-
+const loginUser = document.getElementById('loginUser');
 
 window.onload = function(){
   // 댓글 삭제 버튼 클릭 시
@@ -18,13 +14,12 @@ window.onload = function(){
     if (target.classList.contains('deleteBtn')) {
       const commentItem = target.closest('.comList');
       comListWrap.removeChild(commentItem);
-      //댓글 삭제 시 commentNum1 감소
-      commentNum--;
+
     }
   });
 
 
-  // 작성 버튼 클릭 시
+  // 작성 버튼 클릭 시 이벤트 지정
   if(postBtn != null){
       postBtn.addEventListener('click', () => {
         // 작성 내용 가져오기
@@ -51,7 +46,12 @@ window.onload = function(){
 
         const anonymous = document.createElement('span');
         anonymous.classList.add('anonymous');
+        if(loginUser.equals('관리자')){
+        anonymous.textContent = '관리자';
+        }else{
         anonymous.textContent = '익명';
+        }
+
         anonymousWrap.appendChild(anonymous);
 
         const anonymousBtn = document.createElement('button');

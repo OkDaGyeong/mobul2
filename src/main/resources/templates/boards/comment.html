@@ -22,22 +22,31 @@
 <div id="wrap">
 
     <!-- 헤더 -->
+    <div class="rightBox" style="max-width: 1200px; margin: 0 auto;">
+        <div id="signBox">
+            <div th:if="${session.userId}">
+                <span th:if="${session.isAdmin}" th:text="관리자" style="font-weight:600; color:#047d5a;"></span>
+                <span th:unless="${session.isAdmin}" id="loginUser" style="font-weight:600; color:#5e6790;" th:text="${session.userId + ' 님'}"></span>
+                <a th:href="@{/auth/logout}">로그아웃</a>
+            </div>
+            <div th:unless="${session.userId}">
+                <a th:href="@{/auth/signin}">로그인</a>
+                <a th:href="@{/auth/signup}">회원가입</a>
+            </div>
+        </div>
+    </div>
 
     <div id="logo" class="clearfix">
         <p><a href="/">SAY SOMETHING</a></p>
     </div>
-    <!--    <div th:if="${session.userId}">-->
-    <!--        <span id="loginUser" th:text="${session.userId}"></span><span>가 로그인</span>-->
-    <!--        <span th:text="${boardsForm.boardWriter}"></span><span>가 작성</span>-->
-    <!--    </div>-->
 
     <!-- 테이블 섹션 -->
     <div id="tableWrap">
         <div th:if="${session.userId}">
             <div th:if="${session.isAdmin}" class="btn-form-admin">
-                <button class="btn-navy" onclick="window.history.back()">글 목록</button>
                 <a class="btn-navy" th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}"
                    onclick="return confirm('정말로 삭제하시겠습니까?')">관리자 권한으로 삭제</a>
+                <button class="btn-navy" onclick="window.history.back()">글 목록</button>
             </div>
         </div>
         <div th:unless="${session.isAdmin}" class="rightBtnBox">
@@ -78,13 +87,17 @@
                         <span >
                             <a th:href="@{/(category=hashtag,searchHashtag=${#strings.replace(tag, '#', '')})}"
                                th:text="${tag}"></a>
+<!--                            <a th:href="@{/(sort='boardId',dir='asc',-->
+<!--                       searchTitle=${param.searchTitle != null ? param.searchTitle : ''},-->
+<!--                        searchContent=${param.searchContent != null ? param.searchContent : ''},-->
+<!--                        category=hashtag,searchHashtag=${#strings.replace(tag, '#', '')})}"-->
+<!--                               th:text="${tag}"></a>-->
                         </span>
                     </div>
                 </div>
+
                 <div id="fileBox">
-
                     <button onclick="toggleFileArea()" id="bnt-openClose">첨부파일 열기 ▼</button>
-
                     <div id="fileArea" style="display:none">
                         <div th:each="fileDTO : ${boardsForm.boardsFileDTOList}">
                             <div class="flexBox" th:if="${not #strings.isEmpty(fileDTO.filePath)}">
@@ -102,6 +115,8 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
         </div>
@@ -110,7 +125,7 @@
         <div id="commentArea">
             <div class="comment">
                 <img class="icon" src="/images/chat.png" alt="view" style="margin-right:4px;"/>
-                댓글 <span class="commentNum">3　</span>
+                댓글 <span class="commentNum" th:text="${commentCount}"></span>
 
             </div>
 
@@ -141,12 +156,12 @@
         </div>
 
         <div id="postComment" th:if="${session.userId}">
-            <form id="postWrap" >
-                <input type="hidden" id="commentWriter" placeholder="익명" th:if="${session.userId != null}"
+            <form id="postWrap" method>
+                <input type="hidden" id="commentWriter" th:if="${session.userId != null}"
                        th:attr="value=${session.userId}">
                 <textarea id="commentContents" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"
                           style="overflow=hidden white-space: pre-wrap;" required></textarea>
-                <button id="post" onclick="commentWrite()">작성하기</button>
+                <button id="post" onclick="commentWrite()" type="button">작성하기</button>
 
             </form>
         </div>
@@ -155,11 +170,23 @@
             <li class="comList" th:each="comment:${commentsList}">
                 <div class="anonymousWrap">
                     <input type="hidden" th:value="${comment.commentId}" class="cID"/>
-                    <span th:if="${session.isAdmin}" class="anonymous" th:text="${comment.commentWriter}"></span>
+
+                    <!-- 관리자 계정일때 -->
+                    <span th:if="${session.isAdmin}">
+                        <span class="anonymous" th:if="${comment.commentWriter} == 'admin'">관리자</span>
+                        <span  class="anonymous" th:if="${comment.commentWriter} != 'admin'"
+                               th:text="${comment.commentWriter}"></span>
+                    </span>
+                    <!-- 사용자 계정일때 -->
                     <span th:unless="${session.isAdmin}">
-                        <span  class="anonymous">익명</span>
-                        <span th:if="${comment.commentWriter}==${boardsForm.boardWriter}">(글쓴이)</span>
-                        <span th:if="${comment.commentWriter}!=${boardsForm.boardWriter} and ${session.userId}==${comment.commentWriter}">(본인)</span>
+                        <!-- 관리자가 쓴 댓글 일때 -->
+                        <span class="anonymous" th:if="${comment.commentWriter} == 'admin'">관리자</span>
+                        <!-- 사용자가 쓴 댓글 일때 -->
+                        <span th:if="${comment.commentWriter} != 'admin'">
+                            <span class="anonymous" th:if="${comment.commentWriter} != 'admin'">익명</span>
+                            <span th:if="${comment.commentWriter}==${boardsForm.boardWriter}">(글쓴이)</span>
+                            <span th:if="${comment.commentWriter}!=${boardsForm.boardWriter} and ${session.userId}==${comment.commentWriter}">(본인)</span>
+                        </span>
                     </span>
                     <button th:if="${session.userId}==${comment.commentWriter} or ${session.isAdmin}" class="deleteBtn" font-weight="bold">삭제</button>
                 </div>
@@ -187,8 +214,7 @@
     const commentWrite = () => {
     const writer = document.getElementById("commentWriter").value;
     const contents = document.getElementById("commentContents").value;
-    console.log("작성자: ", writer);               // 댓글 작성자
-    console.log("내용: ", contents);                // 댓글 내용
+
     const id = [[${boardsForm.boardId}]];           // 게시글 번호
 
     $.ajax({
@@ -202,6 +228,7 @@
         },
         success: function (res) {
             console.log("요청성공", res);
+            location.reload();
         },
         error: function (err) {
             console.log("요청실패", err);
@@ -211,7 +238,6 @@
 
 $(document).on("click", ".deleteBtn", function () {
     const commentId = $(this).closest('.comList').find('.cID').val();
-    console.log("무슨값임 " + commentId);
     const boardId = [[${boardsForm.boardId}]];
     $.ajax({
         type: "DELETE",

@@ -1,12 +1,23 @@
+@font-face {
+  font-family: "S-CoreDream-3Light";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff")
+    format("woff");
 
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #f9f8f6;
+  font-weight: normal;
+  font-style: normal;
+}
+html{
+    font-family: "S-CoreDream-3Light";
     display:flex;
     align-items: center;
     justify-content:center;
     height:100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f9f8f6;
+
 }
 
 .container {
@@ -46,7 +57,7 @@ body {
 
 .error-description {
     font-size: 18px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .error-actions {
@@ -55,7 +66,7 @@ body {
 
 .error-actions a {
     display: inline-block;
-    background-color: #333;
+    background-color: #b9b9b9;
     color: #fff;
     padding: 10px 20px;
     text-decoration: none;
@@ -66,5 +77,5 @@ body {
 }
 
 .error-actions a:hover {
-    background-color: #555;
+    background-color: #707070;
 }
