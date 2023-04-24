@@ -62,6 +62,11 @@ public class BoardsService {
         return boardsRepository.findByBoardContentContaining(searchContent,pageable);
     }
 
+    // 해시태그 검색
+    public Page<Boards> boardSearchTagList(String searchTag,Pageable pageable){
+        return boardsRepository.findByBoardTagContaining(searchTag,pageable);
+    }
+
     //작성자 불러오기
     public String getBoardWriter(Long boardId){
         Boards boards = boardsRepository.findByBoardId(boardId);
