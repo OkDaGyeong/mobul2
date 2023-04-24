@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MOBUL 회원가입</title>
   <link rel="stylesheet" th:href="@{/css/auth.css}" />
+    <script th:src="@{/js/kakao.js}" defer></script>
 </head>
 
 <body>
@@ -29,23 +30,25 @@
                pattern="[0-9]+" title="숫자만 입력"/>
       </div>
 <!--      회원가입 버튼-->
-      <div class="btnBox">
-        <button type="submit" class="btn-green">SignUp</button>
-      </div>
+        <div class="btnBox">
+            <p th:if="${errorMessage}" style="color: red; margin-left:10px;" th:text="${errorMessage}"></p>
+            <p th:if="${passwordError}" style="color: red; margin-left:10px;" th:text="${passwordError}"></p>
+            <button type="submit" class="btn-green">SignUp</button>
+        </div>
     </form>
 
 <div>
-    <div th:if="${errorMessage}">
-        <p style="color: red" th:text="${errorMessage}"></p>
-    </div>
-    <div th:if="${passwordError}">
-        <p style="color: blue" th:text="${passwordError}"></p>
-    </div>
+<!--    <div th:if="${errorMessage}">-->
+<!--        <p style="color: red" th:text="${errorMessage}"></p>-->
+<!--    </div>-->
+<!--    <div th:if="${passwordError}">-->
+<!--        <p style="color: blue" th:text="${passwordError}"></p>-->
+<!--    </div>-->
 </div>
 <!--카카오 회원가입, 로그인페이지로 이동 버튼-->
     <div class="btnBox">
       <hr />
-      <button  class="btn-kakao">SignUp with Kakao</button>
+        <button class="btn-kakao">Login with Kakao</button>
       <button class="btn-grey" onclick="window.location.href='/auth/signin'">Login</button>
     </div>
   </div>

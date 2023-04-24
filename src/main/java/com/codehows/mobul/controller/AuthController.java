@@ -1,6 +1,6 @@
 package com.codehows.mobul.controller;
 
-import com.codehows.mobul.config.SessionListener;
+
 import com.codehows.mobul.dto.UsersDTO;
 import com.codehows.mobul.entity.Users;
 import com.codehows.mobul.repository.AuthRepository;
@@ -19,7 +19,7 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value="/auth") // url에 /auth로 들어오는 요청을 이 AuthController가 처리하도록함
-public class AuthController extends SessionListener {
+public class AuthController{
 
 
 
@@ -42,6 +42,11 @@ public class AuthController extends SessionListener {
         UsersDTO signInResult = authService.signIn(usersDTO);   // 로그인한 유저 정보를 받아온다
         if (signInResult != null) { // 로그인 성공
             session.setAttribute("userId", signInResult.getUserId()); //로그인 한 회원 정보를 세션에 담아준다
+
+            if ("admin".equals(session.getAttribute("userId"))) { // 만약 로그인한 유저가 관리자 권한을 가진 사용자라면
+                session.setAttribute("isAdmin", true); // isAdmin 키에 true 값을 저장한다
+            }
+
             mav.setViewName("redirect:/");   //메인 페이지로 돌아간다
         } else { //로그인 실패
             mav.addObject("error", "로그인 실패. 아이디와 비번 확인 바람"); // 에러 메시지 모델 추가

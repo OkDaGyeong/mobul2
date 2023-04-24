@@ -1,0 +1,37 @@
+#fileBox{
+    width: 100%;
+    padding: 0 25px;
+    box-sizing: border-box;
+}
+#fileBox span {
+    color:var(--darkgrey);
+}
+#bnt-openClose{
+background:transparent;
+ color:var(--green);
+ font-size:14px;
+ border:none;
+ cursor:pointer;
+}
+.flexBox{
+display:flex;
+align-items: stretch;
+justify-content: space-between;
+height:30px;
+margin:10px 0;
+}
+
+.btn-file{
+ background-color: transparent;
+ padding:5px 10px;
+ border:1.5px solid var(--green);
+ border-radius:3px;
+ transition:0.3s;
+ color:var(--green);
+ cursor: pointer;
+ font-size:13px;
+ margin-left:10px;
+}
+.btn-file:hover{
+ background-color : rgba(4,125,90,0.3);
+}

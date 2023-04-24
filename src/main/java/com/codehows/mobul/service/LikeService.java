@@ -1,6 +1,8 @@
 package com.codehows.mobul.service;
 
+
 import com.codehows.mobul.dto.LikeDTO;
+
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.Like;
 import com.codehows.mobul.entity.Users;
@@ -59,6 +61,7 @@ public class LikeService {
         Like like = likeRepository.findByLikeUserIdAndLikeBoardId(users, boards);
 
         likeRepository.delete(like);
+
         return like.getLikeId();
     }
 }

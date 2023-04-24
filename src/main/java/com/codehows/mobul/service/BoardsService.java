@@ -61,6 +61,10 @@ public class BoardsService {
     public Page<Boards> boardSearchList2(String searchContent,Pageable pageable){
         return boardsRepository.findByBoardContentContaining(searchContent,pageable);
     }
+    //태그로 검색
+    public Page<Boards> boardSearchList3(String searchHashtag,Pageable pageable){
+        return boardsRepository.findByBoardTagContaining(searchHashtag,pageable);
+    }
 
     // 해시태그 검색
     public Page<Boards> boardSearchTagList(String searchTag,Pageable pageable){
@@ -81,9 +85,7 @@ public class BoardsService {
 
     }
 
-    //hy
-// 수정페이지 수정전
-    //hy
+
     // 수정페이지 : 개별 게시글 불러오기
     @Transactional(readOnly = true)
     public BoardsFormDTO getBoardDtl(Long boardId){ //-257
@@ -106,31 +108,14 @@ public class BoardsService {
 
     public Long updateBoard(BoardsFormDTO boardsFormDTO, List<MultipartFile> fileList) throws Exception{
 
-/*-------
-        try {
-            // 게시글 수정
-            Boards boards = boardsRepository.findByBoardId(boardsFormDTO.getBoardId());
-            boards.updateBoard(boardsFormDTO);
-            List<Long> fileIds =  boardsFormDTO.getFileId();
-
-            // 이미지 등록
-//            for(int i=0; i<fileList.size();i++){
-//                boardsFileService.updateFile(fileIds.get(i), fileList.get(i));
-//            }
-            return boards.getBoardId();
-        } catch(Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-----*/
 
         // 게시글 수정
         System.out.println("태그 테스트: " + boardsFormDTO.getBoardTag());
         Boards boards = boardsRepository.findByBoardId(boardsFormDTO.getBoardId());
-//                .orElseThrow(EntityNotFoundException::new);
 
         System.out.println("테스트 tag : " + boardsFormDTO.getBoardTag());
         boards.updateBoard(boardsFormDTO);
+
         List<Long> fileIds =  boardsFormDTO.getFileId();
 
         // 이미지 등록
@@ -141,8 +126,6 @@ public class BoardsService {
         return boards.getBoardId();
 
     }
-
-
 
 
 

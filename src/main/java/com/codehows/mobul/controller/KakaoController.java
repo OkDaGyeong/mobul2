@@ -10,7 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -19,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
-import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -111,12 +113,15 @@ public class KakaoController {
         System.out.println("사용자 아이디(번호) : " + kakaoProfile.getId());
         System.out.println("이메일 : " + kakaoProfile.getKakao_account().getHas_email());
 //-- (강제로 회원가입 시켜버리기~)
-        System.out.println("mobul 사용자아이디 : " + "kakao" + kakaoProfile.getId());
+        System.out.println("mobul 사용자아이디 : " + "kakao_" + kakaoProfile.getProperties().nickname);
         System.out.println("mobul 사용자비밀번호 : " + cosKey);//임시값
+
+        System.out.println("카ㅏㅋ오프로파일: "+kakaoProfile);
+        System.out.println("카ㅏ이름: "+kakaoProfile.getProperties().nickname);
 
 //일단막해 되는진 모름 되면 개이득 : db에 들어간당
         Users newUser = new Users();
-        newUser.setUserId("kakao" + kakaoProfile.getId());
+        newUser.setUserId("kakao_" + kakaoProfile.getProperties().nickname);
         newUser.setUserPassword(cosKey);
         UsersDTO newUsersDTO = UsersDTO.toUsersDTO(newUser);
 

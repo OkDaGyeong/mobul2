@@ -97,8 +97,6 @@
 }
 
 
-//////
-
 .tagify[disabled] .tagify__tag__removeBtn,.tagify[readonly] .tagify__tag__removeBtn {
   display: none
 }
@@ -602,4 +600,13 @@
 
 .tagify__input{
   background-color: #FFF;
+
+}
+
+.hashBox{
+  width: 100%;
+  padding-top: 25px;
+  color: #5E6790;
+  font-size: 15px;
+
 }

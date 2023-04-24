@@ -1,4 +1,4 @@
-/*
+package com.codehows.mobul.config;/*
 package com.codehows.mobul.config;
 
 

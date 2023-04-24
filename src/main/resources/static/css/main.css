@@ -1,25 +1,10 @@
 @import url("reset.css");
-html {
-  position: relative;
-  min-height: 100%;
-  margin: 0;
-}
+
 body {
   min-height: 100%;
   width:100%;
 }
-.footer {
-  border: 1px solid #ccc;
-  height: 100px;
-  color: var(--ivory);
-  background-color: var(--green);
-  margin-top: 20px;
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
 
 .header {
   margin-bottom: 30px;
@@ -46,11 +31,7 @@ body {
   display: flex;
   justify-content: space-between;
 }
-.centerContent {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 #signBox {
   margin: 20px;
@@ -67,11 +48,13 @@ body {
 
 /* 검색박스스 */
 .searchBox {
-  /* border: 1px solid #ccc; */
   margin-bottom: 10px;
   height: 60px;
-  /* min-width: 460px; */
 }
+.searchBox form{
+  display:flex;
+  align-items: center;
+  }
 select {
   border: none;
 }
@@ -91,7 +74,6 @@ input[type="search"]:focus {
 
 .btn-navy {
   background-color: transparent;
-  /* background-color: var(--navy); */
   color: var(--navy);
   font-size: 16px;
   border: none;
@@ -102,6 +84,7 @@ input[type="search"]:focus {
   border: 2px solid transparent;
   border-radius: 100px;
   transition: 0.3s;
+  font-weight:600;
 }
 .btn-navy:hover {
   border: 2px solid var(--navy);
@@ -193,4 +176,9 @@ td:last-child, th:first-child {
   font-weight: 700;
   font-size:70px;
   font-family: "Noto Sans KR", sans-serif;
+}
+#resetButton{
+background:transparent;
+border:none;
+cursor:pointer
 }

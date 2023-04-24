@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "boards")
@@ -40,7 +42,7 @@ public class Boards {
     private Users boardWriter;
 
 
-    //게시글 좋아요   default 0  : 좋아요 낫널 확인필요
+    //게시글 좋아요   default 0  : 좋아요 not null 확인필요
     @Column(columnDefinition = "integer default 0")
     private Integer boardLike;
 
@@ -53,10 +55,10 @@ public class Boards {
     @Column(columnDefinition = "timestamp")
     private LocalDateTime boardDate;
 
-//// 테스트 추가
-//    @OneToMany(mappedBy = "fileBoardNum", cascade = CascadeType.ALL)
-//    private List<BoardsFile> boardsFiles = new ArrayList<>();
 
+    //커멘트랑 연결
+    @OneToMany(mappedBy = "boards", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Comments> commentsEntityList = new ArrayList<>();
 
     // BoardsFormDTO를 엔티티로 변경
     public static Boards toBoards(BoardsFormDTO dto) {
@@ -70,9 +72,9 @@ public class Boards {
         this.boardId = boardsFormDTO.getBoardId();
         this.boardTitle = boardsFormDTO.getBoardTitle();
         this.boardContent = boardsFormDTO.getBoardContent();
-//        this.boardWriter = boardsFormDTO.getBoardWriter();
+
         this.boardTag = boardsFormDTO.getBoardTag();
-//        this.boardDate = boardsFormDTO.getBoardDate();    // 업데이트 시 시간 그대로
+
     }
 
 }

@@ -4,6 +4,7 @@ import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.Like;
 import com.codehows.mobul.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
