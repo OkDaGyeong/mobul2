@@ -22,6 +22,8 @@ window.onload = function(){
       commentNum--;
     }
   });
+
+
   // 작성 버튼 클릭 시
   postBtn.addEventListener('click', () => {
     // 작성 내용 가져오기
@@ -33,6 +35,7 @@ window.onload = function(){
       alert('댓글을 입력해주세요.');
       return;
     }
+
 
     // 새로운 댓글 항목 생성
     const newComment = document.createElement('li');
@@ -51,9 +54,16 @@ window.onload = function(){
     anonymousWrap.appendChild(anonymous);
 
     const anonymousBtn = document.createElement('button');
-    anonymousBtn.classList.add('anonymousBtn');
-    anonymousBtn.textContent = '댓글달기';
+    anonymousBtn.classList.add('deleteBtn');
+    anonymousBtn.textContent = '삭제';
     anonymousWrap.appendChild(anonymousBtn);
+
+    const cID = document.createElement('input'); // <input> 요소 생성
+    anonymousWrap.classList.add('cID'); // 'cID' 클래스를 추가
+//    cID.value = ''; // value 속성을 빈 문자열로 설정
+
+
+
 
     newComment.appendChild(anonymousWrap);
 
@@ -63,6 +73,7 @@ window.onload = function(){
     itemText.textContent = comment;
     newComment.appendChild(itemText);
     itemText.style.whiteSpace = 'pre-wrap'; // 줄바꿈이 되도록 style 속성 적용
+
 
     // 댓글 작성일
     const date = new Date();
@@ -79,7 +90,7 @@ window.onload = function(){
 
     newComment.appendChild(dateWrap);
     // 댓글 목록에 추가
-    comListWrap.appendChild(newComment);
+    comListWrap.prepend(newComment);
 
     // 작성 창 비우기
     postArea.value = '';

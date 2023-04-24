@@ -8,6 +8,7 @@ import com.codehows.mobul.entity.BoardsFile;
 import com.codehows.mobul.entity.Users;
 import com.codehows.mobul.repository.BoardsFileRepository;
 import com.codehows.mobul.repository.BoardsRepository;
+import com.codehows.mobul.repository.CommentsRepository;
 import com.codehows.mobul.service.AuthService;
 import com.codehows.mobul.service.BoardsService;
 import com.codehows.mobul.service.CommentsService;
@@ -38,7 +39,7 @@ public class CommentsController {
     private final CommentsService commentsService;
     private final BoardsFileRepository boardsFileRepository;
     private final BoardsRepository boardsRepository;
-
+    private final CommentsRepository commentsRepository;
 
     //----상세페이지
     @GetMapping(value="/comment/{boardId}")
@@ -134,5 +135,13 @@ public class CommentsController {
         boardsRepository.delete(board);
 
         return "redirect:/";
+    }
+
+    // 댓글삭제
+    @DeleteMapping(value = "/comment/delete/{commentId}")
+    public @ResponseBody ResponseEntity deleteComment(@PathVariable("commentId") Long commentId) {
+        System.out.println("정성욱" + commentId);
+        commentsRepository.deleteById(commentId);
+        return ResponseEntity.ok(commentId);
     }
 }

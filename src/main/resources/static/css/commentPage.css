@@ -128,7 +128,7 @@ input[type="button"]{
   font-weight: 600;
 }
 
-.anonymousBtn{
+.deleteBtn{
   background: inherit ;
   border:none;
   box-shadow:none;
@@ -141,10 +141,10 @@ input[type="button"]{
   font-family: 'S-CoreDream-3Light';
 }
 
-.comDate{
+/*.comDate{
   margin-top: 5px;
   margin-right: 10px;
-}
+}*/
 .comDate,.comTime{
   font-size: 12px;
 }
