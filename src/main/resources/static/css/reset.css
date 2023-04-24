@@ -24,6 +24,12 @@
   --table-hover: #edeae3;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+  margin: 0;
+}
+
 body {
   font-family: "S-CoreDream-3Light";
   width: 100%;
@@ -62,16 +68,16 @@ input[type="button"] {
 /* 공통 */
 /* 전체배경 */
 #wrap{
+  margin-bottom:200px;
   width: 100%;
-  height: auto;
   background-color: #F9F8F6;
 }
 
 /* 테이블 섹션 */
 #tableWrap{
   max-width: 1130px;
-  height: auto;
   margin: 0 auto;
+  margin-bottom:50px;
 }
 
 #tableBox{
@@ -144,3 +150,12 @@ margin:0 auto;
 height: auto;
 margin-top:20px;
 }
+
+
+.icon{
+width:20px;
+height:20px;}
+
+.icon2{
+width:25px;
+height:25px;}

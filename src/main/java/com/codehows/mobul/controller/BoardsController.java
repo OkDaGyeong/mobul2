@@ -3,15 +3,11 @@ package com.codehows.mobul.controller;
 import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.dto.BoardsFormDTO;
 import com.codehows.mobul.entity.Boards;
-
-import com.codehows.mobul.entity.Like;
-import com.codehows.mobul.entity.Users;
-import com.codehows.mobul.service.AuthService;
-
 import com.codehows.mobul.entity.BoardsFile;
+import com.codehows.mobul.entity.Users;
 import com.codehows.mobul.repository.BoardsFileRepository;
 import com.codehows.mobul.repository.BoardsRepository;
-
+import com.codehows.mobul.service.AuthService;
 import com.codehows.mobul.service.BoardsService;
 import com.codehows.mobul.service.LikeService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
-
 import java.util.Optional;
 //import org.springframework.web.multipart.MultipartFile;
 
@@ -72,8 +67,6 @@ public class BoardsController {
     @GetMapping("/comment")
     public String commentForm(){return "boards/comment";}
 
-//    @GetMapping("/writer")
-//    public String writerForm(){return  "boards/writer";}
 
     @GetMapping("/admin")
     public String adminForm(){return  "boards/admin";}
@@ -81,12 +74,24 @@ public class BoardsController {
 
 
     // /write 페이지 보이기 - 데이터 가져오기 - boards/writer.html에서
-    @GetMapping("/writer")     // writerForm -> boardWriteForm
-    public String writerForm(Model model){
+//    @GetMapping("/writer")     // writerForm -> boardWriteForm
+//    public String writerForm(Model model){
+//        model.addAttribute("boardsFormDTO", new BoardsFormDTO());
+//
+//        return  "/boards/writer";
+//    }-- 미로그인 접근 제한
+    @GetMapping("/writer")
+    public String writerForm(Model model, HttpSession session) {
+        // 세션에서 로그인 정보를 가져옴
+        String userId = (String) session.getAttribute("userId");
+        // 로그인 되어있지 않으면 로그인 페이지로 이동
+        if (userId == null || userId.equals("")) {
+            return "redirect:/auth/signin";
+        }
         model.addAttribute("boardsFormDTO", new BoardsFormDTO());
-
-        return  "/boards/writer";
+        return "/boards/writer";
     }
+
 
     // 작성페이지
     @PostMapping("/writer")
@@ -241,31 +246,5 @@ public class BoardsController {
         }
     }
 
-
-
-
-
-//    @Autowired
-//    BoardsFileRepository boardsFileRepository;
-//    @Autowired
-//    BoardsRepository boardsRepository;
-
-
-//    @GetMapping(value="/comment/drop")
-//    public String dropBoard(){
-//
-//    }
-//    @GetMapping(value="/comment/delete")
-//    public String boardDelete2(){
-//
-//        Boards boards = boardsRepository.findByBoardId(3L);
-//        boardsFileRepository.deleteAllByFileBoardNum(boards);
-//        boardsService.boardDelete(3L);
-//
-//
-//        // 게시물 삭제 후 게시물 리스트
-//        return "redirect:/";
-//    }
-//
 
 }

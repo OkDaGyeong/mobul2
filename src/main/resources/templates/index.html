@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Say Something</title>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <script th:src="@{/js/main.js}" defer></script>
 </head>
 <!--<body style="overflow-y: hidden">-->
 <body>
@@ -14,7 +15,8 @@
     <div class="rightBox" style="max-width: 1200px; margin: 0 auto;">
         <div id="signBox">
             <div th:if="${session.userId}">
-                <span id="loginUser" th:text="${session.userId}"></span><span> 님</span>
+                <span th:if="${session.isAdmin}" th:text="관리자" style="font-weight:600; color:#047d5a;"></span>
+                <span th:unless="${session.isAdmin}" id="loginUser" style="font-weight:600; color:#5e6790;" th:text="${session.userId + ' 님'}"></span>
                 <a th:href="@{/auth/logout}">로그아웃</a>
             </div>
             <div th:unless="${session.userId}">
@@ -36,82 +38,24 @@
     <div class="searchBox betweenBox">
         <form th:action="@{/}" method="get">
             <select name="category" id="searchCategory">
-                <option value="title" selected>제목</option>
-                <option value="content">내용</option>
-                <option value="hashtag">해시태그</option>
+                <option name="title" value="title" selected>제목</option>
+                <option name="content" value="content">내용</option>
+                <option name="hashtag" value="hashtag">해시태그</option>
             </select>
             <input type="search" name="searchTitle" id="searchKeyword" placeholder="검색어를 입력하세요" value=""/>
-            <button type="button" id="resetButton" onclick="resetSearch()"  >검색초기화</button>
+            <button type="button" id="resetButton" onclick="resetSearch()"  >
+                <img class="icon2" src="/images/undo.png" alt="reset"/>
+            </button>
         </form>
         <button  th:if="${session.userId}" class="btn-navy" onclick="window.location.href='/board/writer'">글 작성하기</button>
     </div>
 
-    <script>
- function resetSearch() {
-        // 검색어와 선택된 카테고리 초기화
-        document.querySelector('option[value="title"]').selected = true;
-        document.getElementById("searchKeyword").value = "";
-window.location.href = '/'
-    }
-
-    //
- document.addEventListener("DOMContentLoaded", function() {
-  const searchCategory = document.getElementById("searchCategory");
-  const searchKeyword = document.getElementById("searchKeyword");
-
-  // searchCategory 값이 변경될 때마다 searchKeyword input의 name 속성 변경
-  searchCategory.addEventListener("change", function() {
-    if (searchCategory.value === "title") {
-      searchKeyword.setAttribute("name", "searchTitle");
-    } else if (searchCategory.value === "content") {
-      searchKeyword.setAttribute("name", "searchContent");
-    } else {
-      searchKeyword.setAttribute("name", "searchHashtag");
-    }
-
-    // 선택된 옵션을 localStorage에 저장
-    localStorage.setItem("searchCategory", searchCategory.value);
-  });
-
-  // 이전에 선택한 옵션이 있다면 선택된 옵션을 유지
-  const savedSearchCategory = localStorage.getItem("searchCategory");
-  if (savedSearchCategory) {
-    searchCategory.value = savedSearchCategory;
-
-    // 선택된 옵션에 따라서 검색어 input의 name 속성을 변경
-    if (searchCategory.value === "title") {
-      searchKeyword.setAttribute("name", "searchTitle");
-    } else if (searchCategory.value === "content") {
-      searchKeyword.setAttribute("name", "searchContent");
-    } else {
-      searchKeyword.setAttribute("name", "searchHashtag");
-    }
-  }
-
-  // 검색어 유지
-  const searchTitle = new URLSearchParams(window.location.search).get("searchTitle");
-  if (searchTitle) {
-    searchKeyword.value = searchTitle;
-  }
-
-  const searchContent = new URLSearchParams(window.location.search).get("searchContent");
-  if (searchContent) {
-    searchKeyword.value = searchContent;
-  }
-
-  const searchHashtag = new URLSearchParams(window.location.search).get("searchHashtag");
-  if (searchHashtag) {
-    searchKeyword.value = searchHashtag;
-  }
-});
-
-    </script>
-
     <div class="tableBox">
         <table class="table-style">
             <tr class="table-header">
-                <th style="width:150px;">번호 <a th:href="@{/(sort='boardId')}">정렬</a></th>
+                <th style="width:50px;">번호 <a th:href="@{/(sort='boardId')}">정렬</a></th>
                 <th>제목 <a th:href="@{/(sort='boardTitle')}">정렬</a></th>
+                <th th:if="${session.isAdmin}"  style="width:100px;">작성자</th>
                 <th style="width:100px;">날짜 <a th:href="@{/(sort='boardDate')}">정렬</a></th>
                 <th style="width:50px;">조회수 <a th:href="@{/(sort='boardView')}">정렬</a></th>
             </tr>
@@ -124,8 +68,8 @@ window.location.href = '/'
             <tr th:each="board:${list}">
                 <td th:text="${board.boardId}"></td>
                 <td><a th:text="${board.boardTitle}" th:href="@{/board/comment/{boardId}(boardId=${board.boardId})}"
-
-                       style="text-align:left; display:block;"></a></td>
+                        style="text-align:left; display:block;"></a></td>
+                <td th:if="${session.isAdmin}" th:text="${board.boardWriter.getUserId()}"> </td>
                 <td th:text="${#temporals.format(board.boardDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${board.boardView}+' view'"></td>
             </tr>

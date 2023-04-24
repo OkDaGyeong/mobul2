@@ -1,9 +1,5 @@
 @import url("reset.css");
-html {
-  position: relative;
-  min-height: 100%;
-  margin: 0;
-}
+
 body {
   min-height: 100%;
   width:100%;
@@ -52,11 +48,13 @@ body {
 
 /* 검색박스스 */
 .searchBox {
-  /* border: 1px solid #ccc; */
   margin-bottom: 10px;
   height: 60px;
-  /* min-width: 460px; */
 }
+.searchBox form{
+  display:flex;
+  align-items: center;
+  }
 select {
   border: none;
 }
@@ -178,4 +176,9 @@ td:last-child, th:first-child {
   font-weight: 700;
   font-size:70px;
   font-family: "Noto Sans KR", sans-serif;
+}
+#resetButton{
+background:transparent;
+border:none;
+cursor:pointer
 }

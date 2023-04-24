@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Error</title>
+  <link rel="stylesheet" th:href="@{/css/errorPage.css}"/>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Error Page</h1>
+  </div>
+  <div class="content">
+    <div class="error-message">잘못된 접근입니다.</div>
+    <div class="error-description">Message: <span th:text="${errorMsg}"></span></div>
+    <div class="error-actions">
+      <p><a href="/">메인 페이지로 이동</a></p>
+      <p><a href="/auth/signin">로그인 페이지로 이동</a></p>
+      <p><a href="javascript:history.back()">이 전 페이지로 이동</a></p>
+    </div>
+  </div>
+</div>
+
+<p></p>
+<p></p>
+
+</body>
+</html>

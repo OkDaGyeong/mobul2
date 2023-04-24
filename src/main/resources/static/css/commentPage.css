@@ -44,7 +44,6 @@ input[type="button"]{
 }
 
 #viewbox{
-  width: 150px;
   display: flex;
   justify-content: flex-end;
   margin-right: 30px;
@@ -297,9 +296,6 @@ background-color:rgba(95,103,144,0.3);
 
 }
 
-.icon{
-width:20px;
-height:20px;}
 
 
 
@@ -327,21 +323,31 @@ height:20px;}
   color: var(--navy);
 }
 
-
+.btn-form-admin{
+padding: 10px 0px;
+display:flex;
+justify-content: space-between;
+}
 .btn-form{
 padding: 10px 25px;
 display:flex;
 justify-content: flex-end;
 }
 
+.title-right{
+    display:flex;
+    height:100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
 .btn-modify{
 margin-left:10px;
-color:var(--navy);
+color:var(--ivory);
 padding : 5px 10px;
 border-radius:5px;
 }
 .btn-modify:hover{
 font-weight: bold;
-
-background-color:rgba(94,103,144,0.2);
 }

@@ -26,24 +26,36 @@
     <!-- 테이블 섹션 -->
     <div id="tableWrap">
         <div th:if="${session.userId}" >
-            <div th:if="${session.userId}=='admin'" class="btn-form">
-                <a class="btn-modify" th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}"
+            <div th:if="${session.isAdmin}" class="btn-form-admin" >
+                <button class="btn-navy" onclick="window.history.back()">글 목록</button>
+                <a class="btn-navy" th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}"
                    onclick="return confirm('정말로 삭제하시겠습니까?')">관리자 권한으로 삭제</a>
             </div>
         </div>
-        <div class="rightBtnBox">
+        <div th:unless="${session.isAdmin}" class="rightBtnBox">
             <button class="btn-navy" onclick="window.history.back()">글 목록</button>
         </div>
 
         <div id="tableBox">
             <div class="titleArea">
-
                 <p class="date" th:text="${#temporals.format(boardsForm.boardDate, 'yy-MM-dd　hh:mm')}"></p>
                 <p class="title" th:text="${boardsForm.boardTitle}"></p>
-                <div id="viewbox">
-                    <img class="icon" src="/images/view.png" alt="view"/>
-                    　<span th:text="${boardsForm.boardView}"></span>
-
+                <div class="title-right">
+                    <div id="viewbox">
+                        <img class="icon" src="/images/view.png" alt="view"/>
+                        　<span th:text="${boardsForm.boardView}"></span>
+                    </div>
+                    <div th:if="${session.isAdmin}" id="writerBox" style="margin-right: 30px;">
+                        <img class="icon" src="/images/signinIcon.png" alt="writer"/>
+                        　<span th:text="${boardsForm.boardWriter}"></span>
+                    </div>
+                    <div th:if="${session.userId}">
+                        <div th:if="not ${session.isAdmin} and ${session.userId}==${boardsForm.boardWriter}" class="btn-form">
+                            <a class="btn-modify" th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}"
+                               onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
+                            <a class="btn-modify" th:href="@{/board/writer/{boardId}(boardId=${boardsForm.boardId})}">수정</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="mainText">
@@ -55,6 +67,10 @@
                 </div>
             </div>
             <div id="fileBox">
+<!--                <div style="display:flex; justify-content: space-between;">-->
+<!--                    <button onclick="toggleFileArea()" id="bnt-openClose">첨부파일 열기 ▼</button>-->
+<!--                    <p th:text="'by. ' + ${boardsForm.boardWriter}"></p>-->
+<!--                </div>-->
                 <button onclick="toggleFileArea()" id="bnt-openClose">첨부파일 열기 ▼</button>
 
                 <div id="fileArea" style="display:none">
@@ -77,14 +93,7 @@
                 </div>
             </div>
 
-            <div th:if="${session.userId}">
-                <div th:if="${session.userId}==${boardsForm.boardWriter}" class="btn-form">
-                    <a class="btn-modify" th:href="@{/board/comment/delete/{boardId}(boardId=${boardsForm.boardId})}"
-                       onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
-                    <a class="btn-modify" th:href="@{/board/writer/{boardId}(boardId=${boardsForm.boardId})}">수정</a>
-                </div>
 
-            </div>
         </div>
 
         <!-- 댓글 -->
