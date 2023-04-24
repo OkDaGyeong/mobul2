@@ -69,7 +69,7 @@
                     <p th:text="${boardsForm.boardContent}">content</p>
                 </div>
                 <div id="hashArea" th:if="${boardsForm.boardTag != ''}">
-                    <p th:text="'#'+${boardsForm.boardTag}"></p>
+                    <a th:href="@{/(category=hashtag,searchHashtag=${boardsForm.boardTag})}" th:text="'#'+${boardsForm.boardTag}">test</a>
                 </div>
             </div>
             <div id="fileBox">

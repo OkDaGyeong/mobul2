@@ -1,6 +1,6 @@
-window.onload = function() {
-bindDomEvent();
-};
+       window.onload = function() {
+          bindDomEvent();
+       };
 
 function bindDomEvent() {
 var inputs = document.querySelectorAll(".custom-file-input");
@@ -10,8 +10,6 @@ inputs.forEach(function(input) {
     var fileExt = fileName.substring(fileName.lastIndexOf(".") + 1);
     fileExt = fileExt.toLowerCase();
 
-//    var label = input.nextElementSibling;
-//    label.innerHTML = fileName;
 
 var label = input.parentNode.querySelector('.custom-file-label');
       var fileLabel = label.getAttribute("data-file-label");
@@ -19,4 +17,3 @@ var label = input.parentNode.querySelector('.custom-file-label');
   });
 });
 }
-
