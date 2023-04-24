@@ -2,6 +2,7 @@ package com.codehows.mobul.controller;
 
 import com.codehows.mobul.dto.BoardsDTO;
 import com.codehows.mobul.dto.BoardsFormDTO;
+import com.codehows.mobul.dto.CommentsDTO;
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.BoardsFile;
 import com.codehows.mobul.entity.Users;
@@ -188,6 +189,10 @@ public class BoardsController {
 
         BoardsFormDTO boardsFormDTO = boardsService.getBoardDtl(boardId);
 
+        // 댓글 목록 가져오기
+        List<CommentsDTO> commentsDTOList = commentsService.findAll(boardId);
+        model.addAttribute("commentsList", commentsDTOList);   //  html에서 사용할 수 있게 값들을 넘겨 준다
+
         // comment창에서 해시태그 #붙여서 보이게
         String hashTag = boardsFormDTO.getBoardTag();
         if (hashTag.length()>0){
@@ -225,35 +230,22 @@ public class BoardsController {
 
 
     // 게시글 삭제
+    // 게시글 삭제
     @GetMapping("/comment/delete/{boardId}")
     public String deleteBoard(@PathVariable Long boardId){
 
         // id 조회
         Boards board = boardsRepository.findByBoardId(boardId);
-        //                .orElseThrow(() -> new IllegalArgumentException("Invalid board Id:" + boardId));
-
         // file 객체 삭제
         List<BoardsFile> files = boardsFileRepository.findByFileBoardNumOrderByFileIdAsc(board);   //
         if(!files.isEmpty()){
             boardsFileRepository.deleteAll(files);
         }
-        Users user = board.getBoardWriter();  // 유저 객체에서 보드 라이더 값을 받아오고
-        String findUser = user.getUserId();     //  유저 아이디를 넣어준다
 
-        Long valueCheck = likeService.findLikeCount(board);
-
-        if (valueCheck ==0){
-            boardsRepository.delete(board);
-
-            return "redirect:/";
-        } else{
-
-        likeService.deleteLike(findUser, boardId);
-        // Boards 객체 삭제
+        likeService.deleteLikeBoard(boardId);
         boardsRepository.delete(board);
 
         return "redirect:/";
-        }
     }
 
 

@@ -1,16 +1,13 @@
-package com.codehows.mobul.config;/*
+
 package com.codehows.mobul.config;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.http.HttpSession;
-import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
 
 public class SessionListener implements ServletContextListener, HttpSessionListener {
 
@@ -47,4 +44,4 @@ public class SessionListener implements ServletContextListener, HttpSessionListe
             session.invalidate();
         }
     }
-}*/
+}

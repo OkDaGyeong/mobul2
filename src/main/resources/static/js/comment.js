@@ -80,6 +80,7 @@ window.onload = function(){
     const comDate = document.createElement('span');
     comDate.classList.add('comDate');
     comDate.textContent = `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
+    comDate.style.marginRight = '3px';
     dateWrap.appendChild(comDate);
 
     // 댓글 작성시간

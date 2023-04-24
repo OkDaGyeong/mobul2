@@ -5,10 +5,6 @@ import com.codehows.mobul.entity.Like;
 import com.codehows.mobul.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
 import java.util.Optional;
 
 public interface LikeRepository  extends JpaRepository<Like,Long> {
@@ -20,6 +16,8 @@ public interface LikeRepository  extends JpaRepository<Like,Long> {
 
     /* likeSize - count */
     Long countByLikeBoardId(Boards boards);
+    //Like save(Like like);
+    void deleteByLikeBoardId(Boards boards);
 
     //Like save(Like like);
 

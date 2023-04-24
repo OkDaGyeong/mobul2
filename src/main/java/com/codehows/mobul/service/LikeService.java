@@ -1,8 +1,6 @@
 package com.codehows.mobul.service;
 
 
-import com.codehows.mobul.dto.LikeDTO;
-
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.Like;
 import com.codehows.mobul.entity.Users;
@@ -63,5 +61,13 @@ public class LikeService {
         likeRepository.delete(like);
 
         return like.getLikeId();
+    }
+
+    //게시판을 삭제 해주는
+    @Transactional
+    public void deleteLikeBoard(Long boardId){
+        Boards boards = boardsRepository.findByBoardId(boardId);
+        likeRepository.deleteByLikeBoardId(boards);
+
     }
 }

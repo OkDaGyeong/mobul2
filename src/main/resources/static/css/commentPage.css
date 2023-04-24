@@ -143,10 +143,10 @@ width:100%;
   font-family: 'S-CoreDream-3Light';
 }
 
-/*.comDate{
+.comDate{
   margin-top: 5px;
   margin-right: 10px;
-}*/
+}
 .comDate,.comTime{
   font-size: 12px;
 }
