@@ -34,6 +34,7 @@ public class HomeController {
             // 검색 단어가 들어오면 검색 단어에 맞게 나온다. 쿼리스트링으로 들어가는 키워드를 찾아냄
             list = boardsService.boardSearchList2(searchContent, pageable);
         }else if(searchTag != null){
+            searchTag = "," + searchTag + ",";
             list = boardsService.boardSearchTagList(searchTag, pageable);
         }
 

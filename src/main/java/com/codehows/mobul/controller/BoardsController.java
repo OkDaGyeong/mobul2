@@ -153,7 +153,8 @@ public class BoardsController {
         BoardsFormDTO boardsFormDTO = boardsService.getBoardDtl(boardId);
 
         // comment창에서 해시태그 #붙여서 보이게
-        String hashTag = "#" + boardsFormDTO.getBoardTag();
+        String hashTag = boardsFormDTO.getBoardTag();
+        hashTag = hashTag.substring(0, hashTag.length() - 1);
         hashTag = hashTag.replace(",", " #");
         boardsFormDTO.setBoardTag(hashTag);
 
