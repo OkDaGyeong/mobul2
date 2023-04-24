@@ -74,12 +74,11 @@
                     <p th:text="${boardsForm.boardContent}">content</p>
                 </div>
                 <div id="hashArea" th:if="${boardsForm.boardTag != ''}">
-                    <p th:text="${boardsForm.boardTag}"></p>
-                    <div th:each="tag : ${#strings.arraySplit(boardsForm.boardTag, ' ,')}">
-                        <div>
+                    <div th:each="tag : ${#strings.arraySplit(boardsForm.boardTag, ' ,')}" class="hashLink">
+                        <span >
                             <a th:href="@{/(category=hashtag,searchHashtag=${#strings.replace(tag, '#', '')})}"
                                th:text="${tag}"></a>
-                        </div>
+                        </span>
                     </div>
                 </div>
                 <div id="fileBox">
@@ -141,14 +140,12 @@
             </div>
         </div>
 
-        <div id="postComment">
-            <form id="postWrap">
+        <div id="postComment" th:if="${session.userId}">
+            <form id="postWrap" >
                 <input type="hidden" id="commentWriter" placeholder="익명" th:if="${session.userId != null}"
-                       th:attr="value=${session.userId}"
-                >
+                       th:attr="value=${session.userId}">
                 <textarea id="commentContents" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"
-                          style="overflow=hidden white-space: pre-wrap;"
-                          ></textarea>
+                          style="overflow=hidden white-space: pre-wrap;" required></textarea>
                 <button id="post" onclick="commentWrite()">작성하기</button>
 
             </form>
@@ -156,12 +153,15 @@
 
         <ul id="comListWrap">
             <li class="comList" th:each="comment:${commentsList}">
-
                 <div class="anonymousWrap">
                     <input type="hidden" th:value="${comment.commentId}" class="cID"/>
-
-                    <span class="anonymous">익명</span>
-                    <button class="deleteBtn" font-weight="bold">삭제</button>
+                    <span th:if="${session.isAdmin}" class="anonymous" th:text="${comment.commentWriter}"></span>
+                    <span th:unless="${session.isAdmin}">
+                        <span  class="anonymous">익명</span>
+                        <span th:if="${comment.commentWriter}==${boardsForm.boardWriter}">(글쓴이)</span>
+                        <span th:if="${comment.commentWriter}!=${boardsForm.boardWriter} and ${session.userId}==${comment.commentWriter}">(본인)</span>
+                    </span>
+                    <button th:if="${session.userId}==${comment.commentWriter} or ${session.isAdmin}" class="deleteBtn" font-weight="bold">삭제</button>
                 </div>
                 <span class="itemText" th:text="${comment.commentContents}"></span>
                 <div class="dateWrap">
@@ -244,11 +244,6 @@ $(document).on("click", ".deleteBtn", function () {
 		$('html, body').animate({ scrollTop: 0 }, 300);
 	});
   });
-
-
-
-
-
 
 </script>
 

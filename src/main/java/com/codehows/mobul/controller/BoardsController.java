@@ -142,13 +142,8 @@ public class BoardsController {
         }
         System.out.println("55555555555555555");
 
-//            return "boards/writer";
-//        }
-//        System.out.println("-----------boardsFormDTO : " + boardsFormDTO);
         return "redirect:/";
     }
-
-
 
 
 
@@ -227,9 +222,6 @@ public class BoardsController {
         return "/boards/comment";
     }
 
-
-
-    // 게시글 삭제
     // 게시글 삭제
     @GetMapping("/comment/delete/{boardId}")
     public String deleteBoard(@PathVariable Long boardId){
