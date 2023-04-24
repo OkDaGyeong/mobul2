@@ -57,8 +57,11 @@ public class CommentsService {
         }
         return commentsDTOList;
         // 쿼리를 위해 메서드 정의 했고 조건에 엔티티 부모 가 있어야해서 부모 엔티티가 매개변수로 넘어가고 그러기 위해 부모 매개변수를 조회할 값이 필요 하다
+    }
 
 
+    public int countCommentsByBoard(Boards boards) {
+        return commentsRepository.countByBoards(boards);
     }
 }
 

@@ -204,6 +204,15 @@ public class BoardsController {
         Long likeCount = likeService.findLikeCount(boards);
         model.addAttribute("likeCount", likeCount);
 
+        // 댓글 수 반환
+        int commentCount = commentsService.countCommentsByBoard(boards);
+        model.addAttribute("commentCount", commentCount);
+        System.out.println("횟수 작성" + commentCount);
+
+/*        boards.setBoardId(boardId);
+        commentsService.countCommentsByBoard(boards);
+        */
+
         // 로그인 유저 아이디 확인,
         System.out.println("로그인된 유저 id : "+session.getAttribute("userId"));
         String loginUserId = (String)session.getAttribute("userId");
