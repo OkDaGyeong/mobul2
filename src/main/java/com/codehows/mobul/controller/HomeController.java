@@ -12,10 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 
@@ -26,11 +22,11 @@ public class HomeController {
 
     @GetMapping("/")
     public String boardList(Model model, @PageableDefault(page=0, size=15, sort="boardId",
-            direction= Sort.Direction.DESC) Pageable pageable, String searchTitle, String searchContent){
+            direction= Sort.Direction.DESC) Pageable pageable, String searchTitle, String searchContent, String searchHashtag){
 
         //Page<Boards> list = boardsService.boardList(pageable);
         Page<Boards> list=null;
-        if (searchTitle == null && searchContent==null) {
+        if (searchTitle == null && searchContent==null && searchHashtag==null) {
             // 검색 단어가 없으면 기존 화면을 보여준다.
             list =boardsService.boardList(pageable);
         }else if(searchTitle !=null){
@@ -38,6 +34,8 @@ public class HomeController {
         }else if( searchContent !=null) {
             // 검색 단어가 들어오면 검색 단어에 맞게 나온다. 쿼리스트링으로 들어가는 키워드를 찾아냄
             list = boardsService.boardSearchList2(searchContent, pageable);
+        }else if (searchHashtag !=null){
+            list= boardsService.boardSearchList3(searchHashtag, pageable);
         }
 
         //페이지블럭 처리
