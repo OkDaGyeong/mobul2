@@ -118,7 +118,7 @@ public class BoardsController {
             BoardsFormDTO boardsFormDTO =boardsService.getBoardDtl(boardId);
             model.addAttribute("boardsFormDTO", boardsFormDTO);
         } catch(EntityNotFoundException e){
-            model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
+            model.addAttribute("errorMessage", "존재하지 않는 게시물입니다.");
 //            model.addAttribute("boardsFormDTO", new BoardsFormDTO());    //
             return "boards/writer";
         }
@@ -135,6 +135,7 @@ public class BoardsController {
         }
 
         try{
+
             boardsService.updateBoard(boardsFormDTO, boardsFileList);
         } catch (Exception e){
             model.addAttribute("errorMessage", "게시글 수정 중 에러가 발생하였습니다");
@@ -145,7 +146,7 @@ public class BoardsController {
 
 //            return "boards/writer";
 //        }
-
+//        System.out.println("-----------boardsFormDTO : " + boardsFormDTO);
         return "redirect:/";
     }
 

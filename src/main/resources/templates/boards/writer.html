@@ -4,12 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
     <title>SAY SOMETHING</title>
     <!-- css  -->
+    <link rel="stylesheet" th:href="@{/css/reset.css}"defer>
+    <link rel="stylesheet" th:href="@{/css/writerPage.css}"defer>
+    <link rel="stylesheet" th:href="@{/css/hashtag.css}"defer>
+
+
+
+    <!-- 스크립트 -->
+    <!-- 폴리필 (구버젼 브라우저 지원) -->
+    <!-- 소스-->
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+    <!--    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />-->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <link rel="stylesheet" th:href="@{/css/reset.css}">
     <link rel="stylesheet" th:href="@{/css/writerPage.css}">
     <link rel="stylesheet" th:href="@{/css/hashtag.css}">
+
     <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
     <link rel="preconnect" crossorigin th:href="@{https://fonts.gstatic.com}">
     <link rel="stylesheet"
@@ -22,12 +39,12 @@
 
 </head>
 <body>
+
 <div id="wrap" style="margin-bottom:200px;">
     <!-- 헤더 -->
     <div id="logo" class="clearfix">
         <p><a >SAY SOMETHING</a></p>
     </div>
-
 
     <div class="writeBox">
 
@@ -39,21 +56,27 @@
     <form method="post" th:object="${boardsFormDTO}" enctype="multipart/form-data" id="formBox">   <!-- 혜영  -->
         <input type="hidden" th:field="*{boardId}" th:value="*{boardId}">
 
-        <div>
-            <input name="boardTitle" type="text" placeholder="제목을 입력하세요" th:field="*{boardTitle}" required>
-        </div>
 
-        <div>
-            <textarea name="boardContent" placeholder="내용을 입력하세요" id="text"
-                      th:field="*{boardContent}" required></textarea>
+    <!-- 테이블 섹션 -->
+    <div id="tableWrap">
 
-        </div>
-        <div class="hashBox">
-            <input  placeholder="#해시태그" id="myTags" />
-            <input type="hidden" id="qq" value=""  th:field="*{boardTag}" >
+        <input type="button" class="btn-navy" value="글 목록" id="listBtn" style="font-weight : bold">
 
-        </div>
+        <form method="post" th:object="${boardsFormDTO}" enctype="multipart/form-data">  <!-- 혜영  -->
+            <input type="hidden" th:field="*{boardId}">
+            <div id="tableBox">
+                <div>
+                        <input name="boardTitle" type="text" placeholder="제목을 입력하세요"
+                               th:field="*{boardTitle}" required>
+                 </div>
+                <div>
+                            <textarea name="boardContent" placeholder="내용을 입력하세요" id="text" th:field="*{boardContent}" required></textarea>
+                 </div>
 
+                <div class="hashBox">
+                        <input  placeholder="#해시태그" id="myTags" />
+                        <input type="hidden" id="qq"  th:field="*{boardTag}"/>
+                  </div>
 
         <div th:if="${#lists.isEmpty(boardsFormDTO.boardsFileDTOList)}">
             <div th:each="num: ${#numbers.sequence(1,2)}">
@@ -81,7 +104,7 @@
                 </div>
             </div>
         </div>
-
+        
 
         <div th:if="${#strings.isEmpty(boardsFormDTO.boardId)}" class="rightBtnBox">
             <button th:formaction="@{/board/writer}" type="submit" class="btn-save">저장</button>
@@ -112,6 +135,71 @@ const allTag = document.getElementById('qq');
      });
         </script>
 </div>
+
+
+<script>
+       window.onload = function() {
+          bindDomEvent();
+       };
+
+    function bindDomEvent() {
+      var fileInput = document.querySelector(".custom-file-input");
+      fileInput.addEventListener("change", function() {
+        var fileName = fileInput.value.split("\\").pop();
+        var fileExt = fileName.substring(fileName.lastIndexOf(".") + 1);
+        fileExt = fileExt.toLowerCase();
+
+        var label = fileInput.nextElementSibling;
+        label.innerHTML = fileName;
+      });
+    }
+
+
+
+    // 해시태그
+
+    const input = document.getElementById('myTags');
+    const allTag = document.getElementById('qq');
+
+    // boardTag 값을 input 태그에 적용
+    input.value = allTag.value;
+
+
+    // Tagify 인스턴스 생성
+    const tagify = new Tagify(input, {
+      whitelist: [],
+      dropdown: {
+        position: "input",
+        enabled: 0 // always opens dropdown when input gets focus
+      }
+    });
+
+
+
+    // 태그 추가 이벤트 핸들러
+    tagify.on('add', function() {
+      const tagValues = tagify.value.map(tag => tag.value);
+      input.value = tagValues.join(',');
+      allTag.value = input.value;
+
+      console.log("모든태그 : " + allTag.value);
+
+
+    });
+
+
+    // 태그 제거 이벤트 핸들러
+    tagify.on('remove', function() {
+      const tagValues = tagify.value.map(tag => tag.value);
+      input.value = tagValues.join(',');
+      allTag.value = input.value;
+
+      console.log("모든태그 : " + allTag.value);
+
+    });
+
+</script>
+
     <div class="footer centerContent">
         <p>@ create by MOBUL</p>
     </div>
