@@ -103,12 +103,14 @@ public class BoardsService {
 
     public Long updateBoard(BoardsFormDTO boardsFormDTO, List<MultipartFile> fileList) throws Exception{
 
+
         // 게시글 수정
         System.out.println("태그 테스트: " + boardsFormDTO.getBoardTag());
         Boards boards = boardsRepository.findByBoardId(boardsFormDTO.getBoardId());
 
         System.out.println("테스트 tag : " + boardsFormDTO.getBoardTag());
         boards.updateBoard(boardsFormDTO);
+
         List<Long> fileIds =  boardsFormDTO.getFileId();
 
         // 이미지 등록
@@ -119,6 +121,7 @@ public class BoardsService {
         return boards.getBoardId();
 
     }
+
 
 
     // 게시글 저장 : 본문 + 파일

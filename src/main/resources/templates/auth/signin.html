@@ -22,11 +22,9 @@
       </div>
 <!--   로그인 폼 제출 버튼-->
       <div class="btnBox">
+        <p th:if="${error}"  style="color: red; margin-left:10px;" th:text="${error}"></p>
         <button type="submit" class="btn-green">Login</button>
       </div>
-        <div th:if="${error}">
-            <p style="color: red" th:text="${error}"></p>
-        </div>
 
     </form>
 
@@ -34,6 +32,7 @@
     <div class="btnBox">
       <hr />
       <button class="btn-kakao">Login with Kakao</button>
+
       <button class="btn-grey" onclick="window.location.href='/auth/signup'">
         SignUp
       </button>

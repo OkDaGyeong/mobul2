@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "boards")
@@ -53,6 +55,11 @@ public class Boards {
     @Column(columnDefinition = "timestamp")
     private LocalDateTime boardDate;
 
+
+    //커멘트랑 연결
+    @OneToMany(mappedBy = "boards", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Comments> commentsEntityList = new ArrayList<>();
+
     // BoardsFormDTO를 엔티티로 변경
     public static Boards toBoards(BoardsFormDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
@@ -65,6 +72,7 @@ public class Boards {
         this.boardId = boardsFormDTO.getBoardId();
         this.boardTitle = boardsFormDTO.getBoardTitle();
         this.boardContent = boardsFormDTO.getBoardContent();
+
         this.boardTag = boardsFormDTO.getBoardTag();
 
     }

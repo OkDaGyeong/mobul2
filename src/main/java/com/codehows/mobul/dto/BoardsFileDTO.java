@@ -2,7 +2,8 @@ package com.codehows.mobul.dto;
 
 import com.codehows.mobul.entity.Boards;
 import com.codehows.mobul.entity.BoardsFile;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.modelmapper.ModelMapper;
 
 @Getter @Setter
