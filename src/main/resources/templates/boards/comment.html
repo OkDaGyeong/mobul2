@@ -141,14 +141,12 @@
             </div>
         </div>
 
-        <div id="postComment" th:if="${session.userId} != null" >
+        <div id="postComment" th:if="${session.userId}">
             <form id="postWrap" >
                 <input type="hidden" id="commentWriter" placeholder="익명" th:if="${session.userId != null}"
-                       th:attr="value=${session.userId}"
-                >
+                       th:attr="value=${session.userId}">
                 <textarea id="commentContents" placeholder="댓글을 작성해 주세요 바르고 고운말을 사용합시다"
-                          style="overflow=hidden white-space: pre-wrap;"
-                          ></textarea>
+                          style="overflow=hidden white-space: pre-wrap;" required></textarea>
                 <button id="post" onclick="commentWrite()">작성하기</button>
 
             </form>
@@ -247,11 +245,6 @@ $(document).on("click", ".deleteBtn", function () {
 		$('html, body').animate({ scrollTop: 0 }, 300);
 	});
   });
-
-
-
-
-
 
 </script>
 

@@ -61,11 +61,6 @@ window.onload = function(){
 
         const cID = document.createElement('input'); // <input> 요소 생성
         anonymousWrap.classList.add('cID'); // 'cID' 클래스를 추가
-    //    cID.value = ''; // value 속성을 빈 문자열로 설정
-
-
-
-
         newComment.appendChild(anonymousWrap);
 
         // 댓글 내용
@@ -93,13 +88,6 @@ window.onload = function(){
         newComment.appendChild(dateWrap);
         // 댓글 목록에 추가
         comListWrap.prepend(newComment);
-
-        // 작성 창 비우기
-        postArea.value = '';
-
-       // 댓글 작성한 갯수만큼 commentNum이 카운트 되게 해줘
-        const commentNumEl = document.querySelector('.commentNum');
-        commentNumEl.textContent = ++commentNum;
 
 
       });
