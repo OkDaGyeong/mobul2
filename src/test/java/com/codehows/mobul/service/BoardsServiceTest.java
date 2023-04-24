@@ -5,8 +5,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @SpringBootTest
 @Transactional
 @TestPropertySource(locations="classpath:application-test.properties")
@@ -51,4 +49,7 @@ public class BoardsServiceTest {
 //
 //
 //    }
+
+
+
 }

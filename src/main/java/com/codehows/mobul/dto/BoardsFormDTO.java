@@ -26,6 +26,7 @@ public class BoardsFormDTO {
     private String boardContent;        // 게시판 내용
 
     private int boardView; //조회수--추가
+
     private int boardLike;
 
 
@@ -39,6 +40,7 @@ public class BoardsFormDTO {
     private List<BoardsFileDTO> boardsFileDTOList = new ArrayList<>();   // 이미지 수정 시 이미지 정보 저장 리스트
 
     private List<Long> fileId = new ArrayList<>();      // 파일 고유 값 저장
+
 
     private static ModelMapper modelMapper = new ModelMapper();
 

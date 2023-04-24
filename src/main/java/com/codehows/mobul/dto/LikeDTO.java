@@ -1,6 +1,9 @@
 package com.codehows.mobul.dto;
 
 import com.codehows.mobul.entity.Boards;
+
+import com.codehows.mobul.entity.Like;
+
 import com.codehows.mobul.entity.Users;
 import lombok.*;
 @Getter @Setter @ToString

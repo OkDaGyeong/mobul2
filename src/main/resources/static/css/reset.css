@@ -24,6 +24,12 @@
   --table-hover: #edeae3;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+  margin: 0;
+}
+
 body {
   font-family: "S-CoreDream-3Light";
   width: 100%;
@@ -62,22 +68,19 @@ input[type="button"] {
 /* 공통 */
 /* 전체배경 */
 #wrap{
+  margin-bottom:200px;
   width: 100%;
-  height: auto;
   background-color: #F9F8F6;
 }
 
 /* 테이블 섹션 */
 #tableWrap{
-  width: 1130px;
-  height: auto;
-  background-color: rgba(0, 0, 0, 0.0);
+  max-width: 1130px;
   margin: 0 auto;
+  margin-bottom:50px;
 }
 
-/* 겉 실선 */
 #tableBox{
-  /* border: 1px solid #434343; */
   width: 100%;
   height: auto;
   border-radius: 15px;
@@ -97,7 +100,7 @@ input[type="button"] {
 #logo p a {
   color:#047D5A;
   font-weight: 700;
-  font-size: 6vw;
+  font-size:70px;
   font-family: 'Noto Sans KR', sans-serif;
 }
 
@@ -120,3 +123,39 @@ body::-webkit-scrollbar-thumb{
     background-clip: padding-box;
     border: 2px solid transparent;
 }
+.footer {
+
+  height: 100px;
+  color: var(--ivory);
+  background-color: var(--green);
+  margin-top: 20px;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.centerContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rightBtnBox{
+display:flex;
+justify-content: flex-end;
+max-width:1100px;
+padding:0 10px;
+margin:0 auto;
+height: auto;
+margin-top:20px;
+}
+
+
+.icon{
+width:20px;
+height:20px;}
+
+.icon2{
+width:25px;
+height:25px;}

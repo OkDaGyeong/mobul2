@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MOBUL 회원가입</title>
   <link rel="stylesheet" th:href="@{/css/auth.css}" />
+    <script th:src="@{/js/kakao.js}" defer></script>
 </head>
 
 <body>
@@ -47,7 +48,7 @@
 <!--카카오 회원가입, 로그인페이지로 이동 버튼-->
     <div class="btnBox">
       <hr />
-      <button  class="btn-kakao">SignUp with Kakao</button>
+        <button class="btn-kakao">Login with Kakao</button>
       <button class="btn-grey" onclick="window.location.href='/auth/signin'">Login</button>
     </div>
   </div>

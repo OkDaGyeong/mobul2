@@ -2,6 +2,9 @@ package com.codehows.mobul.controller;
 
 import com.codehows.mobul.service.LikeService;
 import lombok.RequiredArgsConstructor;
+
+import org.hibernate.annotations.Parameter;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

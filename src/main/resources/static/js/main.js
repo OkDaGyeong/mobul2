@@ -1,0 +1,58 @@
+function resetSearch() {
+        // 검색어와 선택된 카테고리 초기화
+
+        document.querySelector('option[value="title"]').selected = true;
+        document.getElementById("searchKeyword").value = "";
+        window.location.href = '/'
+    }
+
+    //
+ document.addEventListener("DOMContentLoaded", function() {
+  const searchCategory = document.getElementById("searchCategory");
+  const searchKeyword = document.getElementById("searchKeyword");
+
+  // searchCategory 값이 변경될 때마다 searchKeyword input의 name 속성 변경
+  searchCategory.addEventListener("change", function() {
+    if (searchCategory.value === "title") {
+      searchKeyword.setAttribute("name", "searchTitle");
+    } else if (searchCategory.value === "content") {
+      searchKeyword.setAttribute("name", "searchContent");
+    } else {
+      searchKeyword.setAttribute("name", "searchHashtag");
+    }
+
+    // 선택된 옵션을 localStorage에 저장
+    localStorage.setItem("searchCategory", searchCategory.value);
+  });
+
+  // 이전에 선택한 옵션이 있다면 선택된 옵션을 유지
+  const savedSearchCategory = localStorage.getItem("searchCategory");
+  if (savedSearchCategory) {
+    searchCategory.value = savedSearchCategory;
+
+    // 선택된 옵션에 따라서 검색어 input의 name 속성을 변경
+    if (searchCategory.value === "title") {
+      searchKeyword.setAttribute("name", "searchTitle");
+    } else if (searchCategory.value === "content") {
+      searchKeyword.setAttribute("name", "searchContent");
+    } else {
+      searchKeyword.setAttribute("name", "searchHashtag");
+    }
+  }
+
+  // 검색어 유지
+  const searchTitle = new URLSearchParams(window.location.search).get("searchTitle");
+  if (searchTitle) {
+    searchKeyword.value = searchTitle;
+  }
+
+  const searchContent = new URLSearchParams(window.location.search).get("searchContent");
+  if (searchContent) {
+    searchKeyword.value = searchContent;
+  }
+
+  const searchHashtag = new URLSearchParams(window.location.search).get("searchHashtag");
+  if (searchHashtag) {
+    searchKeyword.value = searchHashtag;
+  }
+});

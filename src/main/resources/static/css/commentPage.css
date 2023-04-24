@@ -1,4 +1,4 @@
-
+@import url("reset.css");
 
 
 input{
@@ -25,28 +25,28 @@ input[type="button"]{
   border-radius: 15px;
   background-color: #FCFCFC;
   box-shadow: 0px 0px 7px rgba(0,0,0,0.3);
-  overflow: hidden;
+
+  padding-bottom:10px;
 }
 
 .titleArea{
   width: 100%;
   height: 48px;
-  /* border-bottom:1px solid #434343; */
+  font-family: 'S-CoreDream-3Light';
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
   background-color: #5E6790;
-  color: white;
+  color: var(--ivory);
 }
 .date{
   margin-left: 30px;
 }
 
 #viewbox{
-  width: 150px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-right: 30px;
 }
 
@@ -66,21 +66,31 @@ input[type="button"]{
   overflow: hidden;
 
 }
+#mainContentBox{
+min-height:150px;
+width:100%;
+}
+
 #hashArea{
   width: 100%;
+
   padding-top: 25px;
+
   color: #5E6790;
   font-size: 15px;
 }
 
 #commentArea{
   width: 100%;
-  margin: 22px 0 10px 26px;
+  height:23px;
+  margin: 27px 10px 20px 10px;
   font-weight: 600;
   color: #5E6790;
   display: flex;
+
   justify-content: left;
   align-items: center
+
 }
 .comment{
   display: flex;
@@ -92,15 +102,7 @@ input[type="button"]{
   margin-right: 5px;
 }
 
-.likeBtn{
-  display: flex;
-  justify-content: left;
-}
 
-.likeBtn p {
-  margin-right: 5px;
-  cursor: pointer;
-}
 #comListWrap{
   width: 100%;
 }
@@ -360,9 +362,9 @@ color: var(--navy);
 font-size:16px;
 padding:3px;
 }
+
 .likeBtn:hover{
 background-color:rgba(95,103,144,0.3);
-
 
 }
 
@@ -422,10 +424,53 @@ background-color:rgba(94,103,144,0.2);
 
 
 
+.btn-navy {
+  background-color: transparent;
+  color: var(--navy);
+  font-size: 16px;
+  border: none;
+  padding: 7px 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  border-radius: 100px;
+  transition: 0.3s;
+  float:right;
+  font-weight:600;
+
+}
+.btn-navy:hover {
+  border: 2px solid var(--navy);
+  background-color: transparent;
+  color: var(--navy);
+}
+
+.btn-form-admin{
+padding: 10px 0px;
+display:flex;
+justify-content: space-between;
+}
+.btn-form{
+padding: 10px 25px;
+display:flex;
+justify-content: flex-end;
+}
+
+.title-right{
+    display:flex;
+    height:100%;
+    align-items: center;
+    justify-content: center;
+}
 
 
-
-
-
-
-
+.btn-modify{
+margin-left:10px;
+color:var(--ivory);
+padding : 5px 10px;
+border-radius:5px;
+}
+.btn-modify:hover{
+font-weight: bold;
+}

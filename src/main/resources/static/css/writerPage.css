@@ -1,4 +1,4 @@
-
+@import url("reset.css");
 Content-Type: text/html; charset=utf-8
 
 /* 글목록,작성 버튼 폰트 */
@@ -6,38 +6,45 @@ input{
   font-family: 'S-CoreDream-3Light';
   cursor: pointer;
   color: #5E6790;
-  font-weight: 500;
+  font-weight:600;
+
 }
-/* 겉 실선 */
-#tableBox{
-  border: 1px solid #434343;
-  width: 100%;
+
+#formBox{
+  max-width: 1100px;
   height: auto;
-  border-radius: 15px;
-  overflow: hidden;
+  border-radius: 10px;
+  margin:15px auto;
+  overflow:hidden;
+  padding:25px;
+  background-color:var(--table-hover);
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
 }
 
 /* 제목 */
 input[type="text"]{
-  width: 1100px;
+  max-width: 1100px;
   padding: 10px 10px;
-  margin:15px 15px;
+  margin-bottom:15px;
   box-sizing: border-box;
-  border: 1px solid #dddddd;
+  width:100%;
+  border-radius: 5px;
+  font-weight:600px;
 
 }
 /* 본문,댓글 작성 */
 textarea{
   display: block;
   height: auto;
-  width: 1100px;
+  max-width: 1100px;
+  width:100%;
   padding: 5px 5px;
-  margin:0 15px;
+  margin-bottom:15px;
   box-sizing: border-box;
   resize: none;
-  border: none;
-  border-radius: 0;
-  border: 1px solid #dddddd;
+  border-radius: 5px;
+  border:none
+background-color:var(--ivory);
 }
 textarea:focus{
   outline: none;
@@ -54,18 +61,11 @@ textarea::-webkit-scrollbar-thumb{
     border: 2px solid transparent;
 }
 
-/* 등록, 글 목록 */
-input[type="button"]{
-  float: right;
-  font-size: 13px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  margin-top: 10px;
 
-}
+
 /* 해시태그 */
 #hash{
-  margin:15px 15px;
+  /*margin:15px 15px;*/
   height: 30px;
 }
 .tagify{
@@ -124,7 +124,7 @@ input[type="button"]{
 
 
 /* label 태그의 스타일 */
-.custom-file-upload {
+/*.custom-file-upload {
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
@@ -139,32 +139,84 @@ input[type="button"]{
 
 .custom-file-upload:hover {
   background-color: #32374d;
-}
+}*/
 
-#fileName{
+/*#fileName{
   display: inline;
-}
+}*/
 
 /* input 태그의 스타일 (숨김) */
-input[type="file"] {
+/*input[type="file"] {
   display: none;
-}
+}*/
 
 .btn-navy {
   background-color: transparent;
   color: var(--navy);
   font-size: 16px;
   border: none;
-  padding: 0 20px;
-  margin: 7px 0;
+  padding: 7px 20px;
+  margin: 10px 0;
   cursor: pointer;
   box-sizing: border-box;
   border: 2px solid transparent;
   border-radius: 100px;
   transition: 0.3s;
+  float:right;
+  font-weight:600;
+
 }
 .btn-navy:hover {
   border: 2px solid var(--navy);
   background-color: transparent;
   color: var(--navy);
 }
+
+.rightBtnBox{
+display:flex;
+justify-content: flex-end;
+max-width:1200px;
+margin:0 auto;
+height: auto;
+}
+
+.btn-save{
+text-align: center
+font-size:16px;
+padding: 7px 23px;
+margin:5px;
+margin-top:10px;
+border:none;
+color : var(--navy);
+background-color:var(--ivory);
+border-radius:3px;
+cursor:pointer;
+font-weight:700;
+}
+.btn-save:hover{
+background-color:rgba(255,255,255,0.5);
+}
+
+
+/* 파일 입력 필드를 감싸는 요소에 대한 스타일링 */
+  .file-input-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-bottom:2px solid var(--ivory);
+    margin-bottom:10px;
+    padding:5px;
+  }
+
+
+  /* 파일 입력 필드 */
+  .file-input-wrapper input[type=file] {
+    position: absolute;
+    font-size: 999px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+  }
+
+  .custom-file-label{
+  color : var(--darkgrey);
+  }
