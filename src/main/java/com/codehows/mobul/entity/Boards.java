@@ -42,9 +42,9 @@ public class Boards {
     private Users boardWriter;
 
 
-    //게시글 좋아요   default 0  : 좋아요 not null 확인필요
-    @Column(columnDefinition = "integer default 0")
-    private Integer boardLike;
+//    //게시글 좋아요   default 0  : 좋아요 not null 확인필요
+//    @Column(columnDefinition = "integer default 0")
+//    private Integer boardLike;
 
     //게시물 해시태그  varchar(30)
     @Column(length = 30)
